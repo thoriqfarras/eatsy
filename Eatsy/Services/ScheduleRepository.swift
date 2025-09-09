@@ -22,7 +22,8 @@ final class MockScheduleRepository: ScheduleRepository {
         let item = MealItem(title: "Boiled Egg", emoji: "🍳", nutrients: nutrients)
         return [
             .breakfast: Array(repeating: item, count: 3),
-            .lunch:     Array(repeating: item, count: 3)
+            .lunch:     Array(repeating: item, count: 3),
+            .diner:     Array(repeating: item, count: 3)
         ]
     }
 }
