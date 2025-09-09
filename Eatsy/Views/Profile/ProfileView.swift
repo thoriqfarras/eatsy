@@ -2,67 +2,77 @@ import SwiftUI
 
 struct ProfileView: View {
     var body: some View {
-        Spacer()
         VStack {
             HStack(){
-                Image(systemName: "minus")
-                    .padding(.trailing, 12)
+                Text("🏆")
+                    .font(.largeTitle)
+                    .padding(.trailing, 8)
                 VStack (alignment: .leading) {
-                    Text("Hello, World!")
-                    Text("Hello, World!")
+                    Text("Goal")
+                        .font(.caption)
+                        .foregroundStyle(Color (.systemGray2))
+                    Text("Lose Weight")
+                        .font(.headline)
                 }
                 Spacer()
-                Image(systemName: "plus")
+                Button("Change") {
+                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+                }
+                .font(.caption)
+                .bold()
+                .foregroundColor(.white)
+                .padding(12)
+                .background(.green)
+                .clipShape(Capsule())
             }
             .padding()
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .shadow(radius: 8)
-            .padding()
+            .shadow(color: Color.black.opacity(0.08), radius: 6)
+            .padding([.horizontal, .top])
             
             VStack (alignment: .leading) {
                 Text("Personal Information")
+                    .font(.callout)
+                    .fontWeight(.medium)
                     .padding([.horizontal, .top])
-                VStack(){
-                    HStack {
-                        Text("🎯 Goal Weight")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .padding(.bottom)
-                    ProfileItem(title: "Age")
-                    ProfileItem (title: "Weight")
+                VStack(spacing: 16){
+                    ProfileItem(title: "🎯 Goal Weight", val: "100kg")
+                    ProfileItem (title: "🎂 Age", val: "21yo")
+                    ProfileItem (title: "⚖️ Weight", val: "60kg")
+                    ProfileItem (title: "📏 Height", val: "162.3cm")
                 }
                 .padding()
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .shadow(radius: 8)
-                .padding()
+                .shadow(color: Color.black.opacity(0.08), radius: 6)
+                .padding(.horizontal)
             }
             Spacer()
         }
-    }
-    func ProfileItem(title: String) -> some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Image(systemName: "chevron.right")
-        }
-        .padding(.bottom)
-    }
-}
+//        .navigationTitle("Profile")
+//        .navigationBarTitleDisplayMode(.inline)
+    }}
 #Preview {
     ProfileView()
 }
 
-//struct ProfileItem: View {
-//    var title: String
-//    var body: some View {
-//        HStack {
-//            Text(title)
-//            Spacer()
-//            Image(systemName: "chevron.right")
-//        }
-//        .padding(.bottom)
-//    }
-//}
+struct ProfileItem: View {
+    var title: String
+    var val: String
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.subheadline)
+            Spacer()
+            Text(val)
+                .font(.caption)
+                .foregroundStyle(Color (.systemGray2))
+
+                .bold()
+            Image(systemName: "chevron.right")
+                .foregroundColor(Color (.systemGray2))
+                .font(.caption)
+        }
+    }
+}
