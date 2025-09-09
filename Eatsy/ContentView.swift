@@ -22,6 +22,7 @@ struct ContentView: View {
             Text("Ini Baru Tian")
             Text("Ini Baru Kornel")
             Text("Ini Thoriq")
+            Text("Ini Henry")
         }
         .padding(10).background(Color.green)
         HStack {
