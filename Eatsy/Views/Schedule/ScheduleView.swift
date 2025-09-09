@@ -17,7 +17,7 @@ struct ScheduleView: View {
                     Text("Schedule")
                         .font(.title.bold())
                     Spacer()
-                    Image(systemName: "checkerboard.rectangle")
+                    Image(systemName: "person.circle")
                         .font(.title3)
                 }
                 .padding(.horizontal)
