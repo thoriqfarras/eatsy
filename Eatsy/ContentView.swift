@@ -20,10 +20,14 @@ struct ContentView: View {
                 /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
             }
             Text("Ini Baru Tian")
-            Text("Ini Baru Tian")
-            
+            Text("Ini Baru Kornel")
+            Text("Ini Thoriq")
         }
-        .padding()
+        .padding(10).background(Color.green)
+        HStack {
+            Text("Ini text ada di HStack")
+            Text("Ini text juga ada di HStack")
+        }.padding().background(Color.blue)
     }
 }
 
