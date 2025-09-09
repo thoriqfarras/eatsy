@@ -16,8 +16,12 @@ struct ContentView: View {
             Text("Hello, world!")
             Text("Tian")
             Text("Korneel")
+            Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
+                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
+            }
             Text("Ini Baru Tian")
-            Text("Ini Baru Kornel")
+            Text("Ini Baru Tian")
+            
         }
         .padding()
     }
