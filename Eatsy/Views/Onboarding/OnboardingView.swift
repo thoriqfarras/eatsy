@@ -13,7 +13,9 @@ struct OnboardingView: View {
             Navbar()
             //            GenderView();
             //            GoalView()
-            AboutYouView()
+//            AboutYouView()
+//            WeightGoalView()
+            DietRestrictionView()
             Spacer()
             NextButton()
         }
@@ -88,7 +90,6 @@ struct GoalView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            
         }
         
         GoalRadioButtonsGroup()
@@ -155,6 +156,69 @@ struct AboutYouView: View {
     }
 }
 
+struct WeightGoalView: View {
+    
+    @State private var selectedWeightGoal: Int?
+    
+    var body: some View {
+        VStack {
+            Text("4 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            VStack(spacing: 10) {
+                Text("Set your weight goal!")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Tell us your target weight so we can plan your journey and estimate how long it will take.")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+        }
+        
+        VStack {
+            HStack {
+                Text("🎯 Goal Weight")
+                    .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
+            }
+            .padding()
+            
+            Picker("Weight Goal", selection: $selectedWeightGoal) {
+                ForEach (weights, id: \.self) { weight in
+                    Text("\(weight) kg")
+                }
+            }
+            .pickerStyle(.wheel)
+        }
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 4)
+        .padding(.horizontal)
+    }
+}
+
+struct DietRestrictionView: View {
+    var body: some View {
+        VStack {
+            Text("5 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            VStack(spacing: 10) {
+                Text("Any dietary restriction?")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Tell us about allergies or foods you need to avoid, so we can adjust your meal plan. ")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+        }
+        
+        DietRestrictionCheckboxesGroup()
+    }
+}
+
 struct DropdownPicker<Content: View>: View {
     @State var showDropdown: Bool = false
     
@@ -185,6 +249,44 @@ struct DropdownPicker<Content: View>: View {
             }
         }
         .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 4)
+        .padding(.horizontal)
+    }
+}
+
+struct DietRestrictionCheckboxesGroup: View {
+    @State var selectedRestrictions: Set<DietRestriction> = []
+    
+    var body: some View {
+        Button(action: {
+            if selectedRestrictions.contains(.lactoreIntolerant) {
+                selectedRestrictions.remove(.lactoreIntolerant)
+            } else {
+                selectedRestrictions.insert(.lactoreIntolerant)
+            }
+        }) {
+            Text("🥛 Lactose intolerant")
+                .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+        }
+        .background(selectedRestrictions.contains(.lactoreIntolerant) ? .yellow.opacity(75) : .white)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 4)
+        .padding(.horizontal)
+        
+        Button(action: {
+            if selectedRestrictions.contains(.glutenFree) {
+                selectedRestrictions.remove(.glutenFree)
+            } else {
+                selectedRestrictions.insert(.glutenFree)
+            }
+        }) {
+            Text("🌾 Gluten-free")
+                .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+        }
+        .background(selectedRestrictions.contains(.glutenFree) ? .yellow.opacity(75) : .white)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 4)
         .padding(.horizontal)
