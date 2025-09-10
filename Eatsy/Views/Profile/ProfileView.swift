@@ -22,13 +22,13 @@ struct ProfileView: View {
                 .bold()
                 .foregroundColor(.white)
                 .padding(12)
-                .background(.green)
+                .background(Color("PrimaryGreen"))
                 .clipShape(Capsule())
             }
             .padding()
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .shadow(color: Color.black.opacity(0.08), radius: 6)
+            .eatsyShadow()
             .padding([.horizontal, .top])
             
             VStack (alignment: .leading) {
@@ -45,7 +45,7 @@ struct ProfileView: View {
                 .padding()
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .shadow(color: Color.black.opacity(0.08), radius: 6)
+                .eatsyShadow()
                 .padding(.horizontal)
             }
             Spacer()
@@ -67,6 +67,7 @@ struct ProfileItem: View {
             Spacer()
             Text(val)
                 .font(.caption)
+                .bold(true)
                 .foregroundStyle(Color (.systemGray2))
             Image(systemName: "chevron.right")
                 .foregroundColor(Color (.systemGray2))
