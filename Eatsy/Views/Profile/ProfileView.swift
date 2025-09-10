@@ -50,8 +50,8 @@ struct ProfileView: View {
             }
             Spacer()
         }
-//        .navigationTitle("Profile")
-//        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Profile")
+        .navigationBarTitleDisplayMode(.inline)
     }}
 #Preview {
     ProfileView()
