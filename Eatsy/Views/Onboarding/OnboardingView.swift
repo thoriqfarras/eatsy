@@ -15,7 +15,8 @@ struct OnboardingView: View {
             //            GoalView()
 //            AboutYouView()
 //            WeightGoalView()
-            DietRestrictionView()
+//            DietRestrictionView()
+            OnboardingDoneView()
             Spacer()
             NextButton()
         }
@@ -216,6 +217,32 @@ struct DietRestrictionView: View {
         }
         
         DietRestrictionCheckboxesGroup()
+    }
+}
+
+struct OnboardingDoneView: View {
+    var body: some View {
+        Spacer()
+        VStack(spacing: 10) {
+            Text("Well done 🎉")
+                .font(.title)
+                .bold()
+                .frame(maxWidth: .infinity)
+            Text("Your personalized plan is ready!")
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text("Follow the plan we’ve built for you and  you’ll reach your goal by")
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.primary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.top, 20)
+            Text("🗓️ 12 December 2025 ")
+                .bold()
+                .foregroundStyle(.green)
+                .padding(.top, 5)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
     }
 }
 
