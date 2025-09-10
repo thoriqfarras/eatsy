@@ -36,7 +36,7 @@ struct ScheduleView: View {
                 .padding(.top, 12)
 
 
-                // --- FIXED SEGMENTED ---
+                // --- FIXED SEGMENTED NEW ---
                 DateSegmentBar(selectedIndex: $vm.selectedDateIndex,
                                titles: vm.dates)
                     .padding(.horizontal)
