@@ -11,17 +11,28 @@ struct ScheduleView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-
-                // --- FIXED HEADER ---
+                
+                // Title & Profile
                 HStack {
                     Text("Schedule")
-                        .font(.title.bold())
+                        .font(.title)
+                        .bold()
+                    
                     Spacer()
-                    Image(systemName: "person.circle")
-                        .font(.title3)
+                    
+                    Button(action: {
+                        // aksi buka profile
+                    }) {
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(.white)
+                            .background(Circle().fill(Color.gray))
+                    }
                 }
                 .padding(.horizontal)
-                .padding(.top, 8)
+                .padding(.top, 12)
 
                 // --- FIXED SEGMENTED ---
                 DateSegmentBar(selectedIndex: $vm.selectedDateIndex,
