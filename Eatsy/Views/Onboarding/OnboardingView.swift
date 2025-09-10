@@ -11,8 +11,9 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             Navbar()
-//            GenderView();
-            GoalView()
+            //            GenderView();
+            //            GoalView()
+            AboutYouView()
             Spacer()
             NextButton()
         }
@@ -94,10 +95,106 @@ struct GoalView: View {
     }
 }
 
+let heights = 130..<221
+let weights = 30..<201
+let ages = 18..<26
+
+struct AboutYouView: View {
+    
+    @State private var selectedHeight: Int = 160
+    @State private var selectedWeight: Int = 60
+    @State private var selectedAge: Int = 21
+    
+    @State private var heightExpanded: Bool = true
+    
+    var body: some View {
+        VStack {
+            Text("3 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            VStack(spacing: 10) {
+                Text("Tell Us About You!")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Enter your height, weight, and age so we can calculate your BMI and daily calorie needs.")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+        }
+        
+        DropdownPicker(text: "📏 Height", selectedValue: selectedHeight, values: heights, unit: "cm") {
+            Picker("Height", selection: $selectedHeight) {
+                ForEach (heights, id: \.self) { height in
+                    Text("\(height) cm")
+                }
+            }
+            .pickerStyle(.wheel)
+        }
+        
+        DropdownPicker(text: "⚖️ Weight", selectedValue: selectedWeight, values: weights, unit: "kg") {
+            
+            Picker("Weight", selection: $selectedWeight) {
+                ForEach (weights, id: \.self) { weight in
+                    Text("\(weight) kg")
+                }
+            }
+            .pickerStyle(.wheel)
+        }
+        
+        DropdownPicker(text: "🎂 Age", selectedValue: selectedAge, values: ages, unit: "y.o.") {
+            
+            Picker("Age", selection: $selectedAge) {
+                ForEach (ages, id: \.self) { age in
+                    Text("\(age) y.o.")
+                }
+            }
+            .pickerStyle(.wheel)
+        }
+        
+    }
+}
+
+struct DropdownPicker<Content: View>: View {
+    @State var showDropdown: Bool = false
+    
+    let text: String
+    let selectedValue: Int
+    let values: Range<Int>
+    let unit: String
+    @ViewBuilder var content: Content
+    
+    var body: some View {
+        VStack {
+            Button(action: {
+                withAnimation {
+                    showDropdown.toggle()
+                }
+            }) {
+                HStack {
+                    Text("\(text)")
+                        .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Text("\(selectedValue) \(unit)").foregroundStyle(.green)
+                }
+                .padding()
+            }
+            
+            if (showDropdown) {
+                content
+            }
+        }
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 4)
+        .padding(.horizontal)
+    }
+}
+
 struct GenderRadioButtonsGroup: View {
     @State var isMaleSelected: Bool = false
     @State var isFemaleSelected: Bool = false
-
+    
     var body: some View {
         VStack(spacing: 10) {
             Button(action: {
@@ -130,7 +227,7 @@ struct GenderRadioButtonsGroup: View {
 
 struct GoalRadioButtonsGroup: View {
     @State var selectedButton: Goal?
-
+    
     var body: some View {
         VStack(spacing: 10) {
             Button(action: {
