@@ -25,11 +25,8 @@ struct ProfileView: View {
                 .background(Color("PrimaryGreen"))
                 .clipShape(Capsule())
             }
+            .eatsyCard()
             .padding()
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .eatsyShadow()
-            .padding([.horizontal, .top])
             
             VStack (alignment: .leading) {
                 Text("Personal Information")
@@ -42,10 +39,7 @@ struct ProfileView: View {
                     ProfileItem (title: "⚖️ Weight", val: "60kg")
                     ProfileItem (title: "📏 Height", val: "162.3cm")
                 }
-                .padding()
-                .background(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .eatsyShadow()
+                .eatsyCard()
                 .padding(.horizontal)
             }
             Spacer()
