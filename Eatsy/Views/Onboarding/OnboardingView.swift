@@ -7,41 +7,109 @@
 
 import SwiftUI
 
+enum OnboardingStep {
+    case gender
+    case goal
+    case aboutYou
+    case weightGoal
+    case dietRestriction
+    case done
+}
+
 struct OnboardingView: View {
+    @State var currentStep: OnboardingStep = .gender
+    @Binding var showOnboarding: Bool  // anak
+    
     var body: some View {
         VStack {
-            Navbar()
-            //            GenderView();
-            //            GoalView()
-//            AboutYouView()
-//            WeightGoalView()
-            DietRestrictionView()
-            Spacer()
-            NextButton()
+            switch currentStep {
+            case .gender:
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .gender },
+                    onCancel: {showOnboarding = false}
+                )
+                GenderView(nextStep: { currentStep = .goal })
+            case .goal:
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .gender },
+                    onCancel: { showOnboarding = false }
+                )
+                GoalView(nextStep: { currentStep = .aboutYou })
+            case .aboutYou:
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .goal },
+                    onCancel: { showOnboarding = false }
+                )
+                AboutYouView(nextStep: { currentStep = .weightGoal })
+            case .weightGoal:
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .aboutYou },
+                    onCancel: { showOnboarding = false }
+                )
+                WeightGoalView(nextStep: { currentStep = .dietRestriction })
+            case .dietRestriction:
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .weightGoal },
+                    onCancel: { showOnboarding = false }
+                )
+                DietRestrictionView(nextStep: { currentStep = .done })
+            case .done:
+                OnboardingDoneView()
+            }
         }
         .padding(.bottom, 1)
     }
 }
 
 struct Navbar: View {
+    
+    @Binding var currentStep: OnboardingStep
+    let prevStep: () -> Void
+    let onCancel: () -> Void
+
     var body: some View {
         HStack(alignment: .top) {
-            Button("Cancel") {
-                print("")
+            Button(action: {
+                if currentStep == .gender {
+                    onCancel()
+                } else {
+                    prevStep()
+                }
+            }) {
+                if currentStep == .gender {
+                    Text("Cancel")
+                } else {
+                    Image(systemName: "chevron.left")
+                }
             }
             .foregroundStyle(.green)
             Spacer()
             Text("Set Up Plan").bold()
             Spacer()
-            Button("Cancel") {}.hidden()
+            Button(action: {}) {
+                if currentStep == .gender {
+                    Text("Cancel")
+                } else {
+                    Image(systemName: "chevron.left")
+                }
+            }.hidden()
         }.padding(.horizontal)
     }
 }
 
 struct NextButton: View {
+    let nextStep: () -> Void
+    
     var body: some View {
         VStack {
-            Button(action: {}) {
+            Button(action: {
+                nextStep()
+            }) {
                 Text("Next").foregroundStyle(Color.white).bold()
             }
             .padding()
@@ -53,8 +121,29 @@ struct NextButton: View {
     }
 }
 
-struct GenderView: View {
+struct DoneButton: View {
+    
     var body: some View {
+        VStack {
+            Button(action: {}) {
+                Text("Let's get started").foregroundStyle(Color.white).bold()
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.green)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .padding(.horizontal)
+    }
+}
+
+struct GenderView: View {
+    
+    let nextStep: () -> Void
+    
+    var body: some View {
+        
+        
         VStack {
             Text("1 of 5").foregroundStyle(.secondary).padding(.top, 1)
             VStack(spacing: 10) {
@@ -68,14 +157,19 @@ struct GenderView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-            
         }
         
         GenderRadioButtonsGroup()
+        
+        Spacer()
+        NextButton(nextStep: nextStep)
     }
 }
 
 struct GoalView: View {
+    
+    let nextStep: () -> Void
+    
     var body: some View {
         VStack {
             Text("2 of 5").foregroundStyle(.secondary).padding(.top, 1)
@@ -93,6 +187,8 @@ struct GoalView: View {
         }
         
         GoalRadioButtonsGroup()
+        Spacer()
+        NextButton(nextStep: nextStep)
     }
 }
 
@@ -107,6 +203,8 @@ struct AboutYouView: View {
     @State private var selectedAge: Int = 21
     
     @State private var heightExpanded: Bool = true
+    
+    let nextStep: () -> Void
     
     var body: some View {
         VStack {
@@ -152,6 +250,8 @@ struct AboutYouView: View {
             }
             .pickerStyle(.wheel)
         }
+        Spacer()
+        NextButton(nextStep: nextStep)
         
     }
 }
@@ -159,6 +259,8 @@ struct AboutYouView: View {
 struct WeightGoalView: View {
     
     @State private var selectedWeightGoal: Int?
+    
+    let nextStep: () -> Void
     
     var body: some View {
         VStack {
@@ -195,10 +297,16 @@ struct WeightGoalView: View {
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 4)
         .padding(.horizontal)
+        
+        Spacer()
+        NextButton(nextStep: nextStep)
     }
 }
 
 struct DietRestrictionView: View {
+    
+    let nextStep: () -> Void
+    
     var body: some View {
         VStack {
             Text("5 of 5").foregroundStyle(.secondary).padding(.top, 1)
@@ -216,6 +324,37 @@ struct DietRestrictionView: View {
         }
         
         DietRestrictionCheckboxesGroup()
+        
+        Spacer()
+        NextButton(nextStep: nextStep)
+    }
+}
+
+struct OnboardingDoneView: View {
+    var body: some View {
+        Spacer()
+        VStack(spacing: 10) {
+            Text("Well done 🎉")
+                .font(.title)
+                .bold()
+                .frame(maxWidth: .infinity)
+            Text("Your personalized plan is ready!")
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text("Follow the plan we’ve built for you and  you’ll reach your goal by")
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.primary)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.top, 20)
+            Text("🗓️ 12 December 2025 ")
+                .bold()
+                .foregroundStyle(.green)
+                .padding(.top, 5)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        Spacer()
+        DoneButton()
     }
 }
 
@@ -382,5 +521,5 @@ struct GoalRadioButtonsGroup: View {
 }
 
 #Preview {
-    OnboardingView()
+    OnboardingView(showOnboarding: .constant(true))
 }

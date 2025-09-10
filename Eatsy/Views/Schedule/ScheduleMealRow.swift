@@ -35,9 +35,9 @@ struct ScheduleMealRow: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        if i < item.nutrients.count - 1 {
-                            Divider().frame(height: 18)
-                        }
+//                        if i < item.nutrients.count - 1 {
+//                            Divider().frame(height: 18)
+//                        }
                     }
                 }
             }

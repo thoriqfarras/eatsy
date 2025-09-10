@@ -11,19 +11,32 @@ struct ScheduleView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
-
-                // --- FIXED HEADER ---
+                
                 HStack {
                     Text("Schedule")
-                        .font(.title.bold())
+                        .font(.title)
+                        .bold()
+                    
                     Spacer()
-                    Image(systemName: "person.circle")
-                        .font(.title3)
+                    
+                    NavigationLink {
+                        ProfileView()   // nanti arahkan ke view profil kamu
+                    } label: {
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 28)
+                            .foregroundColor(.white)
+                            .background(Circle().fill(Color.gray))
+                    }
+                    .navigationTitle("Back")
+                    
                 }
                 .padding(.horizontal)
-                .padding(.top, 8)
+                .padding(.top, 12)
 
-                // --- FIXED SEGMENTED ---
+
+                // --- FIXED SEGMENTED NEW ---
                 DateSegmentBar(selectedIndex: $vm.selectedDateIndex,
                                titles: vm.dates)
                     .padding(.horizontal)
