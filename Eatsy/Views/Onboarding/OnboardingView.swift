@@ -18,30 +18,49 @@ enum OnboardingStep {
 
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
+    @Binding var showOnboarding: Bool  // anak
     
     var body: some View {
         VStack {
             switch currentStep {
             case .gender:
-                Navbar(currentStep: $currentStep, prevStep: { currentStep = .gender })
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .gender },
+                    onCancel: {showOnboarding = false}
+                )
                 GenderView(nextStep: { currentStep = .goal })
             case .goal:
-                Navbar(currentStep: $currentStep, prevStep: { currentStep = .gender })
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .gender },
+                    onCancel: { showOnboarding = false }
+                )
                 GoalView(nextStep: { currentStep = .aboutYou })
             case .aboutYou:
-                Navbar(currentStep: $currentStep, prevStep: { currentStep = .goal })
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .goal },
+                    onCancel: { showOnboarding = false }
+                )
                 AboutYouView(nextStep: { currentStep = .weightGoal })
             case .weightGoal:
-                Navbar(currentStep: $currentStep, prevStep: { currentStep = .aboutYou })
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .aboutYou },
+                    onCancel: { showOnboarding = false }
+                )
                 WeightGoalView(nextStep: { currentStep = .dietRestriction })
             case .dietRestriction:
-                Navbar(currentStep: $currentStep, prevStep: { currentStep = .weightGoal })
+                Navbar(
+                    currentStep: $currentStep,
+                    prevStep: { currentStep = .weightGoal },
+                    onCancel: { showOnboarding = false }
+                )
                 DietRestrictionView(nextStep: { currentStep = .done })
             case .done:
-                
                 OnboardingDoneView()
             }
-            
         }
         .padding(.bottom, 1)
     }
@@ -51,12 +70,13 @@ struct Navbar: View {
     
     @Binding var currentStep: OnboardingStep
     let prevStep: () -> Void
+    let onCancel: () -> Void
 
     var body: some View {
         HStack(alignment: .top) {
             Button(action: {
                 if currentStep == .gender {
-                    // Close sheet
+                    onCancel()
                 } else {
                     prevStep()
                 }
@@ -501,5 +521,5 @@ struct GoalRadioButtonsGroup: View {
 }
 
 #Preview {
-    OnboardingView()
+    OnboardingView(showOnboarding: .constant(true))
 }

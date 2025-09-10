@@ -1,16 +1,10 @@
-//
-//  TodayView.swift
-//  Eatsy
-//
-//  Created by Mac on 09/09/25.
-//
-
 import SwiftUI
 
 struct TodayView: View {
+    @Binding var showOnboarding:Bool // anak
+    
     var body: some View {
         VStack(spacing: 16) {
-            
             // Title & Profile
             HStack {
                 Text("Today's Meal Plan")
@@ -19,9 +13,9 @@ struct TodayView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    // aksi buka profile
-                }) {
+                NavigationLink {
+                    ProfileView() // nanti arahkan ke view profil
+                } label: {
                     Image(systemName: "person.fill")
                         .resizable()
                         .scaledToFit()
@@ -33,8 +27,9 @@ struct TodayView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
-            // Green button
-            Button(action: {}) {
+            Button(action: {
+                showOnboarding = true   // ganti halaman
+            }) {
                 Text("GET MEAL PLAN")
                     .bold()
                     .frame(maxWidth: .infinity)
@@ -56,7 +51,7 @@ struct TodayView: View {
             .padding(.horizontal)
             
             // Timeline
-            ScrollView {
+            List {
                 VStack(spacing: 32) {
                     ForEach(0..<3) { _ in
                         TimelineRow()
@@ -65,17 +60,14 @@ struct TodayView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
             }
-            
-            Spacer()
+            .listStyle(PlainListStyle())
         }
     }
 }
 
-
 struct TimelineRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            
             // Timeline dots + line
             VStack {
                 Circle()
@@ -126,6 +118,6 @@ struct TimelineRow: View {
 
 #Preview {
     NavigationStack {
-        TodayView()
+        TodayView(showOnboarding: .constant(false))
     }
 }

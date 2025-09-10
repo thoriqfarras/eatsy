@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showOnboarding = false // ortu
+    
     var body: some View {
         TabView{
-            TodayView()
+            TodayView(showOnboarding: $showOnboarding)
                 .tabItem{
                     Label("Home", systemImage: "house.fill")
                 }
@@ -18,6 +20,9 @@ struct ContentView: View {
                 .tabItem{
                     Label("Schedule", systemImage: "calendar")
                 }
+        }
+        .fullScreenCover(isPresented: $showOnboarding) {
+            OnboardingView(showOnboarding: $showOnboarding)
         }
     }
 }
