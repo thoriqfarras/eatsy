@@ -63,16 +63,14 @@ struct ProfileItem: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.subheadline)
+                .font(.footnote)
             Spacer()
             Text(val)
                 .font(.caption)
                 .foregroundStyle(Color (.systemGray2))
-
-                .bold()
             Image(systemName: "chevron.right")
                 .foregroundColor(Color (.systemGray2))
-                .font(.caption)
+                .font(.caption2)
         }
     }
 }
