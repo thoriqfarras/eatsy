@@ -17,5 +17,6 @@ struct MealItem: Identifiable, Hashable {
 enum MealSection: String, CaseIterable, Identifiable {
     case breakfast = "Breakfast"
     case lunch     = "Lunch"
+    case diner     = "Dinner"
     var id: String { rawValue }
 }

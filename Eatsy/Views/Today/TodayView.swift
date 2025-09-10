@@ -1,0 +1,131 @@
+//
+//  TodayView.swift
+//  Eatsy
+//
+//  Created by Mac on 09/09/25.
+//
+
+import SwiftUI
+
+struct TodayView: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            
+            // Title & Profile
+            HStack {
+                Text("Today's Meal Plan")
+                    .font(.title)
+                    .bold()
+                
+                Spacer()
+                
+                Button(action: {
+                    // aksi buka profile
+                }) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 28, height: 28)
+                        .foregroundColor(.white)
+                        .background(Circle().fill(Color.gray))
+                }
+            }
+            .padding(.horizontal)
+            .padding(.top, 12)
+            
+            // Green button
+            Button(action: {}) {
+                Text("GET MEAL PLAN")
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .padding(.horizontal)
+            
+            // Calories Intake
+            HStack {
+                Text("Calories Intake")
+                    .font(.headline)
+                Spacer()
+                Text("- KCAL")
+                    .foregroundColor(.gray)
+            }
+            .padding(.horizontal)
+            
+            // Timeline
+            ScrollView {
+                VStack(spacing: 32) {
+                    ForEach(0..<3) { _ in
+                        TimelineRow()
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.top, 8)
+            }
+            
+            Spacer()
+        }
+    }
+}
+
+
+struct TimelineRow: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            
+            // Timeline dots + line
+            VStack {
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        Circle().stroke(Color.gray, lineWidth: 1)
+                    )
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 2)
+                    .padding(.top, -2)
+            }
+            
+            // Meal Card
+            VStack(alignment: .leading, spacing: 8) {
+                Text("8 AM")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                
+                HStack(spacing: 12) {
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.gray.opacity(0.3), lineWidth: 1)
+                        .frame(width: 60, height: 60)
+                        .overlay(
+                            Image(systemName: "photo")
+                                .foregroundColor(.gray)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Breakfast")
+                            .font(.headline)
+                        Text("-")
+                            .foregroundColor(.gray)
+                            .font(.subheadline)
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(12)
+                .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        TodayView()
+    }
+}
