@@ -12,7 +12,6 @@ struct ScheduleView: View {
         NavigationStack {
             VStack(spacing: 12) {
                 
-                // Title & Profile
                 HStack {
                     Text("Schedule")
                         .font(.title)
@@ -20,9 +19,9 @@ struct ScheduleView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        // aksi buka profile
-                    }) {
+                    NavigationLink {
+                        ProfileView()   // nanti arahkan ke view profil kamu
+                    } label: {
                         Image(systemName: "person.fill")
                             .resizable()
                             .scaledToFit()
@@ -30,9 +29,12 @@ struct ScheduleView: View {
                             .foregroundColor(.white)
                             .background(Circle().fill(Color.gray))
                     }
+                    .navigationTitle("Back")
+                    
                 }
                 .padding(.horizontal)
                 .padding(.top, 12)
+
 
                 // --- FIXED SEGMENTED ---
                 DateSegmentBar(selectedIndex: $vm.selectedDateIndex,
