@@ -16,12 +16,32 @@ enum Goal {
     case lose
     case gain
     case maintain
+    
+    var title: String {
+            switch self {
+            case .lose: return "Lose Weight"
+            case .maintain: return "Maintain Weight"
+            case .gain: return "Gain Weight"
+            }
+        }
+        
+        var emoji: String {
+            switch self {
+            case .lose: return "🥗"
+            case .maintain: return "🍽️"
+            case .gain: return "🍗"
+            }
+        }
 }
 
-enum DietRestriction {
-    case lactoreIntolerant
-    case glutenFree
-    // ...TODO
+enum DietRestriction: String, CaseIterable, Hashable {
+    case noRestriction = "😋 No diet restriction"
+    case lactoseIntolerant = "🥛 Lactose intolerant"
+    case glutenFree = "🌾 Gluten-free"
+    case DiaryFree = "🧀 Dairy-free"
+    case Egg = "🥚 Egg allergy"
+    
+    // Tambah lainnya di sini
 }
 
 struct User: Identifiable {
@@ -33,4 +53,9 @@ struct User: Identifiable {
     let age: Int
     let targetWeight: Int
     let dietRestrictions: DietRestriction?
+}
+
+enum PickerType: Identifiable {
+    case height, weight, age
+    var id: Self { self }
 }

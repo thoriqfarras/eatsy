@@ -8,16 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showOnboarding:Bool = false // ortu
+    @State var showButton:Bool = true
+    
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+
+        // ✅ tambahkan garis tipis di atas tab bar
+        appearance.shadowColor = UIColor.lightGray
+
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
     var body: some View {
         TabView{
-            TodayView()
-                .tabItem{
-                    Label("Home", systemImage: "house.fill")
-                }
-            ScheduleView()
-                .tabItem{
-                    Label("Schedule", systemImage: "calendar")
-                }
+            NavigationStack {
+                TodayView(showOnboarding: $showOnboarding, showButton: $showButton)
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+
+            NavigationStack {
+                ScheduleView()
+            }
+            .tabItem {
+                Label("Schedule", systemImage: "calendar")
+            }        }
+        .fullScreenCover(isPresented: $showOnboarding) {
+            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton)
         }
     }
 }
