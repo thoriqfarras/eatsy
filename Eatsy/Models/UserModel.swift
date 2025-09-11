@@ -39,6 +39,7 @@ struct User: Identifiable {
     let dietRestrictions: DietRestriction?
 }
 
-enum PickerType {
+enum PickerType: Identifiable {
     case height, weight, age
+    var id: Self { self }
 }

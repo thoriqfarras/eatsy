@@ -22,8 +22,9 @@ class FoodViewModel: ObservableObject {
             imageName: "piring",
             calories: 150,
             nutritions: [
-                NutritionInfo(icon: "bolt.heart", text: "15g Protein", color: .red),
-                NutritionInfo(icon: "leaf", text: "5g Carbs", color: .green)
+                NutritionInfo(icon: "drop", text: "15g Fat", color: .red),
+                NutritionInfo(icon: "leaf", text: "5g Carbs", color: .green),
+                NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
             ]
         ),
         Food(
@@ -31,8 +32,9 @@ class FoodViewModel: ObservableObject {
             imageName: "piring",
             calories: 800,
             nutritions: [
-                NutritionInfo(icon: "leaf", text: "12g Fiber", color: .green),
-                NutritionInfo(icon: "drop", text: "2g Fat", color: .blue)
+                NutritionInfo(icon: "drop", text: "12g Fat", color: .green),
+                NutritionInfo(icon: "leaf", text: "2g Carbs", color: .blue),
+                NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
             ]
         )
     ]
