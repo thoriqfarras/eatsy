@@ -18,10 +18,14 @@ enum Goal {
     case maintain
 }
 
-enum DietRestriction {
-    case lactoreIntolerant
-    case glutenFree
-    // ...TODO
+enum DietRestriction: String, CaseIterable, Hashable {
+    case noRestriction = "😋 No diet restriction"
+    case lactoseIntolerant = "🥛 Lactose intolerant"
+    case glutenFree = "🌾 Gluten-free"
+    case DiaryFree = "🧀 Dairy-free"
+    case Egg = "🥚 Egg allergy"
+    
+    // Tambah lainnya di sini
 }
 
 struct User: Identifiable {
@@ -33,4 +37,8 @@ struct User: Identifiable {
     let age: Int
     let targetWeight: Int
     let dietRestrictions: DietRestriction?
+}
+
+enum PickerType {
+    case height, weight, age
 }
