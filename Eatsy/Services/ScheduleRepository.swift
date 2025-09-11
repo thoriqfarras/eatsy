@@ -31,7 +31,7 @@ final class MockScheduleRepository: ScheduleRepository {
             return [
                 .breakfast: Array(repeating: item, count: 3),
                 .lunch:     Array(repeating: item, count: 3),
-                .diner:     Array(repeating: item, count: 3)
+                .dinner:     Array(repeating: item, count: 3)
             ]
         }
 }
