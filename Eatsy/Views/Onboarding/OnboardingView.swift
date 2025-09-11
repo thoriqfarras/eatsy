@@ -201,12 +201,11 @@ let weights = 30..<201
 let ages = 18..<26
 
 struct AboutYouView: View {
-    
     @State private var selectedHeight: Int = 160
     @State private var selectedWeight: Int = 60
     @State private var selectedAge: Int = 21
     
-    @State private var heightExpanded: Bool = true
+    @State private var expandedPicker: PickerType? = nil
     
     let nextStep: () -> Void
     
@@ -224,39 +223,58 @@ struct AboutYouView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
-        }
-        
-        DropdownPicker(text: "📏 Height", selectedValue: selectedHeight, values: heights, unit: "cm") {
-            Picker("Height", selection: $selectedHeight) {
-                ForEach (heights, id: \.self) { height in
-                    Text("\(height) cm")
-                }
-            }
-            .pickerStyle(.wheel)
-        }
-        
-        DropdownPicker(text: "⚖️ Weight", selectedValue: selectedWeight, values: weights, unit: "kg") {
             
-            Picker("Weight", selection: $selectedWeight) {
-                ForEach (weights, id: \.self) { weight in
-                    Text("\(weight) kg")
+            DropdownPicker(
+                text: "📏 Height",
+                selectedValue: selectedHeight,
+                values: heights,
+                unit: "cm",
+                isExpanded: expandedPicker == .height,
+                toggle: { expandedPicker = expandedPicker == .height ? nil : .height }
+            ) {
+                Picker("Height", selection: $selectedHeight) {
+                    ForEach(heights, id: \.self) { height in
+                        Text("\(height) cm")
+                    }
                 }
+                .pickerStyle(.wheel)
             }
-            .pickerStyle(.wheel)
-        }
-        
-        DropdownPicker(text: "🎂 Age", selectedValue: selectedAge, values: ages, unit: "yo") {
             
-            Picker("Age", selection: $selectedAge) {
-                ForEach (ages, id: \.self) { age in
-                    Text("\(age) yo")
+            DropdownPicker(
+                text: "⚖️ Weight",
+                selectedValue: selectedWeight,
+                values: weights,
+                unit: "kg",
+                isExpanded: expandedPicker == .weight,
+                toggle: { expandedPicker = expandedPicker == .weight ? nil : .weight }
+            ) {
+                Picker("Weight", selection: $selectedWeight) {
+                    ForEach(weights, id: \.self) { weight in
+                        Text("\(weight) kg")
+                    }
                 }
+                .pickerStyle(.wheel)
             }
-            .pickerStyle(.wheel)
+            
+            DropdownPicker(
+                text: "🎂 Age",
+                selectedValue: selectedAge,
+                values: ages,
+                unit: "yo",
+                isExpanded: expandedPicker == .age,
+                toggle: { expandedPicker = expandedPicker == .age ? nil : .age }
+            ) {
+                Picker("Age", selection: $selectedAge) {
+                    ForEach(ages, id: \.self) { age in
+                        Text("\(age) yo")
+                    }
+                }
+                .pickerStyle(.wheel)
+            }
+            
+            Spacer()
+            NextButton(nextStep: nextStep)
         }
-        Spacer()
-        NextButton(nextStep: nextStep)
-        
     }
 }
 
@@ -303,8 +321,9 @@ struct WeightGoalView: View {
     }
 }
 
+
 struct DietRestrictionView: View {
-    
+    @State private var selectedRestrictions: Set<DietRestriction> = []
     let nextStep: () -> Void
     
     var body: some View {
@@ -315,18 +334,17 @@ struct DietRestrictionView: View {
                     .font(.title)
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("Tell us about allergies or foods you need to avoid, so we can adjust your meal plan. ")
+                Text("Tell us about allergies or foods you need to avoid, so we can adjust your meal plan.")
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity)
             .padding()
+            
+            DietRestrictionCheckboxesGroup(selectedRestrictions: $selectedRestrictions)
+            
+            Spacer()
+            NextButton(nextStep: nextStep)
         }
-        
-        DietRestrictionCheckboxesGroup()
-        
-        Spacer()
-        NextButton(nextStep: nextStep)
     }
 }
 
@@ -359,84 +377,81 @@ struct OnboardingDoneView: View {
 }
 
 struct DropdownPicker<Content: View>: View {
-    @State var showDropdown: Bool = false
-    
     let text: String
     let selectedValue: Int
     let values: Range<Int>
     let unit: String
+    let isExpanded: Bool
+    let toggle: () -> Void
     @ViewBuilder var content: Content
     
     var body: some View {
         VStack {
-            Button(action: {
-                withAnimation {
-                    showDropdown.toggle()
-                }
-            }) {
+            Button(action: toggle) {
                 HStack {
                     Text("\(text)")
                         .foregroundStyle(Color.black)
                     Spacer()
                     Text("\(selectedValue) \(unit)")
                         .font(.footnote)
-                        .bold(true)
-                        .foregroundStyle(Color (.systemGray2))
+                        .bold()
+                        .foregroundStyle(Color(.systemGray2))
                 }
-                .padding(8)
             }
             
-            if (showDropdown) {
+            if isExpanded {
                 content
             }
         }
-        .eatsyCard()
-        .padding(.horizontal)
+        .modifier(
+            SelectableCard(isSelected: isExpanded)
+        )
+        .padding(.bottom, 2)
+    }
+}
+
+struct DietRestrictionCheckbox: View {
+    let restriction: DietRestriction
+    @Binding var selectedRestrictions: Set<DietRestriction>
+    
+    var body: some View {
+        Button(action: toggleSelection) {
+            HStack {
+                Text(restriction.rawValue)
+                    .foregroundColor(.black)
+                Spacer()
+                Image(systemName: selectedRestrictions.contains(restriction) ? "checkmark.square.fill" : "square")
+                    .foregroundColor(selectedRestrictions.contains(restriction) ? Color("PrimaryGreen") : Color(.systemGray5))
+            }
+        }
+        .modifier(
+            SelectableCard(
+                isSelected: selectedRestrictions.contains(restriction)
+            )
+        )
+    }
+    
+    private func toggleSelection() {
+        if selectedRestrictions.contains(restriction) {
+            selectedRestrictions.remove(restriction)
+        } else {
+            selectedRestrictions.insert(restriction)
+        }
     }
 }
 
 struct DietRestrictionCheckboxesGroup: View {
-    @State var selectedRestrictions: Set<DietRestriction> = []
+    @Binding var selectedRestrictions: Set<DietRestriction>
     
     var body: some View {
-        
-        Button(action: {
-            if selectedRestrictions.contains(.lactoreIntolerant) {
-                selectedRestrictions.remove(.lactoreIntolerant)
-            } else {
-                selectedRestrictions.insert(.lactoreIntolerant)
+        VStack(spacing: 8) {
+            ForEach(DietRestriction.allCases, id: \.self) { restriction in
+                DietRestrictionCheckbox(
+                    restriction: restriction,
+                    selectedRestrictions: $selectedRestrictions
+                )
             }
-        }) {
-            Text("🥛 Lactose intolerant")
-                .foregroundStyle(Color.black)
-            Spacer()
-            Image(systemName: selectedRestrictions.contains(.lactoreIntolerant) ? "checkmark.square.fill" : "square")
-                .foregroundColor(selectedRestrictions.contains(.lactoreIntolerant) ? Color("PrimaryGreen") : Color(.systemGray5))
         }
-        .modifier(
-            SelectableCard(
-                isSelected: selectedRestrictions.contains(.lactoreIntolerant)
-            )
-        )
-        
-        Button(action: {
-            if selectedRestrictions.contains(.glutenFree) {
-                selectedRestrictions.remove(.glutenFree)
-            } else {
-                selectedRestrictions.insert(.glutenFree)
-            }
-        }) {
-            Text("🌾 Gluten-free")
-                .foregroundStyle(Color.black)
-            Spacer()
-            Image(systemName: selectedRestrictions.contains(.glutenFree) ? "checkmark.square.fill" : "square")
-                .foregroundColor(selectedRestrictions.contains(.glutenFree) ? Color("PrimaryGreen") : Color(.systemGray5))
-        }
-        .modifier(
-            SelectableCard(
-                isSelected: selectedRestrictions.contains(.glutenFree)
-            )
-        )
     }
 }
 

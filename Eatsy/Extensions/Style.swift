@@ -37,7 +37,6 @@ struct SelectableCard: ViewModifier {
             .eatsyCard()
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(isSelected ? Color("CardSelectedBackground") : Color.clear)
                     .stroke(isSelected ? color : .clear, lineWidth: lineWidth)
             )
             .padding(.horizontal, 16)
