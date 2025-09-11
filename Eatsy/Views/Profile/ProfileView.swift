@@ -11,29 +11,8 @@ struct ProfileView: View {
     var body: some View {
         VStack {
             HStack(){
-                Text("🏆")
-                    .font(.largeTitle)
-                    .padding(.trailing, 8)
-                VStack (alignment: .leading) {
-                    Text("Goal")
-                        .font(.caption)
-                        .foregroundStyle(Color (.systemGray2))
-                    Text("Lose Weight")
-                        .font(.headline)
-                }
-                Spacer()
-                Button("Change") {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                }
-                .font(.caption)
-                .bold()
-                .foregroundColor(.white)
-                .padding(12)
-                .background(Color("PrimaryGreen"))
-                .clipShape(Capsule())
+                GoalCardView()
             }
-            .eatsyCard()
-            .padding()
             
             VStack (alignment: .leading) {
                 Text("Personal Information")
@@ -62,7 +41,7 @@ struct ProfileView: View {
                         weight: $selectedWeight,
                         age: $selectedAge
                     )
-                    .presentationDetents([.fraction(0.5)])
+                    .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
         }
         .navigationTitle("Profile")
@@ -150,6 +129,67 @@ struct PickerSheet: View {
         case .height: return "Height"
         case .weight: return "Weight"
         case .age: return "Age"
+        }
+    }
+}
+
+struct GoalCardView: View {
+    @State private var selectedGoal: Goal?
+    @State private var showModal = false
+        @Environment(\.dismiss) var dismiss
+        
+        @State private var tempSelectedGoal: Goal? = nil // state sementara
+    
+    var body: some View {
+        HStack {
+            Text("🏆")
+                .font(.largeTitle)
+                .padding(.trailing, 8)
+            
+            VStack(alignment: .leading) {
+                Text("Goal")
+                    .font(.caption)
+                    .foregroundStyle(Color(.systemGray2))
+                
+                Text(selectedGoal?.title ?? "Select Goal")
+                    .font(.headline)
+            }
+            
+            Spacer()
+            
+            Button("Change") {
+                showModal.toggle()
+            }
+            .font(.caption)
+            .bold()
+            .foregroundColor(.white)
+            .padding(12)
+            .background(Color("PrimaryGreen"))
+            .clipShape(Capsule())
+        }
+        .eatsyCard()
+        .padding()
+        .sheet(isPresented: $showModal, onDismiss: {
+            tempSelectedGoal = nil
+        }) {
+            VStack {
+                Text("Select Your Goal")
+                    .bold()
+                    .padding(.bottom)
+                
+                GoalRadioButtonsGroup(selectedButton: $tempSelectedGoal)
+                    .onAppear {
+                        tempSelectedGoal = selectedGoal // mulai dari current goal
+                    }
+                
+                Button("Done") {
+                    selectedGoal = tempSelectedGoal // apply ke main state
+                    showModal = false // tutup modal
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 }

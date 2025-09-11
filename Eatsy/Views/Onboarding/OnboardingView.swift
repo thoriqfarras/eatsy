@@ -19,6 +19,7 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
+    @State private var selectedGoal: Goal? = nil
     
     var body: some View {
         VStack {
@@ -36,7 +37,10 @@ struct OnboardingView: View {
                     prevStep: { currentStep = .gender },
                     onCancel: { showOnboarding = false }
                 )
-                GoalView(nextStep: { currentStep = .aboutYou })
+                GoalView(
+                    selectedGoal: $selectedGoal,
+                    nextStep: { currentStep = .aboutYou }
+                )
             case .aboutYou:
                 Navbar(
                     currentStep: $currentStep,
@@ -166,30 +170,37 @@ struct GenderView: View {
 }
 
 struct GoalView: View {
-    
+    @Binding var selectedGoal: Goal?
     let nextStep: () -> Void
     
     var body: some View {
         VStack {
-            Text("2 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
             VStack(spacing: 10) {
+                Text("2 of 5")
+                    .foregroundColor(Color(.systemGray2))
+                    .padding(.top, 1)
+                
                 Text("What's your goal?")
                     .font(.title)
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
                 Text("Choose your goal and we’ll create a meal plan just for you.")
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity)
             .padding()
+            
+            GoalRadioButtonsGroup(selectedButton: $selectedGoal)
+            
+            Spacer()
+            
+            NextButton(nextStep: nextStep)
+                .disabled(selectedGoal == nil) // disable kalau belum pilih
         }
-        
-        GoalRadioButtonsGroup()
-        Spacer()
-        NextButton(nextStep: nextStep)
     }
 }
+
 
 let heights = 130..<221
 let weights = 30..<201
@@ -480,55 +491,22 @@ struct GenderRadioButtonsGroup: View {
 }
 
 struct GoalRadioButtonsGroup: View {
-    @State var selectedButton: Goal?
+    @Binding var selectedButton: Goal?
     
     var body: some View {
         VStack(spacing: 10) {
-            Button(action: {
-                if (selectedButton == .lose) {
-                    selectedButton = nil
-                } else {
-                    selectedButton = .lose
+            ForEach([Goal.lose, Goal.maintain, Goal.gain], id: \.self) { goal in
+                Button(action: {
+                    selectedButton = (selectedButton == goal) ? nil : goal
+                }) {
+                    HStack {
+                        Text(goal.emoji + " " + goal.title)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
                 }
-            }) {
-                Text("🥗 Lose weight")
-                    .foregroundColor(.black)
-                Spacer()
+                .modifier(SelectableCard(isSelected: selectedButton == goal))
             }
-            .modifier(SelectableCard(
-                isSelected: selectedButton == .lose
-            ))
-            
-            Button(action: {
-                if (selectedButton == .maintain) {
-                    selectedButton = nil
-                } else {
-                    selectedButton = .maintain
-                }
-            }) {
-                Text("🍽️ Maintain weight")
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .modifier(SelectableCard(
-                isSelected: selectedButton == .maintain
-            ))
-            
-            Button(action: {
-                if (selectedButton == .gain) {
-                    selectedButton = nil
-                } else {
-                    selectedButton = .gain
-                }
-            }) {
-                Text("🍗 Gain weight")
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .modifier(SelectableCard(
-                isSelected: selectedButton == .gain
-            ))
-            
         }
     }
 }

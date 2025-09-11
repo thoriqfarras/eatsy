@@ -16,6 +16,22 @@ enum Goal {
     case lose
     case gain
     case maintain
+    
+    var title: String {
+            switch self {
+            case .lose: return "Lose Weight"
+            case .maintain: return "Maintain Weight"
+            case .gain: return "Gain Weight"
+            }
+        }
+        
+        var emoji: String {
+            switch self {
+            case .lose: return "🥗"
+            case .maintain: return "🍽️"
+            case .gain: return "🍗"
+            }
+        }
 }
 
 enum DietRestriction: String, CaseIterable, Hashable {
