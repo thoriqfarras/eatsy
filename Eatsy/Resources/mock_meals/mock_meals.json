@@ -43,6 +43,18 @@
               { "name": "Carbs", "icon": "leaf", "value": "10g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
+<<<<<<< HEAD:Eatsy/Resources/mock_meals.json
+=======
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+            ]
+>>>>>>> main:Eatsy/Resources/mock_meals/mock_meals.json
           }
         ]
       }
@@ -96,6 +108,15 @@
               { "name": "Fat", "icon": "drop", "value": "9g" },
               { "name": "Carbs", "icon": "leaf", "value": "60g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "7g" }
+            ]
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
             ]
           }
         ],
