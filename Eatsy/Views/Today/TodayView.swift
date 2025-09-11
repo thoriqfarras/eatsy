@@ -2,30 +2,12 @@ import SwiftUI
 
 struct TodayView: View {
     @Binding var showOnboarding:Bool // anak
+    @State var checkToday:Bool = false
     
     var body: some View {
         VStack(spacing: 16) {
             // Title & Profile
-            HStack {
-                Text("Today's Meal Plan")
-                    .font(.title)
-                    .bold()
-                
-                Spacer()
-                
-                NavigationLink {
-                    ProfileView() // nanti arahkan ke view profil
-                } label: {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                        .foregroundColor(.white)
-                        .background(Circle().fill(Color.gray))
-                }
-            }
-            .padding(.horizontal)
-            .padding(.top, 12)
+            TitleAndProfile()
             
             Button(action: {
                 showOnboarding = true   // ganti halaman
@@ -41,20 +23,13 @@ struct TodayView: View {
             .padding(.horizontal)
             
             // Calories Intake
-            HStack {
-                Text("Calories Intake")
-                    .font(.headline)
-                Spacer()
-                Text("- KCAL")
-                    .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
+            CaloriesIntake()
             
             // Timeline
             List {
                 VStack(spacing: 32) {
                     ForEach(0..<3) { _ in
-                        TimelineRow()
+                        TimelineRowView()
                     }
                 }
                 .padding(.horizontal)
@@ -65,7 +40,7 @@ struct TodayView: View {
     }
 }
 
-struct TimelineRow: View {
+struct TimelineRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -113,6 +88,44 @@ struct TimelineRow: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
             }
         }
+    }
+}
+
+struct TitleAndProfile: View {
+    var body: some View {
+        HStack {
+            Text("Today's Meal Plan")
+                .font(.title)
+                .bold()
+            
+            Spacer()
+            
+            NavigationLink {
+                ProfileView() // nanti arahkan ke view profil
+            } label: {
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
+                    .foregroundColor(.white)
+                    .background(Circle().fill(Color.gray))
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top, 12)
+    }
+}
+
+struct CaloriesIntake: View {
+    var body: some View {
+        HStack {
+            Text("Calories Intake")
+                .font(.headline)
+            Spacer()
+            Text("- KCAL")
+                .foregroundColor(.gray)
+        }
+        .padding(.horizontal)
     }
 }
 
