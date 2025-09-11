@@ -16,7 +16,6 @@ struct FoodCardView: View {
             // Gambar makanan
             Image(food.imageName)
                 .resizable()
-                .scaledToFill()
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding(.trailing, 8)

@@ -59,13 +59,13 @@ struct ScheduleView: View {
                         ForEach(MealSection.allCases) { section in
                             // Section header
                             Text(section.rawValue)
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
+                                .foregroundStyle(Color(.systemGray2))
                                 .padding(.horizontal)
-                                .padding(.top, 8)
+                                .padding(.vertical, 8)
 
                             // Cards
-                            VStack(spacing: 14) {
+                            VStack(spacing: 8) {
                                 ForEach(vm.items(for: section)) { item in
                                     ScheduleMealRow(item: item)
                                         .padding(.horizontal)
