@@ -43,11 +43,6 @@
               { "name": "Carbs", "icon": "leaf", "value": "10g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
-<<<<<<< HEAD
-<<<<<<< HEAD:Eatsy/Resources/mock_meals.json
-=======
-=======
->>>>>>> 7e285b09aa83bcc55fe5f7fa3893dc6458883170
           },
           {
             "title": "Avocado Toast",
@@ -57,10 +52,6 @@
               { "name": "Carbs", "icon": "leaf", "value": "28g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
             ]
-<<<<<<< HEAD
->>>>>>> main:Eatsy/Resources/mock_meals/mock_meals.json
-=======
->>>>>>> 7e285b09aa83bcc55fe5f7fa3893dc6458883170
           }
         ]
       }
