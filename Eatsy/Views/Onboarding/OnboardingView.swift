@@ -71,7 +71,7 @@ struct Navbar: View {
     @Binding var currentStep: OnboardingStep
     let prevStep: () -> Void
     let onCancel: () -> Void
-
+    
     var body: some View {
         HStack(alignment: .top) {
             Button(action: {
@@ -87,7 +87,7 @@ struct Navbar: View {
                     Image(systemName: "chevron.left")
                 }
             }
-            .foregroundStyle(.green)
+            .foregroundColor(Color("PrimaryGreen"))
             Spacer()
             Text("Set Up Plan").bold()
             Spacer()
@@ -111,11 +111,11 @@ struct NextButton: View {
                 nextStep()
             }) {
                 Text("Next").foregroundStyle(Color.white).bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color("PrimaryGreen"))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.green)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .padding(.horizontal)
     }
@@ -127,11 +127,11 @@ struct DoneButton: View {
         VStack {
             Button(action: {}) {
                 Text("Let's get started").foregroundStyle(Color.white).bold()
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color("PrimaryGreen"))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color.green)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .padding(.horizontal)
     }
@@ -147,13 +147,17 @@ struct GenderView: View {
         VStack {
             Text("1 of 5").foregroundStyle(.secondary).padding(.top, 1)
             VStack(spacing: 10) {
-                Text("What's your gender?")
-                    .font(.title)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("We'll use this to better personalize your plan.")
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("What's your gender?")
+                        .font(.title)
+                        .bold()
+                    Spacer()
+                }
+                HStack {
+                    Text("We'll use this to better personalize your plan.")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -241,11 +245,11 @@ struct AboutYouView: View {
             .pickerStyle(.wheel)
         }
         
-        DropdownPicker(text: "🎂 Age", selectedValue: selectedAge, values: ages, unit: "y.o.") {
+        DropdownPicker(text: "🎂 Age", selectedValue: selectedAge, values: ages, unit: "yo") {
             
             Picker("Age", selection: $selectedAge) {
                 ForEach (ages, id: \.self) { age in
-                    Text("\(age) y.o.")
+                    Text("\(age) yo")
                 }
             }
             .pickerStyle(.wheel)
@@ -281,10 +285,9 @@ struct WeightGoalView: View {
         VStack {
             HStack {
                 Text("🎯 Goal Weight")
-                    .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(Color.black)
                 Spacer()
             }
-            .padding()
             
             Picker("Weight Goal", selection: $selectedWeightGoal) {
                 ForEach (weights, id: \.self) { weight in
@@ -293,11 +296,8 @@ struct WeightGoalView: View {
             }
             .pickerStyle(.wheel)
         }
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
+        .eatsyCard()
         .padding(.horizontal)
-        
         Spacer()
         NextButton(nextStep: nextStep)
     }
@@ -348,7 +348,7 @@ struct OnboardingDoneView: View {
                 .padding(.top, 20)
             Text("🗓️ 12 December 2025 ")
                 .bold()
-                .foregroundStyle(.green)
+                .foregroundColor(Color("PrimaryGreen"))
                 .padding(.top, 5)
         }
         .frame(maxWidth: .infinity)
@@ -376,20 +376,21 @@ struct DropdownPicker<Content: View>: View {
             }) {
                 HStack {
                     Text("\(text)")
-                        .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundStyle(Color.black)
                     Spacer()
-                    Text("\(selectedValue) \(unit)").foregroundStyle(.green)
+                    Text("\(selectedValue) \(unit)")
+                        .font(.footnote)
+                        .bold(true)
+                        .foregroundStyle(Color (.systemGray2))
                 }
-                .padding()
+                .padding(8)
             }
             
             if (showDropdown) {
                 content
             }
         }
-        .background(.white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
+        .eatsyCard()
         .padding(.horizontal)
     }
 }
@@ -398,6 +399,7 @@ struct DietRestrictionCheckboxesGroup: View {
     @State var selectedRestrictions: Set<DietRestriction> = []
     
     var body: some View {
+        
         Button(action: {
             if selectedRestrictions.contains(.lactoreIntolerant) {
                 selectedRestrictions.remove(.lactoreIntolerant)
@@ -406,13 +408,16 @@ struct DietRestrictionCheckboxesGroup: View {
             }
         }) {
             Text("🥛 Lactose intolerant")
-                .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                .foregroundStyle(Color.black)
+            Spacer()
+            Image(systemName: selectedRestrictions.contains(.lactoreIntolerant) ? "checkmark.square.fill" : "square")
+                .foregroundColor(selectedRestrictions.contains(.lactoreIntolerant) ? Color("PrimaryGreen") : Color(.systemGray5))
         }
-        .background(selectedRestrictions.contains(.lactoreIntolerant) ? .yellow.opacity(75) : .white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
-        .padding(.horizontal)
+        .modifier(
+            SelectableCard(
+                isSelected: selectedRestrictions.contains(.lactoreIntolerant)
+            )
+        )
         
         Button(action: {
             if selectedRestrictions.contains(.glutenFree) {
@@ -422,13 +427,16 @@ struct DietRestrictionCheckboxesGroup: View {
             }
         }) {
             Text("🌾 Gluten-free")
-                .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+                .foregroundStyle(Color.black)
+            Spacer()
+            Image(systemName: selectedRestrictions.contains(.glutenFree) ? "checkmark.square.fill" : "square")
+                .foregroundColor(selectedRestrictions.contains(.glutenFree) ? Color("PrimaryGreen") : Color(.systemGray5))
         }
-        .background(selectedRestrictions.contains(.glutenFree) ? .yellow.opacity(75) : .white)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
-        .padding(.horizontal)
+        .modifier(
+            SelectableCard(
+                isSelected: selectedRestrictions.contains(.glutenFree)
+            )
+        )
     }
 }
 
@@ -443,25 +451,20 @@ struct GenderRadioButtonsGroup: View {
                 isFemaleSelected = false
             }) {
                 Text("👨 Male")
-                    .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                    .foregroundColor(.black)
+                Spacer()
             }
-            .background(isMaleSelected ? .yellow.opacity(75) : .white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 4)
-            .padding(.horizontal)
+            .selectableCard(isSelected: isMaleSelected)
             Button(action: {
                 isMaleSelected = false
                 isFemaleSelected.toggle()
                 
             }) {
-                Text("👩‍🦰 Female").foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                Text("👩‍🦰 Female")
+                    .foregroundColor(.black)
+                Spacer()
             }
-            .background(isFemaleSelected ? .yellow.opacity(75) : .white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 4)
-            .padding(.horizontal)
+            .selectableCard(isSelected: isFemaleSelected)
         }
     }
 }
@@ -479,13 +482,12 @@ struct GoalRadioButtonsGroup: View {
                 }
             }) {
                 Text("🥗 Lose weight")
-                    .foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                    .foregroundColor(.black)
+                Spacer()
             }
-            .background(selectedButton == .lose ? .yellow.opacity(75) : .white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 4)
-            .padding(.horizontal)
+            .modifier(SelectableCard(
+                isSelected: selectedButton == .lose
+            ))
             
             Button(action: {
                 if (selectedButton == .maintain) {
@@ -494,13 +496,13 @@ struct GoalRadioButtonsGroup: View {
                     selectedButton = .maintain
                 }
             }) {
-                Text("🍽️ Maintain weight").foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                Text("🍽️ Maintain weight")
+                    .foregroundColor(.black)
+                Spacer()
             }
-            .background(selectedButton == .maintain ? .yellow.opacity(75) : .white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 4)
-            .padding(.horizontal)
+            .modifier(SelectableCard(
+                isSelected: selectedButton == .maintain
+            ))
             
             Button(action: {
                 if (selectedButton == .gain) {
@@ -509,13 +511,14 @@ struct GoalRadioButtonsGroup: View {
                     selectedButton = .gain
                 }
             }) {
-                Text("🍗 Gain weight").foregroundStyle(Color.black).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                Text("🍗 Gain weight")
+                    .foregroundColor(.black)
+                Spacer()
             }
-            .background(selectedButton == .gain ? .yellow.opacity(75) : .white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 4)
-            .padding(.horizontal)
+            .modifier(SelectableCard(
+                isSelected: selectedButton == .gain
+            ))
+            
         }
     }
 }
