@@ -33,6 +33,26 @@
               { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
           }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+            ]
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+            ]
+          }
         ]
       }
     },
@@ -60,6 +80,17 @@
               { "name": "Protein", "icon": "bolt.heart", "value": "28g" }
             ]
           }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+            ]
+          }
         ]
       }
     },
@@ -75,6 +106,15 @@
               { "name": "Carbs", "icon": "leaf", "value": "60g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "7g" }
             ]
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+            ]
           }
         ],
         "lunch": [
@@ -85,6 +125,17 @@
               { "name": "Fat", "icon": "drop", "value": "8g" },
               { "name": "Carbs", "icon": "leaf", "value": "55g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "24g" }
+            ]
+          }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
           }
         ]
