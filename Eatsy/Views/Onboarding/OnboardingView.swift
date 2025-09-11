@@ -19,6 +19,7 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
+    @Binding var showButton: Bool  // anak
     
     var body: some View {
         VStack {
@@ -59,7 +60,7 @@ struct OnboardingView: View {
                 )
                 DietRestrictionView(nextStep: { currentStep = .done })
             case .done:
-                OnboardingDoneView()
+                OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton)
             }
         }
         .padding(.bottom, 1)
@@ -119,10 +120,15 @@ struct NextButton: View {
 }
 
 struct DoneButton: View {
+    @Binding var showOnboarding: Bool  // anak
+    @Binding var showButton: Bool  // anak
     
     var body: some View {
         VStack {
-            Button(action: {}) {
+            Button(action: {
+                showOnboarding = false  // tutup onboarding
+                showButton = false
+            }) {
                 Text("Let's get started")
             }
             .buttonStyle(PrimaryButtonStyle())
@@ -344,6 +350,9 @@ struct DietRestrictionView: View {
 }
 
 struct OnboardingDoneView: View {
+    @Binding var showOnboarding: Bool  // anak
+    @Binding var showButton: Bool  // anak
+    
     var body: some View {
         Spacer()
         VStack(spacing: 10) {
@@ -367,7 +376,8 @@ struct OnboardingDoneView: View {
         .frame(maxWidth: .infinity)
         .padding()
         Spacer()
-        DoneButton()
+        DoneButton(showOnboarding: $showOnboarding,
+                   showButton: $showButton)
     }
 }
 
@@ -534,5 +544,5 @@ struct GoalRadioButtonsGroup: View {
 }
 
 #Preview {
-    OnboardingView(showOnboarding: .constant(true))
+    OnboardingView(showOnboarding: .constant(true), showButton: .constant(false))
 }
