@@ -399,6 +399,7 @@ struct DietRestrictionCheckboxesGroup: View {
     @State var selectedRestrictions: Set<DietRestriction> = []
     
     var body: some View {
+        
         Button(action: {
             if selectedRestrictions.contains(.lactoreIntolerant) {
                 selectedRestrictions.remove(.lactoreIntolerant)
@@ -409,6 +410,8 @@ struct DietRestrictionCheckboxesGroup: View {
             Text("🥛 Lactose intolerant")
                 .foregroundStyle(Color.black)
             Spacer()
+            Image(systemName: selectedRestrictions.contains(.lactoreIntolerant) ? "checkmark.square.fill" : "square")
+                .foregroundColor(selectedRestrictions.contains(.lactoreIntolerant) ? Color("PrimaryGreen") : Color(.systemGray5))
         }
         .modifier(
             SelectableCard(
@@ -426,10 +429,12 @@ struct DietRestrictionCheckboxesGroup: View {
             Text("🌾 Gluten-free")
                 .foregroundStyle(Color.black)
             Spacer()
+            Image(systemName: selectedRestrictions.contains(.glutenFree) ? "checkmark.square.fill" : "square")
+                .foregroundColor(selectedRestrictions.contains(.glutenFree) ? Color("PrimaryGreen") : Color(.systemGray5))
         }
         .modifier(
             SelectableCard(
-                isSelected: selectedRestrictions.contains(.lactoreIntolerant)
+                isSelected: selectedRestrictions.contains(.glutenFree)
             )
         )
     }

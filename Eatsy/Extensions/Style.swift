@@ -29,6 +29,7 @@ struct SelectableCard: ViewModifier {
     var color: Color = Color("PrimaryGreen")
     var lineWidth: CGFloat = 2
     var paddingValue: CGFloat = 8
+    var backgroundColor: Color? = nil
     
     func body(content: Content) -> some View {
         content
@@ -36,6 +37,7 @@ struct SelectableCard: ViewModifier {
             .eatsyCard()
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
+                    .fill(isSelected ? Color("CardSelectedBackground") : Color.clear)
                     .stroke(isSelected ? color : .clear, lineWidth: lineWidth)
             )
             .padding(.horizontal, 16)
