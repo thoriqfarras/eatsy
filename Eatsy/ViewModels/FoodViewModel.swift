@@ -1,0 +1,56 @@
+//
+//  FoodViewModel.swift
+//  Recomendation
+//
+
+import SwiftUI
+
+class FoodViewModel: ObservableObject {
+    @Published var foods: [Food] = [
+        Food(
+            name: "Nasi Goreng",
+            imageName: "nasgor",
+            calories: 800,
+            nutritions: [
+                NutritionInfo(icon: "drop", text: "5g Fat", color: .blue),
+                NutritionInfo(icon: "leaf", text: "20g Carbs", color: .green),
+                NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
+            ]
+        ),
+        Food(
+            name: "Belum ada data",
+            imageName: "piring",
+            calories: 150,
+            nutritions: [
+                NutritionInfo(icon: "bolt.heart", text: "15g Protein", color: .red),
+                NutritionInfo(icon: "leaf", text: "5g Carbs", color: .green)
+            ]
+        ),
+        Food(
+            name: "Belum ada data",
+            imageName: "piring",
+            calories: 800,
+            nutritions: [
+                NutritionInfo(icon: "leaf", text: "12g Fiber", color: .green),
+                NutritionInfo(icon: "drop", text: "2g Fat", color: .blue)
+            ]
+        )
+    ]
+
+    func toggleSelection(for foodId: UUID) {
+        if let index = foods.firstIndex(where: { $0.id == foodId }) {
+            for i in foods.indices {
+                foods[i].isSelected = false
+            }
+            foods[index].isSelected.toggle()
+        }
+    }
+}
+//
+//  FoodViewModel.swift
+//  Eatsy
+//
+//  Created by Mac on 11/09/25.
+//
+
+import Foundation
