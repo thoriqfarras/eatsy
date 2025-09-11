@@ -117,12 +117,7 @@ struct PickerSheet: View {
             Button("Done") {
                 dismiss()
             }
-            .foregroundColor(.white)
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(Color("PrimaryGreen"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .padding(.horizontal)
+            .buttonStyle(PrimaryButtonStyle())
         }
     }
     

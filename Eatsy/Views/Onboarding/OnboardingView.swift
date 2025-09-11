@@ -89,7 +89,8 @@ struct Navbar: View {
             }
             .foregroundColor(Color("PrimaryGreen"))
             Spacer()
-            Text("Set Up Plan").bold()
+            Text("Set Up Plan")
+                .bold()
             Spacer()
             Button(action: {}) {
                 if currentStep == .gender {
@@ -110,14 +111,10 @@ struct NextButton: View {
             Button(action: {
                 nextStep()
             }) {
-                Text("Next").foregroundStyle(Color.white).bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color("PrimaryGreen"))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                Text("Next")
             }
+            .buttonStyle(PrimaryButtonStyle())
         }
-        .padding(.horizontal)
     }
 }
 
@@ -126,14 +123,10 @@ struct DoneButton: View {
     var body: some View {
         VStack {
             Button(action: {}) {
-                Text("Let's get started").foregroundStyle(Color.white).bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color("PrimaryGreen"))
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                Text("Let's get started")
             }
+            .buttonStyle(PrimaryButtonStyle())
         }
-        .padding(.horizontal)
     }
 }
 
@@ -145,7 +138,9 @@ struct GenderView: View {
         
         
         VStack {
-            Text("1 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            Text("1 of 5")
+                .foregroundColor(Color(.systemGray2))
+                .padding(.top, 1)
             VStack(spacing: 10) {
                 HStack {
                     Text("What's your gender?")
@@ -176,7 +171,7 @@ struct GoalView: View {
     
     var body: some View {
         VStack {
-            Text("2 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            Text("2 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
             VStack(spacing: 10) {
                 Text("What's your goal?")
                     .font(.title)
@@ -211,7 +206,7 @@ struct AboutYouView: View {
     
     var body: some View {
         VStack {
-            Text("3 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            Text("3 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
             VStack(spacing: 10) {
                 Text("Tell Us About You!")
                     .font(.title)
@@ -286,7 +281,7 @@ struct WeightGoalView: View {
     
     var body: some View {
         VStack {
-            Text("4 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            Text("4 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
             VStack(spacing: 10) {
                 Text("Set your weight goal!")
                     .font(.title)
@@ -328,7 +323,7 @@ struct DietRestrictionView: View {
     
     var body: some View {
         VStack {
-            Text("5 of 5").foregroundStyle(.secondary).padding(.top, 1)
+            Text("5 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
             VStack(spacing: 10) {
                 Text("Any dietary restriction?")
                     .font(.title)

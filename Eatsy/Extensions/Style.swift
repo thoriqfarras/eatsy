@@ -62,3 +62,17 @@ extension View {
         )
     }
 }
+
+struct PrimaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(Color.white)
+            .bold()
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color("PrimaryGreen"))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .opacity(configuration.isPressed ? 0.8 : 1.0) // efek tap
+            .padding()
+    }
+}
