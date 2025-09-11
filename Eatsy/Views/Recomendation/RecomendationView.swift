@@ -12,6 +12,7 @@ struct RecomendationView: View {
     @StateObject private var viewModel = FoodViewModel()
     @State private var isExpanded: Bool = true
     @State private var dragAmount: CGSize = .zero
+    @Environment(\.dismiss) var dismiss   // 👉 buat nutup sheet/modal
     
     private let minimizedHeight: CGFloat = 1000
     
@@ -64,6 +65,7 @@ struct RecomendationView: View {
                             
                             Button {
                                 print("Tombol Choose ditekan!")
+                                dismiss()   // 👉 nutup modal dan balik ke TodayView
                             } label: {
                                 Text("Choose")
                             }
