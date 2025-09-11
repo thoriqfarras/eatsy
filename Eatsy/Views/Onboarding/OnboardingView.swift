@@ -19,23 +19,8 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     @Binding var showButton: Bool  // anak
     @State private var selectedGoal: Goal? = nil
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> main
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> main
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> 7e285b09aa83bcc55fe5f7fa3893dc6458883170
     
     var body: some View {
         VStack {
