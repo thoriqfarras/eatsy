@@ -43,6 +43,15 @@
               { "name": "Carbs", "icon": "leaf", "value": "10g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+            ]
           }
         ]
       }
@@ -96,6 +105,15 @@
               { "name": "Fat", "icon": "drop", "value": "9g" },
               { "name": "Carbs", "icon": "leaf", "value": "60g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "7g" }
+            ]
+          },
+          {
+            "title": "Avocado Toast",
+            "emoji": "🥑",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "18g" },
+              { "name": "Carbs", "icon": "leaf", "value": "28g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
             ]
           }
         ],
