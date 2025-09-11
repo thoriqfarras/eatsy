@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TodayView: View {
     @Binding var showOnboarding:Bool // anak
+    @Binding var showButton:Bool
     
     var body: some View {
         VStack(spacing: 16) {
@@ -27,19 +28,38 @@ struct TodayView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
-            Button(action: {
-                showOnboarding = true   // ganti halaman
-            }) {
-                Text("GET MEAL PLAN")
-                    .bold()
-                    .frame(maxWidth: .infinity)
+            if !showButton {
+                VStack{
+                    HStack(spacing: 12) {
+                        VStack(alignment: .leading){
+                            Text("This is your starting line!").bold()
+                            Text("Small steps today, big changes ahead\nFirst progress visible by next week").font(.caption).fontWeight(.light)
+                        }
+                        Spacer()
+                        Image(systemName: "photo")
+                    }
                     .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+
+                }
+                
+            } else {
+                Button(action: {
+                    showOnboarding = true   // ganti halaman
+                }) {
+                    Text("GET MEAL PLAN")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            
+
             // Calories Intake
             HStack {
                 Text("Calories Intake")
@@ -104,8 +124,14 @@ struct TimelineRow: View {
                             .foregroundColor(.gray)
                             .font(.subheadline)
                     }
-                    
                     Spacer()
+                    
+                    Button(action:{
+                        
+                    }){
+                        Image(systemName: "plus")
+                            .foregroundColor(.black)
+                    }
                 }
                 .padding()
                 .background(Color.white)
@@ -118,6 +144,7 @@ struct TimelineRow: View {
 
 #Preview {
     NavigationStack {
-        TodayView(showOnboarding: .constant(false))
+        TodayView(showOnboarding: .constant(false), showButton: .constant(false))
     }
 }
+

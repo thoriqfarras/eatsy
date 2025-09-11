@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showOnboarding = false // ortu
+    @State var showOnboarding:Bool = false // ortu
+    @State var showButton:Bool = true
     
     var body: some View {
         TabView{
-            TodayView(showOnboarding: $showOnboarding)
+            TodayView(showOnboarding: $showOnboarding, showButton: $showButton)
                 .tabItem{
                     Label("Home", systemImage: "house.fill")
                 }
