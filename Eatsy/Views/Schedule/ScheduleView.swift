@@ -4,9 +4,9 @@ struct ScheduleView: View {
     @StateObject private var vm: ScheduleViewModel
 
     // Inject VM (enak buat testing/preview)
-    init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: MockScheduleRepository())) {
-        _vm = StateObject(wrappedValue: viewModel)
-    }
+    init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: LocalScheduleRepository())) {
+            _vm = StateObject(wrappedValue: viewModel)
+        }
 
     var body: some View {
         NavigationStack {
@@ -86,5 +86,5 @@ struct ScheduleView: View {
 }
 
 #Preview {
-    ScheduleView(viewModel: ScheduleViewModel(repo: MockScheduleRepository()))
+    ScheduleView(viewModel: ScheduleViewModel(repo: LocalScheduleRepository()))
 }
