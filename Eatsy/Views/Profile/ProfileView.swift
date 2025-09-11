@@ -46,6 +46,7 @@ struct ProfileView: View {
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
+        .background(Color("defaultBackground"))
     }}
 #Preview {
     ProfileView()

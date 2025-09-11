@@ -15,10 +15,10 @@ struct ContentView: View {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.systemBackground
-
+        
         // ✅ tambahkan garis tipis di atas tab bar
         appearance.shadowColor = UIColor.lightGray
-
+        
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -31,13 +31,15 @@ struct ContentView: View {
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
-
+            
             NavigationStack {
                 ScheduleView()
             }
             .tabItem {
                 Label("Schedule", systemImage: "calendar")
-            }        }
+            }
+        }
+        .accentColor(.primaryGreen)
         .fullScreenCover(isPresented: $showOnboarding) {
             OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton)
         }

@@ -36,56 +36,41 @@ struct TodayView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("This is your starting line!")
                             .bold()
-                            .font(.subheadline)
+                            .font(.headline)
+                            .padding(.bottom, 6)
                         
                         Text("Small steps today, big changes ahead\nFirst progress visible by next week")
                             .font(.caption)
-                            .foregroundColor(.gray)
+                            .foregroundStyle(Color(.systemGray2))
                     }
                     Spacer()
                     Image("daun")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 32, height: 32)
+                        .frame(width: 68, height: 68)
+
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.white)
-                        .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
-                )
+                .eatsyCard()
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.green, lineWidth: 2)
+                        .stroke(Color(.systemGray5), lineWidth: 1)
                 )
-                .padding(.horizontal)
-                .padding(.top, 8)
+                .padding([.horizontal, .bottom])
             } else {
-                Button(action: {
+                Button("GET MEAL PLAN") {
                     showOnboarding = true
-                }) {
-                    Text("GET MEAL PLAN")
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.green)
-                        )
-                        .foregroundColor(.white)
-                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
                 }
-                .padding(.horizontal)
-                .padding(.top, 8)
+                .buttonStyle(PrimaryButtonStyle())
             }
             
             // Calories Intake
             HStack {
                 Text("Calories Intake")
-                    .font(.headline)
+                    .bold()
                 Spacer()
                 Text("- KCAL")
-                    .foregroundColor(.gray)
+                    .font(.caption)
+                    .foregroundStyle(Color(.systemGray2))
             }
             .padding(.horizontal)
             
@@ -102,11 +87,11 @@ struct TodayView: View {
             .listStyle(PlainListStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity) // isi penuh layar
-        .background(Color.white) // 👉 kasih putih bersih
+        .background(Color("defaultBackground")) // 👉 kasih putih bersih
         .background(Color(.systemGroupedBackground)) // biar gak blank
         .sheet(isPresented: $showRecommendation) {
             RecomendationView()
-                .presentationDetents([.fraction(0.7)]) // 👉 langsung atur tinggi modal
+                .presentationDetents([.fraction(0.8)]) // 👉 langsung atur tinggi modal
                 .presentationCornerRadius(24)          // sudut rounded bawaan iOS 16+
         }
 
@@ -136,23 +121,18 @@ struct TimelineRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("8 AM")
                     .font(.caption)
-                    .foregroundColor(.gray)
                 
-                HStack(spacing: 12) {
-                    RoundedRectangle(cornerRadius: 8)
-                        .strokeBorder(Color.gray.opacity(0.3), lineWidth: 1)
-                        .frame(width: 60, height: 60)
-                        .overlay(
-                            Image(systemName: "photo")
-                                .foregroundColor(.gray)
-                        )
+                HStack() {
+                    Text("🍳")
+                        .font(.largeTitle)
+                        .foregroundStyle(Color(.systemGray2))
                     
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Breakfast")
-                            .font(.headline)
+                            .font(.caption)
+                            .foregroundStyle(Color(.systemGray2))
                         Text("-")
-                            .foregroundColor(.gray)
-                            .font(.subheadline)
+                            .bold()
                     }
                     Spacer()
                     
@@ -163,10 +143,7 @@ struct TimelineRow: View {
                             .foregroundColor(.black)
                     }
                 }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(12)
-                .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+                .eatsyCard()
             }
         }
     }

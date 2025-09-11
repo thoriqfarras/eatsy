@@ -6,22 +6,24 @@ struct RecomendationView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack {
             Capsule()
                 .fill(Color.gray.opacity(0.4))
                 .frame(width: 52, height: 6)
-                .padding(.top, 8)
+                .padding(.vertical, 6)
             
             Text("Recommendation")
                 .bold()
+                .padding(6)
             
-            HStack(spacing: 8) {
+            HStack() {
                 Label("Today", systemImage: "calendar")
                 Label("Lunch", systemImage: "clock")
             }
             .font(.footnote)
             .bold()
             .foregroundColor(.gray)
+            .padding(.bottom, 6)
             
             VStack(spacing: 12) {
                 ForEach(viewModel.foods.prefix(3)) { food in
@@ -37,16 +39,11 @@ struct RecomendationView: View {
                 dismiss()
             } label: {
                 Text("Choose")
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
             }
-            .padding(.horizontal)
+            .buttonStyle(PrimaryButtonStyle())
+//            .padding(.horizontal)
         }
-        .padding()
+//        .padding()
     }
 }
 

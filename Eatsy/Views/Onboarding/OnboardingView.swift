@@ -19,8 +19,23 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    @Binding var showButton: Bool  // anak
+    @State private var selectedGoal: Goal? = nil
+=======
     @State private var selectedGoal: Goal? = nil
     @Binding var showButton: Bool  // anak
+>>>>>>> main
+=======
+    @State private var selectedGoal: Goal? = nil
+    @Binding var showButton: Bool  // anak
+>>>>>>> main
+=======
+    @State private var selectedGoal: Goal? = nil
+    @Binding var showButton: Bool  // anak
+>>>>>>> 7e285b09aa83bcc55fe5f7fa3893dc6458883170
     
     var body: some View {
         VStack {
@@ -105,6 +120,7 @@ struct Navbar: View {
                 }
             }.hidden()
         }.padding(.horizontal)
+            .background(Color("defaultBackground"))
     }
 }
 
@@ -146,7 +162,6 @@ struct GenderView: View {
     
     var body: some View {
         
-        
         VStack {
             Text("1 of 5")
                 .foregroundColor(Color(.systemGray2))
@@ -166,12 +181,12 @@ struct GenderView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
+            
+            GenderRadioButtonsGroup()
+            Spacer()
+            NextButton(nextStep: nextStep)
         }
-        
-        GenderRadioButtonsGroup()
-        
-        Spacer()
-        NextButton(nextStep: nextStep)
+        .background(Color("defaultBackground")) // 👈 pindah ke sini
     }
 }
 
@@ -204,6 +219,7 @@ struct GoalView: View {
             NextButton(nextStep: nextStep)
                 .disabled(selectedGoal == nil) // disable kalau belum pilih
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -287,6 +303,7 @@ struct AboutYouView: View {
             Spacer()
             NextButton(nextStep: nextStep)
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -298,41 +315,44 @@ struct WeightGoalView: View {
     
     var body: some View {
         VStack {
-            Text("4 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
-            VStack(spacing: 10) {
-                Text("Set your weight goal!")
-                    .font(.title)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("Tell us your target weight so we can plan your journey and estimate how long it will take.")
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-        }
-        
-        VStack {
-            HStack {
-                Text("🎯 Goal Weight")
-                    .foregroundStyle(Color.black)
-                Spacer()
+            VStack {
+                Text("4 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
+                VStack(spacing: 10) {
+                    Text("Set your weight goal!")
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Tell us your target weight so we can plan your journey and estimate how long it will take.")
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
             }
             
-            Picker("Weight Goal", selection: $selectedWeightGoal) {
-                ForEach (weights, id: \.self) { weight in
-                    Text("\(weight) kg")
+            VStack {
+                HStack {
+                    Text("🎯 Goal Weight")
+                        .foregroundStyle(Color.black)
+                    Spacer()
                 }
+                
+                Picker("Weight Goal", selection: $selectedWeightGoal) {
+                    ForEach (weights, id: \.self) { weight in
+                        Text("\(weight) kg")
+                    }
+                }
+                .pickerStyle(.wheel)
             }
-            .pickerStyle(.wheel)
+            .eatsyCard()
+            .padding(.horizontal)
+            
+            Spacer()
+            NextButton(nextStep: nextStep)
         }
-        .eatsyCard()
-        .padding(.horizontal)
-        Spacer()
-        NextButton(nextStep: nextStep)
+        .background(Color("defaultBackground"))
     }
 }
-
 
 struct DietRestrictionView: View {
     @State private var selectedRestrictions: Set<DietRestriction> = []
@@ -357,6 +377,7 @@ struct DietRestrictionView: View {
             Spacer()
             NextButton(nextStep: nextStep)
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -365,30 +386,33 @@ struct OnboardingDoneView: View {
     @Binding var showButton: Bool  // anak
     
     var body: some View {
-        Spacer()
-        VStack(spacing: 10) {
-            Text("Well done 🎉")
-                .font(.title)
-                .bold()
-                .frame(maxWidth: .infinity)
-            Text("Your personalized plan is ready!")
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .center)
-            Text("Follow the plan we’ve built for you and  you’ll reach your goal by")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.primary)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.top, 20)
-            Text("🗓️ 12 December 2025 ")
-                .bold()
-                .foregroundColor(Color("PrimaryGreen"))
-                .padding(.top, 5)
+        VStack {
+            Spacer()
+            VStack(spacing: 10) {
+                Text("Well done 🎉")
+                    .font(.title)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                Text("Your personalized plan is ready!")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Text("Follow the plan we've built for you and  you'll reach your goal by")
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 20)
+                Text("🗓️ 12 December 2025 ")
+                    .bold()
+                    .foregroundColor(Color("PrimaryGreen"))
+                    .padding(.top, 5)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            Spacer()
+            DoneButton(showOnboarding: $showOnboarding,
+                       showButton: $showButton)
         }
-        .frame(maxWidth: .infinity)
-        .padding()
-        Spacer()
-        DoneButton(showOnboarding: $showOnboarding,
-                   showButton: $showButton)
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -423,6 +447,7 @@ struct DropdownPicker<Content: View>: View {
             SelectableCard(isSelected: isExpanded)
         )
         .padding(.bottom, 2)
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -445,6 +470,7 @@ struct DietRestrictionCheckbox: View {
                 isSelected: selectedRestrictions.contains(restriction)
             )
         )
+        .background(Color("defaultBackground"))
     }
     
     private func toggleSelection() {
@@ -468,6 +494,7 @@ struct DietRestrictionCheckboxesGroup: View {
                 )
             }
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -518,6 +545,7 @@ struct GoalRadioButtonsGroup: View {
                 .modifier(SelectableCard(isSelected: selectedButton == goal))
             }
         }
+        .background(Color("defaultBackground"))
     }
 }
 
