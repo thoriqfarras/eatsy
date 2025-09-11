@@ -1,100 +1,55 @@
-//
-//  RecomendationView.swift
-//  Eatsy
-//
-//  Created by Mac on 11/09/25.
-//
-
-import Foundation
 import SwiftUI
 
+// RecomendationView.swift
 struct RecomendationView: View {
     @StateObject private var viewModel = FoodViewModel()
-    @State private var isExpanded: Bool = true
-    @State private var dragAmount: CGSize = .zero
-    
-    private let minimizedHeight: CGFloat = 1000
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
-            // Background
-            Color(.systemGroupedBackground)
-                .ignoresSafeArea()
+        VStack(spacing: 16) {
+            Capsule()
+                .fill(Color.gray.opacity(0.4))
+                .frame(width: 52, height: 6)
+                .padding(.top, 8)
             
-            VStack {
-                Spacer()
-                
-                //buat ala ala sheet
-                ZStack(alignment: .top) {
-                    Color.white
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(24, corners: [.topLeft, .topRight])
-                        .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: -4)
-                    
-                    VStack(spacing: 20) {
-                        Capsule()
-                            .fill(Color.gray.opacity(0.4))
-                            .frame(width: 52, height: 6)
-                        
-                        VStack() {
-                            Text("Recommendation")
-                                .bold()
-                                .padding(.bottom, 4)
-                            
-                            HStack(spacing: 8) {
-                                Label("Today", systemImage: "calendar")
-                                Label("Lunch", systemImage: "clock")
-                            }
-                            .font(.footnote)
-                            .bold()
-                            .foregroundColor(Color(.systemGray2))
-                            .padding(.bottom, 8)
-                            
-                            // Ganti ScrollView dengan VStack biasa
-                            VStack() {
-                                ForEach(viewModel.foods) { food in
-                                    Button {
-                                        viewModel.toggleSelection(for: food.id)
-                                    } label: {
-                                        FoodCardView(food: food)
-                                    }
-                                }
-                            }
-    
-                            
-                            Button {
-                                print("Tombol Choose ditekan!")
-                            } label: {
-                                Text("Choose")
-                            }
-                            .buttonStyle(PrimaryButtonStyle())
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, isExpanded ? 20 : 0)
-                }
-                .frame(maxHeight: isExpanded ? UIScreen.main.bounds.height * 0.6 : minimizedHeight)
-                .frame(maxWidth: .infinity)
-                .offset(y: dragAmount.height)
-                .animation(.interactiveSpring(), value: dragAmount)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            dragAmount.height = value.translation.height
-                        }
-                        .onEnded { value in
-                            if value.translation.height > 100 {
-                                isExpanded = false
-                            } else if value.translation.height < -100 {
-                                isExpanded = true
-                            }
-                            dragAmount = .zero
-                        }
-                )
+            Text("Recommendation")
+                .bold()
+            
+            HStack(spacing: 8) {
+                Label("Today", systemImage: "calendar")
+                Label("Lunch", systemImage: "clock")
             }
+            .font(.footnote)
+            .bold()
+            .foregroundColor(.gray)
+            
+            VStack(spacing: 12) {
+                ForEach(viewModel.foods.prefix(3)) { food in
+                    Button {
+                        viewModel.toggleSelection(for: food.id)
+                    } label: {
+                        FoodCardView(food: food)
+                    }
+                }
+            }
+            
+            Button {
+                dismiss()
+            } label: {
+                Text("Choose")
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+            }
+            .padding(.horizontal)
         }
+        .padding()
     }
 }
+
 
 // MARK: - Custom corner radius
 extension View {
