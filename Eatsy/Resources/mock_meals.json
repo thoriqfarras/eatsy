@@ -33,6 +33,17 @@
               { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
           }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+            ]
+          }
         ]
       }
     },
@@ -60,6 +71,17 @@
               { "name": "Protein", "icon": "bolt.heart", "value": "28g" }
             ]
           }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+            ]
+          }
         ]
       }
     },
@@ -85,6 +107,17 @@
               { "name": "Fat", "icon": "drop", "value": "8g" },
               { "name": "Carbs", "icon": "leaf", "value": "55g" },
               { "name": "Protein", "icon": "bolt.heart", "value": "24g" }
+            ]
+          }
+        ],
+        "dinner": [
+          {
+            "title": "Chicken Salad",
+            "emoji": "🥗",
+            "nutrients": [
+              { "name": "Fat", "icon": "drop", "value": "12g" },
+              { "name": "Carbs", "icon": "leaf", "value": "10g" },
+              { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
             ]
           }
         ]
