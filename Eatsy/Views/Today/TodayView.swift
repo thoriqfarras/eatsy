@@ -4,7 +4,7 @@ struct TodayView: View {
     @Binding var showOnboarding: Bool
     @Binding var showButton: Bool
     
-    @State private var showRecommendation = false // 👉 state buat sheet
+    @State private var showRecommendation = false
     
     var body: some View {
         VStack(spacing: 16) {
@@ -30,6 +30,7 @@ struct TodayView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
+            // Info card / Button
             if !showButton {
                 HStack(spacing: 12) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -59,8 +60,7 @@ struct TodayView: View {
                 )
                 .padding(.horizontal)
                 .padding(.top, 8)
-            }
-            else {
+            } else {
                 Button(action: {
                     showOnboarding = true
                 }) {
@@ -93,22 +93,28 @@ struct TodayView: View {
             List {
                 ForEach(0..<3, id: \.self) { _ in
                     TimelineRow {
-                        showRecommendation = true // 👉 trigger modal
+                        showRecommendation = true
                     }
                     .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear) // 👉 biar nyatu
                 }
             }
             .listStyle(PlainListStyle())
         }
-        // 👉 Sheet untuk modal
+        .frame(maxWidth: .infinity, maxHeight: .infinity) // isi penuh layar
+        .background(Color.white) // 👉 kasih putih bersih
+        .background(Color(.systemGroupedBackground)) // biar gak blank
         .sheet(isPresented: $showRecommendation) {
             RecomendationView()
+                .presentationDetents([.fraction(0.7)]) // 👉 langsung atur tinggi modal
+                .presentationCornerRadius(24)          // sudut rounded bawaan iOS 16+
         }
+
     }
 }
 
 struct TimelineRow: View {
-    var onAddTapped: () -> Void // 👉 callback
+    var onAddTapped: () -> Void
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -151,7 +157,7 @@ struct TimelineRow: View {
                     Spacer()
                     
                     Button(action: {
-                        onAddTapped() // 👉 panggil callback
+                        onAddTapped()
                     }) {
                         Image(systemName: "plus")
                             .foregroundColor(.black)
