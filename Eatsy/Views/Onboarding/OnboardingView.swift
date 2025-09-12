@@ -19,8 +19,12 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
+//<<<<<<< Updated upstream
     @Binding var showButton: Bool  // anak
-    @State private var selectedGoal: Goal? = nil
+//=======
+    @StateObject var viewModel: UserViewModel = UserViewModel()
+    @State var userData: User = User()
+//>>>>>>> Stashed changes
     
     var body: some View {
         VStack {
@@ -31,40 +35,51 @@ struct OnboardingView: View {
                     prevStep: { currentStep = .gender },
                     onCancel: {showOnboarding = false}
                 )
-                GenderView(nextStep: { currentStep = .goal })
+                GenderView(nextStep: { currentStep = .goal }, gender: $userData.gender)
             case .goal:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .gender },
                     onCancel: { showOnboarding = false }
                 )
+//<<<<<<< Updated upstream
                 GoalView(
-                    selectedGoal: $selectedGoal,
-                    nextStep: { currentStep = .aboutYou }
+                    selectedGoal: $userData.goal,
+                    nextStep: { currentStep = .aboutYou },
                 )
+//=======
+//                GoalView(nextStep: { currentStep = .aboutYou }, goal: $userData.goal)
+//>>>>>>> Stashed changes
             case .aboutYou:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .goal },
                     onCancel: { showOnboarding = false }
                 )
-                AboutYouView(nextStep: { currentStep = .weightGoal })
+                AboutYouView(nextStep: { currentStep = .weightGoal }, height: $userData.height, weight: $userData.weight, age: $userData.age)
             case .weightGoal:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .aboutYou },
                     onCancel: { showOnboarding = false }
                 )
-                WeightGoalView(nextStep: { currentStep = .dietRestriction })
+                WeightGoalView(nextStep: { currentStep = .dietRestriction }, weightGoal: $userData.targetWeight)
             case .dietRestriction:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .weightGoal },
                     onCancel: { showOnboarding = false }
                 )
-                DietRestrictionView(nextStep: { currentStep = .done })
+                DietRestrictionView(nextStep: {
+                    currentStep = .done
+                    viewModel.saveData(userData: userData)
+                }, userData: $userData, saveUser: viewModel.saveData)
             case .done:
+//<<<<<<< Updated upstream
                 OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton)
+//=======
+//                OnboardingDoneView(showOnboarding: $showOnboarding)
+//>>>>>>> Stashed changes
             }
         }
         .padding(.bottom, 1)
@@ -131,10 +146,20 @@ struct DoneButton: View {
     var body: some View {
         VStack {
             Button(action: {
+//<<<<<<< Updated upstream
                 showOnboarding = false  // tutup onboarding
                 showButton = false
             }) {
                 Text("Let's get started")
+//=======
+//                showOnboarding = false
+//            }) {
+//                Text("Let's get started").foregroundStyle(Color.white).bold()
+//                    .padding()
+//                    .frame(maxWidth: .infinity)
+//                    .background(Color("PrimaryGreen"))
+//                    .clipShape(RoundedRectangle(cornerRadius: 16))
+//>>>>>>> Stashed changes
             }
             .buttonStyle(PrimaryButtonStyle())
         }
@@ -144,6 +169,7 @@ struct DoneButton: View {
 struct GenderView: View {
     
     let nextStep: () -> Void
+    @Binding var gender: Gender?
     
     var body: some View {
         
@@ -167,11 +193,19 @@ struct GenderView: View {
             .frame(maxWidth: .infinity)
             .padding()
             
-            GenderRadioButtonsGroup()
+            GenderRadioButtonsGroup(selectedGender: $gender)
             Spacer()
             NextButton(nextStep: nextStep)
         }
+//<<<<<<< Updated upstream
         .background(Color("defaultBackground")) // 👈 pindah ke sini
+//=======
+//        
+//        GenderRadioButtonsGroup(selectedGender: $gender)
+//        
+//        Spacer()
+//        NextButton(nextStep: nextStep)
+//>>>>>>> Stashed changes
     }
 }
 
@@ -204,7 +238,14 @@ struct GoalView: View {
             NextButton(nextStep: nextStep)
                 .disabled(selectedGoal == nil) // disable kalau belum pilih
         }
+//<<<<<<< Updated upstream
         .background(Color("defaultBackground"))
+//=======
+//        
+//        GoalRadioButtonsGroup(selectedGoal: $goal)
+//        Spacer()
+//        NextButton(nextStep: nextStep)
+//>>>>>>> Stashed changes
     }
 }
 
@@ -214,13 +255,16 @@ let weights = 30..<201
 let ages = 18..<26
 
 struct AboutYouView: View {
-    @State private var selectedHeight: Int = 160
-    @State private var selectedWeight: Int = 60
-    @State private var selectedAge: Int = 21
-    
+//<<<<<<< Updated upstream
     @State private var expandedPicker: PickerType? = nil
+//=======
+//>>>>>>> Stashed changes
     
     let nextStep: () -> Void
+    
+    @Binding var height: Int
+    @Binding var weight: Int
+    @Binding var age: Int
     
     var body: some View {
         VStack {
@@ -236,48 +280,78 @@ struct AboutYouView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
+//<<<<<<< Updated upstream
             
             DropdownPicker(
                 text: "📏 Height",
-                selectedValue: selectedHeight,
+                selectedValue: $height,
                 values: heights,
                 unit: "cm",
                 isExpanded: expandedPicker == .height,
                 toggle: { expandedPicker = expandedPicker == .height ? nil : .height }
             ) {
-                Picker("Height", selection: $selectedHeight) {
+                Picker("Height", selection: $height) {
                     ForEach(heights, id: \.self) { height in
                         Text("\(height) cm")
                     }
+//=======
+//        }
+//        
+//        DropdownPicker(text: "📏 Height", selectedValue: $height, values: heights, unit: "cm") {
+//            Picker("Height", selection: $height) {
+//                ForEach (heights, id: \.self) { height in
+//                    Text("\(height) cm")
+//                }
+//            }
+//            .pickerStyle(.wheel)
+//        }
+//        
+//        DropdownPicker(text: "⚖️ Weight", selectedValue: $weight, values: weights, unit: "kg") {
+//            
+//            Picker("Weight", selection: $weight) {
+//                ForEach (weights, id: \.self) { weight in
+//                    Text("\(weight) kg")
+//>>>>>>> Stashed changes
                 }
                 .pickerStyle(.wheel)
             }
+//<<<<<<< Updated upstream
             
             DropdownPicker(
                 text: "⚖️ Weight",
-                selectedValue: selectedWeight,
+                selectedValue: $weight,
                 values: weights,
                 unit: "kg",
                 isExpanded: expandedPicker == .weight,
                 toggle: { expandedPicker = expandedPicker == .weight ? nil : .weight }
             ) {
-                Picker("Weight", selection: $selectedWeight) {
+                Picker("Weight", selection: $weight) {
                     ForEach(weights, id: \.self) { weight in
                         Text("\(weight) kg")
                     }
+//=======
+//            .pickerStyle(.wheel)
+//        }
+//        
+//        DropdownPicker(text: "🎂 Age", selectedValue: $age, values: ages, unit: "yo") {
+//            
+//            Picker("Age", selection: $age) {
+//                ForEach (ages, id: \.self) { age in
+//                    Text("\(age) yo")
+//>>>>>>> Stashed changes
                 }
                 .pickerStyle(.wheel)
             }
             
             DropdownPicker(
                 text: "🎂 Age",
-                selectedValue: selectedAge,
+                selectedValue: $age,
                 values: ages,
                 unit: "yo",
                 isExpanded: expandedPicker == .age,
                 toggle: { expandedPicker = expandedPicker == .age ? nil : .age }
             ) {
-                Picker("Age", selection: $selectedAge) {
+                Picker("Age", selection: $age) {
                     ForEach(ages, id: \.self) { age in
                         Text("\(age) yo")
                     }
@@ -294,9 +368,9 @@ struct AboutYouView: View {
 
 struct WeightGoalView: View {
     
-    @State private var selectedWeightGoal: Int?
-    
     let nextStep: () -> Void
+    
+    @Binding var weightGoal: Int
     
     var body: some View {
         VStack {
@@ -315,14 +389,20 @@ struct WeightGoalView: View {
                 .padding()
             }
             
+//<<<<<<< Updated upstream
             VStack {
                 HStack {
                     Text("🎯 Goal Weight")
                         .foregroundStyle(Color.black)
                     Spacer()
+//=======
+//            Picker("Weight Goal", selection: $weightGoal) {
+//                ForEach (weights, id: \.self) { weight in
+//                    Text("\(weight) kg")
+//>>>>>>> Stashed changes
                 }
                 
-                Picker("Weight Goal", selection: $selectedWeightGoal) {
+                Picker("Weight Goal", selection: $weightGoal) {
                     ForEach (weights, id: \.self) { weight in
                         Text("\(weight) kg")
                     }
@@ -343,6 +423,9 @@ struct DietRestrictionView: View {
     @State private var selectedRestrictions: Set<DietRestriction> = []
     let nextStep: () -> Void
     
+    @Binding var userData: User
+    var saveUser: (User) -> Void
+    
     var body: some View {
         VStack {
             Text("5 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
@@ -357,18 +440,34 @@ struct DietRestrictionView: View {
             }
             .padding()
             
-            DietRestrictionCheckboxesGroup(selectedRestrictions: $selectedRestrictions)
+            DietRestrictionCheckboxesGroup(selectedRestrictions: $userData.dietRestrictions)
             
             Spacer()
             NextButton(nextStep: nextStep)
         }
+//<<<<<<< Updated upstream
         .background(Color("defaultBackground"))
+//=======
+//        
+//        DietRestrictionCheckboxesGroup(dietRestrictions: $userData.dietRestrictions)
+//        
+//        Spacer()
+//        NextButton(nextStep: nextStep)
+//            .onTapGesture {
+//                print("This is button")
+//                saveUser(userData)
+//            }
+//>>>>>>> Stashed changes
     }
 }
 
 struct OnboardingDoneView: View {
+//<<<<<<< Updated upstream
     @Binding var showOnboarding: Bool  // anak
     @Binding var showButton: Bool  // anak
+//=======
+//    @Binding var showOnboarding: Bool
+//>>>>>>> Stashed changes
     
     var body: some View {
         VStack {
@@ -397,13 +496,20 @@ struct OnboardingDoneView: View {
             DoneButton(showOnboarding: $showOnboarding,
                        showButton: $showButton)
         }
+//<<<<<<< Updated upstream
         .background(Color("defaultBackground"))
+//=======
+//        .frame(maxWidth: .infinity)
+//        .padding()
+//        Spacer()
+//        DoneButton(showOnboarding: $showOnboarding)
+//>>>>>>> Stashed changes
     }
 }
 
 struct DropdownPicker<Content: View>: View {
     let text: String
-    let selectedValue: Int
+    @Binding var selectedValue: Int
     let values: Range<Int>
     let unit: String
     let isExpanded: Bool
@@ -468,6 +574,7 @@ struct DietRestrictionCheckbox: View {
 }
 
 struct DietRestrictionCheckboxesGroup: View {
+//<<<<<<< Updated upstream
     @Binding var selectedRestrictions: Set<DietRestriction>
     
     var body: some View {
@@ -480,39 +587,74 @@ struct DietRestrictionCheckboxesGroup: View {
             }
         }
         .background(Color("defaultBackground"))
+//=======
+//    @Binding var dietRestrictions: Set<DietRestriction>
+//    
+//    var body: some View {
+//        
+//        ForEach(DietRestriction.allCases, id: \.self) { restriction in
+//            RestrictionCard(selectedRestrictions: $dietRestrictions, restriction: restriction, text: restriction.rawValue)
+//        }
+//    }
+//}
+//
+//struct RestrictionCard: View {
+//    @Binding var selectedRestrictions: Set<DietRestriction>
+//    var restriction: DietRestriction
+//    var text: String
+//    
+//    var body: some View {
+//        Button(action: {
+//            if selectedRestrictions.contains(restriction) {
+//                selectedRestrictions.remove(restriction)
+//                print(selectedRestrictions)
+//            } else {
+//                selectedRestrictions.insert(restriction)
+//                print(selectedRestrictions)
+//            }
+//        }) {
+//            Text("\(text)")
+//                .foregroundStyle(Color.black)
+//            Spacer()
+//            Image(systemName: selectedRestrictions.contains(restriction) ? "checkmark.square.fill" : "square")
+//                .foregroundColor(selectedRestrictions.contains(restriction) ? Color("PrimaryGreen") : Color(.systemGray5))
+//        }
+//        .modifier(
+//            SelectableCard(
+//                isSelected: selectedRestrictions.contains(restriction)
+//            )
+//        )
+//>>>>>>> Stashed changes
     }
 }
 
 struct GenderRadioButtonsGroup: View {
-    @State var isMaleSelected: Bool = false
-    @State var isFemaleSelected: Bool = false
+    @Binding var selectedGender: Gender?
     
     var body: some View {
         VStack(spacing: 10) {
             Button(action: {
-                isMaleSelected.toggle()
-                isFemaleSelected = false
+                selectedGender = .m
             }) {
                 Text("👨 Male")
                     .foregroundColor(.black)
                 Spacer()
             }
-            .selectableCard(isSelected: isMaleSelected)
+            .selectableCard(isSelected: selectedGender == .m)
             Button(action: {
-                isMaleSelected = false
-                isFemaleSelected.toggle()
-                
+                selectedGender = .f
             }) {
                 Text("👩‍🦰 Female")
                     .foregroundColor(.black)
                 Spacer()
             }
-            .selectableCard(isSelected: isFemaleSelected)
+            .selectableCard(isSelected: selectedGender == .f)
         }
     }
 }
 
 struct GoalRadioButtonsGroup: View {
+//<<<<<<< Updated upstream
     @Binding var selectedButton: Goal?
     
     var body: some View {
@@ -526,9 +668,57 @@ struct GoalRadioButtonsGroup: View {
                             .foregroundColor(.black)
                         Spacer()
                     }
+//=======
+//    @Binding var selectedGoal: Goal?
+//    
+//    var body: some View {
+//        VStack(spacing: 10) {
+//            Button(action: {
+//                if (selectedGoal == .lose) {
+//                    selectedGoal = nil
+//                } else {
+//                    selectedGoal = .lose
+//>>>>>>> Stashed changes
                 }
                 .modifier(SelectableCard(isSelected: selectedButton == goal))
             }
+//<<<<<<< Updated upstream
+//=======
+//            .modifier(SelectableCard(
+//                isSelected: selectedGoal == .lose
+//            ))
+//            
+//            Button(action: {
+//                if (selectedGoal == .maintain) {
+//                    selectedGoal = nil
+//                } else {
+//                    selectedGoal = .maintain
+//                }
+//            }) {
+//                Text("🍽️ Maintain weight")
+//                    .foregroundColor(.black)
+//                Spacer()
+//            }
+//            .modifier(SelectableCard(
+//                isSelected: selectedGoal == .maintain
+//            ))
+//            
+//            Button(action: {
+//                if (selectedGoal == .gain) {
+//                    selectedGoal = nil
+//                } else {
+//                    selectedGoal = .gain
+//                }
+//            }) {
+//                Text("🍗 Gain weight")
+//                    .foregroundColor(.black)
+//                Spacer()
+//            }
+//            .modifier(SelectableCard(
+//                isSelected: selectedGoal == .gain
+//            ))
+//            
+//>>>>>>> Stashed changes
         }
         .background(Color("defaultBackground"))
     }
