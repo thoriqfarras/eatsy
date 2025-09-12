@@ -1,55 +1,55 @@
 {
-    "recomendation": [
-        "breakfast": [
-            {
-                "title": "Boiled Egg",
-                "emoji": "🍳",
-                "nutrients": [
-                    { "name": "Fat", "icon": "drop", "value": "10g" },
-                    { "name": "Carbs", "icon": "leaf", "value": "1g" },
-                    { "name": "Protein", "icon": "bolt.heart", "value": "6g" }
-                ]
-            },
-            {
-                "title": "Avocado Toast",
-                "emoji": "🥑",
-                "nutrients": [
-                    { "name": "Fat", "icon": "drop", "value": "18g" },
-                    { "name": "Carbs", "icon": "leaf", "value": "28g" },
-                    { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
-                ]
-            }
-        ],
-        "lunch": [
-            {
-                "title": "Chicken Salad",
-                "emoji": "🥗",
-                "nutrients": [
-                    { "name": "Fat", "icon": "drop", "value": "12g" },
-                    { "name": "Carbs", "icon": "leaf", "value": "10g" },
-                    { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
-                ]
-            }
-        ],
-        "dinner": [
-            {
-                "title": "Chicken Salad",
-                "emoji": "🥗",
-                "nutrients": [
-                    { "name": "Fat", "icon": "drop", "value": "12g" },
-                    { "name": "Carbs", "icon": "leaf", "value": "10g" },
-                    { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
-                ]
-            },
-            {
-                "title": "Avocado Toast",
-                "emoji": "🥑",
-                "nutrients": [
-                    { "name": "Fat", "icon": "drop", "value": "18g" },
-                    { "name": "Carbs", "icon": "leaf", "value": "28g" },
-                    { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
-                ]
-            }
+  "recommendation": {
+    "breakfast": [
+      {
+        "title": "Boiled Egg",
+        "emoji": "🍳",
+        "nutrients": [
+          { "name": "Fat", "icon": "drop", "value": "10g" },
+          { "name": "Carbs", "icon": "leaf", "value": "1g" },
+          { "name": "Protein", "icon": "bolt.heart", "value": "6g" }
         ]
+      },
+      {
+        "title": "Avocado Toast",
+        "emoji": "🥑",
+        "nutrients": [
+          { "name": "Fat", "icon": "drop", "value": "18g" },
+          { "name": "Carbs", "icon": "leaf", "value": "28g" },
+          { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+        ]
+      }
+    ],
+    "lunch": [
+      {
+        "title": "Chicken Salad",
+        "emoji": "🥗",
+        "nutrients": [
+          { "name": "Fat", "icon": "drop", "value": "12g" },
+          { "name": "Carbs", "icon": "leaf", "value": "10g" },
+          { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+        ]
+      }
+    ],
+    "dinner": [
+      {
+        "title": "Chicken Salad",
+        "emoji": "🥗",
+        "nutrients": [
+          { "name": "Fat", "icon": "drop", "value": "12g" },
+          { "name": "Carbs", "icon": "leaf", "value": "10g" },
+          { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+        ]
+      },
+      {
+        "title": "Avocado Toast",
+        "emoji": "🥑",
+        "nutrients": [
+          { "name": "Fat", "icon": "drop", "value": "18g" },
+          { "name": "Carbs", "icon": "leaf", "value": "28g" },
+          { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+        ]
+      }
     ]
+  }
 }
