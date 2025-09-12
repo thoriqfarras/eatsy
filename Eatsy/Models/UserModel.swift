@@ -7,12 +7,12 @@
 
 import Foundation
 
-enum Gender {
+enum Gender: Codable {
     case m // for male
     case f // for female
 }
 
-enum Goal {
+enum Goal: Codable {
     case lose
     case gain
     case maintain
@@ -34,8 +34,12 @@ enum Goal {
         }
 }
 
-enum DietRestriction: String, CaseIterable, Hashable {
-    case noRestriction = "😋 No diet restriction"
+//<<<<<<< Updated upstream
+//enum DietRestriction: String, CaseIterable, Hashable {
+//    case noRestriction = "😋 No diet restriction"
+//=======
+enum DietRestriction: String, CaseIterable, Hashable, Codable {
+//>>>>>>> Stashed changes
     case lactoseIntolerant = "🥛 Lactose intolerant"
     case glutenFree = "🌾 Gluten-free"
     case DiaryFree = "🧀 Dairy-free"
@@ -44,15 +48,16 @@ enum DietRestriction: String, CaseIterable, Hashable {
     // Tambah lainnya di sini
 }
 
-struct User: Identifiable {
-    let id = UUID()
-    let gender: Gender
-    let goal: Goal
-    let height: Int
-    let weight: Int
-    let age: Int
-    let targetWeight: Int
-    let dietRestrictions: DietRestriction?
+
+struct User: Identifiable, Codable {
+    var id = UUID()
+    var gender: Gender?
+    var goal: Goal?
+    var height: Int = 160
+    var weight: Int = 60
+    var age: Int = 21
+    var targetWeight: Int = 75
+    var dietRestrictions: Set<DietRestriction> = []
 }
 
 enum PickerType: Identifiable {

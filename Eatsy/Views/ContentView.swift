@@ -23,8 +23,10 @@ struct ContentView: View {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
+    var viewModel = UserViewModel()
+    
     var body: some View {
-        TabView{
+        TabView {
             NavigationStack {
                 TodayView(showOnboarding: $showOnboarding, showButton: $showButton)
             }
