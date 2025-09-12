@@ -70,7 +70,10 @@ struct OnboardingView: View {
                     prevStep: { currentStep = .weightGoal },
                     onCancel: { showOnboarding = false }
                 )
-                DietRestrictionView(nextStep: { currentStep = .done }, userData: $userData, saveUser: viewModel.saveData)
+                DietRestrictionView(nextStep: {
+                    currentStep = .done
+                    viewModel.saveData(userData: userData)
+                }, userData: $userData, saveUser: viewModel.saveData)
             case .done:
 //<<<<<<< Updated upstream
                 OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton)
@@ -253,10 +256,6 @@ let ages = 18..<26
 
 struct AboutYouView: View {
 //<<<<<<< Updated upstream
-    @State private var selectedHeight: Int = 160
-    @State private var selectedWeight: Int = 60
-    @State private var selectedAge: Int = 21
-    
     @State private var expandedPicker: PickerType? = nil
 //=======
 //>>>>>>> Stashed changes
@@ -285,13 +284,13 @@ struct AboutYouView: View {
             
             DropdownPicker(
                 text: "📏 Height",
-                selectedValue: $selectedHeight,
+                selectedValue: $height,
                 values: heights,
                 unit: "cm",
                 isExpanded: expandedPicker == .height,
                 toggle: { expandedPicker = expandedPicker == .height ? nil : .height }
             ) {
-                Picker("Height", selection: $selectedHeight) {
+                Picker("Height", selection: $height) {
                     ForEach(heights, id: \.self) { height in
                         Text("\(height) cm")
                     }
@@ -320,13 +319,13 @@ struct AboutYouView: View {
             
             DropdownPicker(
                 text: "⚖️ Weight",
-                selectedValue: $selectedWeight,
+                selectedValue: $weight,
                 values: weights,
                 unit: "kg",
                 isExpanded: expandedPicker == .weight,
                 toggle: { expandedPicker = expandedPicker == .weight ? nil : .weight }
             ) {
-                Picker("Weight", selection: $selectedWeight) {
+                Picker("Weight", selection: $weight) {
                     ForEach(weights, id: \.self) { weight in
                         Text("\(weight) kg")
                     }
@@ -346,13 +345,13 @@ struct AboutYouView: View {
             
             DropdownPicker(
                 text: "🎂 Age",
-                selectedValue: $selectedAge,
+                selectedValue: $age,
                 values: ages,
                 unit: "yo",
                 isExpanded: expandedPicker == .age,
                 toggle: { expandedPicker = expandedPicker == .age ? nil : .age }
             ) {
-                Picker("Age", selection: $selectedAge) {
+                Picker("Age", selection: $age) {
                     ForEach(ages, id: \.self) { age in
                         Text("\(age) yo")
                     }
@@ -445,10 +444,6 @@ struct DietRestrictionView: View {
             
             Spacer()
             NextButton(nextStep: nextStep)
-                .onTapGesture {
-                    print("This is button")
-                    saveUser(userData)
-                }
         }
 //<<<<<<< Updated upstream
         .background(Color("defaultBackground"))
