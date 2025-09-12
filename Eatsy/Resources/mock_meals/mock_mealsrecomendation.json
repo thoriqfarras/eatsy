@@ -6,6 +6,8 @@
         "emoji": "🍳",
         "imageName": "boiled_egg",
         "calories": 78,
+        "goals": ["lose_weight", "maintain_weight"],
+        "allergies": ["dairy_free", "gluten_free", "lactose_intolerant"],
         "nutrients": [
           {
             "name": "Fat",
@@ -29,6 +31,8 @@
         "emoji": "🥣",
         "imageName": "oatmeal",
         "calories": 150,
+        "goals": ["maintain_weight", "gain_weight"],
+        "allergies": ["lactose_intolerant"],
         "nutrients": [
           {
             "name": "Fat",
@@ -52,6 +56,8 @@
         "emoji": "🥑",
         "imageName": "avocado_toast",
         "calories": 250,
+        "goals": ["maintain_weight", "gain_weight"],
+        "allergies": ["dairy_free", "lactose_intolerant", "egg_allergy"],
         "nutrients": [
           {
             "name": "Fat",
@@ -77,6 +83,8 @@
         "emoji": "🥗",
         "imageName": "chicken_salad",
         "calories": 350,
+        "goals": ["lose_weight", "maintain_weight"],
+        "allergies": ["dairy_free", "lactose_intolerant", "egg_allergy", "gluten_free"],
         "nutrients": [
           {
             "name": "Fat",
@@ -100,6 +108,8 @@
         "emoji": "🍢",
         "imageName": "sate_ayam",
         "calories": 400,
+        "goals": ["maintain_weight", "gain_weight"],
+        "allergies": ["lactose_intolerant"],
         "nutrients": [
           {
             "name": "Fat",
@@ -117,6 +127,31 @@
             "value": "25g"
           }
         ]
+      },
+      {
+        "title": "Gado-gado",
+        "emoji": "🍲",
+        "imageName": "gado_gado",
+        "calories": 380,
+        "goals": ["lose_weight", "maintain_weight"],
+        "allergies": ["dairy_free", "lactose_intolerant", "gluten_free"],
+        "nutrients": [
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "25g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "30g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "15g"
+          }
+        ]
       }
     ],
     "dinner": [
@@ -125,6 +160,8 @@
         "emoji": "🍣",
         "imageName": "grilled_salmon",
         "calories": 550,
+        "goals": ["lose_weight", "maintain_weight"],
+        "allergies": ["dairy_free", "lactose_intolerant", "gluten_free", "egg_allergy"],
         "nutrients": [
           {
             "name": "Fat",
@@ -148,6 +185,8 @@
         "emoji": "🍲",
         "imageName": "rawon",
         "calories": 600,
+        "goals": ["gain_weight"],
+        "allergies": ["lactose_intolerant", "gluten_free"],
         "nutrients": [
           {
             "name": "Fat",
@@ -163,6 +202,31 @@
             "name": "Protein",
             "icon": "bolt.heart",
             "value": "20g"
+          }
+        ]
+      },
+      {
+        "title": "Beef Steak",
+        "emoji": "🥩",
+        "imageName": "beef_steak",
+        "calories": 750,
+        "goals": ["gain_weight"],
+        "allergies": ["lactose_intolerant", "gluten_free"],
+        "nutrients": [
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "50g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "0g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "70g"
           }
         ]
       }
