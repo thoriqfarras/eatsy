@@ -67,4 +67,38 @@ class UserViewModel: ObservableObject {
     func completeSetUp() {
         self.user.isSetUp = true
     }
+
+    func calculateTargetCalories(userData: User) -> Int {
+        var bmr: Double = 0
+        
+        if userData.gender == .m {
+            bmr = 88.362
+                + (13.397 * Double(userData.weight))
+                + (4.799 * Double(userData.height))
+                - (5.677 * Double(userData.age))
+        } else {
+            bmr = 447.593
+                + (9.247 * Double(userData.weight))
+                + (3.098 * Double(userData.height))
+                - (4.330 * Double(userData.age))
+        }
+        
+        // TDEE dengan faktor aktivitas 1.2 (sedentary)
+        let tdee = bmr * 1.2
+        
+        // Selisih berat dalam kg
+        let weightDiff = Double(userData.weight - userData.targetWeight)
+        
+        // Total kalori yg harus di-defisit/surplus (1 kg ≈ 7700 kcal)
+        let totalCalorieChange = weightDiff * 7700
+        
+        // Per hari selama 1 tahun
+        let dailyCalorieChange = totalCalorieChange / 365.0
+        
+        // Target kalori harian
+        let targetCalories = tdee - dailyCalorieChange
+        
+        return Int(targetCalories.rounded())
+    }
+
 }
