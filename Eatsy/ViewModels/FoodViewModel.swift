@@ -36,6 +36,15 @@ class FoodViewModel: ObservableObject {
                 NutritionInfo(icon: "leaf", text: "2g Carbs", color: .blue),
                 NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
             ]
+        ),
+        Food(
+            name: "Belum ada data",
+            imageName: "piring",
+            calories: 800,
+            nutritions: [
+                NutritionInfo(icon: "leaf", text: "12g Fiber", color: .green),
+                NutritionInfo(icon: "drop", text: "2g Fat", color: .blue)
+            ]
         )
     ]
 
