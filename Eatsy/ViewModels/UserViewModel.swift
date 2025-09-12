@@ -52,7 +52,9 @@ class UserViewModel: ObservableObject {
     func saveData(userData: User) {
         do {
             // Encode the provided User struct into Data.
-            let encodedData = try JSONEncoder().encode(userData)
+            self.user = userData
+            self.completeSetUp()
+            let encodedData = try JSONEncoder().encode(self.user)
             // Save the encoded data to UserDefaults using the designated key.
             UserDefaults.standard.set(encodedData, forKey: userDefaultsKey)
             print("User data successfully saved.")
@@ -62,10 +64,7 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    // Example of a method to update a specific user property.
-    func updateWeight(newWeight: Int) {
-        self.user.weight = newWeight
-        // Now calling the new saveData method.
-        self.saveData(userData: self.user)
+    func completeSetUp() {
+        self.user.isSetUp = true
     }
 }
