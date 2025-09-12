@@ -2,9 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @State private var selectedHeight: Int = 160
-    @State private var selectedWeight: Int = 60
-    @State private var selectedAge: Int = 21
+    @StateObject var userViewModel = UserViewModel()
     
     @State private var activePicker: PickerType? = nil
     
@@ -20,13 +18,13 @@ struct ProfileView: View {
                     .fontWeight(.medium)
                     .padding([.horizontal, .top])
                 VStack(spacing: 16) {
-                    ProfileItem(title: "📏 Height", value: "\(selectedHeight) cm")
+                    ProfileItem(title: "📏 Height", value: userViewModel.user.isSetUp ? "\(userViewModel.user.height) cm" : "Not set")
                                             .onTapGesture { activePicker = .height }
                                         
-                                        ProfileItem(title: "⚖️ Weight", value: "\(selectedWeight) kg")
+                                        ProfileItem(title: "⚖️ Weight", value: userViewModel.user.isSetUp ? "\(userViewModel.user.weight) cm" : "Not set")
                                             .onTapGesture { activePicker = .weight }
                                         
-                                        ProfileItem(title: "🎂 Age", value: "\(selectedAge) yo")
+                                        ProfileItem(title: "🎂 Age", value: userViewModel.user.isSetUp ? "\(userViewModel.user.age) cm" : "Not set")
                                             .onTapGesture { activePicker = .age }
                 }
                 .eatsyCard()
@@ -37,9 +35,9 @@ struct ProfileView: View {
         .sheet(item: $activePicker) { picker in
                     PickerSheet(
                         pickerType: picker,
-                        height: $selectedHeight,
-                        weight: $selectedWeight,
-                        age: $selectedAge
+                        height: $userViewModel.user.height,
+                        weight: $userViewModel.user.weight,
+                        age: $userViewModel.user.age
                     )
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
