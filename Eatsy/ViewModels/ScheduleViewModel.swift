@@ -33,30 +33,50 @@ final class ScheduleViewModel: ObservableObject {
     }
 
     private func loadDates() async {
-        isLoading = true
-        errorMessage = nil
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
+        }
         do {
-            let fetched = try await repo.fetchDates()
-            dates = fetched
-            if selectedDateIndex >= fetched.count {
-                selectedDateIndex = max(0, fetched.count - 1)
+            let fetched = try await repo.fetchDates()   // kerja background
+            await MainActor.run {
+                dates = fetched
+                if selectedDateIndex >= fetched.count {
+                    selectedDateIndex = max(0, fetched.count - 1)
+                }
+                isLoading = false
             }
         } catch {
-            errorMessage = "Failed to load dates: \(error.localizedDescription)"
+            await MainActor.run {
+                errorMessage = "Failed to load dates: \(error.localizedDescription)"
+                isLoading = false
+            }
         }
-        isLoading = false
     }
 
     private func loadMeals() async {
-        guard !dates.isEmpty else { return }
-        isLoading = true
-        errorMessage = nil
-        do {
-            let meals = try await repo.fetchMeals(forDateIndex: selectedDateIndex)
-            data = meals
-        } catch {
-            errorMessage = "Failed to load meals: \(error.localizedDescription)"
+        // ambil snapshot state di main thread
+        let hasDates: Bool = await MainActor.run { !dates.isEmpty }
+        guard hasDates else { return }
+
+        let index: Int = await MainActor.run { selectedDateIndex }
+
+        await MainActor.run {
+            isLoading = true
+            errorMessage = nil
         }
-        isLoading = false
+        do {
+            let meals = try await repo.fetchMeals(forDateIndex: index) // background
+            await MainActor.run {
+                data = meals
+                isLoading = false
+            }
+        } catch {
+            await MainActor.run {
+                errorMessage = "Failed to load meals: \(error.localizedDescription)"
+                isLoading = false
+            }
+        }
     }
+
 }

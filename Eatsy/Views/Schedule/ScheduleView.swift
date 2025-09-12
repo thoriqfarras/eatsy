@@ -4,9 +4,9 @@ struct ScheduleView: View {
     @StateObject private var vm: ScheduleViewModel
 
     // Inject VM (enak buat testing/preview)
-    init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: MockScheduleRepository())) {
-        _vm = StateObject(wrappedValue: viewModel)
-    }
+    init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: LocalScheduleRepository())) {
+            _vm = StateObject(wrappedValue: viewModel)
+        }
 
     var body: some View {
         NavigationStack {
@@ -59,13 +59,13 @@ struct ScheduleView: View {
                         ForEach(MealSection.allCases) { section in
                             // Section header
                             Text(section.rawValue)
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.secondary)
+                                .font(.subheadline)
+                                .foregroundStyle(Color(.systemGray2))
                                 .padding(.horizontal)
-                                .padding(.top, 8)
+                                .padding(.vertical, 8)
 
                             // Cards
-                            VStack(spacing: 14) {
+                            VStack(spacing: 8) {
                                 ForEach(vm.items(for: section)) { item in
                                     ScheduleMealRow(item: item)
                                         .padding(.horizontal)
@@ -86,5 +86,5 @@ struct ScheduleView: View {
 }
 
 #Preview {
-    ScheduleView(viewModel: ScheduleViewModel(repo: MockScheduleRepository()))
+    ScheduleView(viewModel: ScheduleViewModel(repo: LocalScheduleRepository()))
 }

@@ -1,0 +1,146 @@
+{
+    "days": [
+        {
+            "title": "Tomorrow",
+            "sections": {
+                "breakfast": [
+                    {
+                        "title": "Boiled Egg",
+                        "emoji": "🍳",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "10g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "1g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "6g" }
+                        ]
+                    },
+                    {
+                        "title": "Avocado Toast",
+                        "emoji": "🥑",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "18g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "28g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+                        ]
+                    }
+                ],
+                "lunch": [
+                    {
+                        "title": "Chicken Salad",
+                        "emoji": "🥗",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "12g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "10g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+                        ]
+                    }
+                ],
+                "dinner": [
+                    {
+                        "title": "Chicken Salad",
+                        "emoji": "🥗",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "12g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "10g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+                        ]
+                    },
+                    {
+                        "title": "Avocado Toast",
+                        "emoji": "🥑",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "18g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "28g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "18 Aug",
+            "sections": {
+                "breakfast": [
+                    {
+                        "title": "Oatmeal Berry",
+                        "emoji": "🫐",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "5g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "45g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "8g" }
+                        ]
+                    }
+                ],
+                "lunch": [
+                    {
+                        "title": "Beef Bowl",
+                        "emoji": "🍲",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "20g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "50g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "28g" }
+                        ]
+                    }
+                ],
+                "dinner": [
+                    {
+                        "title": "Chicken Salad",
+                        "emoji": "🥗",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "12g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "10g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "title": "19 Aug",
+            "sections": {
+                "breakfast": [
+                    {
+                        "title": "Pancakes",
+                        "emoji": "🥞",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "9g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "60g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "7g" }
+                        ]
+                    },
+                    {
+                        "title": "Avocado Toast",
+                        "emoji": "🥑",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "18g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "28g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+                        ]
+                    }
+                ],
+                "lunch": [
+                    {
+                        "title": "Sushi Set",
+                        "emoji": "🍣",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "8g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "55g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "24g" }
+                        ]
+                    }
+                ],
+                "dinner": [
+                    {
+                        "title": "Chicken Salad",
+                        "emoji": "🥗",
+                        "nutrients": [
+                            { "name": "Fat", "icon": "drop", "value": "12g" },
+                            { "name": "Carbs", "icon": "leaf", "value": "10g" },
+                            { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
+

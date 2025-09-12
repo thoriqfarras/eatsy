@@ -10,9 +10,9 @@ struct ScheduleMealRow: View {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                     .fill(.ultraThinMaterial)
                 Text(item.emoji)
-                    .font(.system(size: 28))
+                    .font(.system(size: 48))
             }
-            .frame(width: 56, height: 56)
+            .frame(width: 74, height: 74)
             
             // Title + nutrients
             VStack(alignment: .leading, spacing: 10) {
@@ -43,11 +43,12 @@ struct ScheduleMealRow: View {
             }
             Spacer(minLength: 0)
         }
-        .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color(.systemBackground))
-                .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
-        )
+//        .padding(14)
+//        .background(
+//            RoundedRectangle(cornerRadius: 18, style: .continuous)
+//                .fill(Color(.systemBackground))
+//                .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
+//        )
+        .eatsyCard()
     }
 }

@@ -6,32 +6,33 @@ protocol ScheduleRepository {
     func fetchMeals(forDateIndex index: Int) async throws -> [MealSection: [MealItem]]
 }
 
-// Implementasi mock (gampang diganti ke API sungguhan)
-final class MockScheduleRepository: ScheduleRepository {
-    
-    let userSet: Int = 1
-    
+/// Implementasi yang membaca dari Resources/mock_meals/mock_meals.json
+final class LocalScheduleRepository: ScheduleRepository {
+
+    private let root: MealsRootDTO
+    private let userSet: Int
+
+    /// subdirectory = "mock_meals" karena file ada di Resources/mock_meals/mock_meals.json
+    init(bundle: Bundle = .main, userSet: Int = 1) {
+        self.root = bundle.decode("mock_meals", in: "mock_meals")
+        self.userSet = userSet
+    }
+
     func fetchDates() async throws -> [String] {
-        // contoh: besok + dua hari setelahnya
-        return ["Tomorrow", "18 Aug", "19 Aug"]
+        root.days.map { $0.title }
     }
 
     func fetchMeals(forDateIndex index: Int) async throws -> [MealSection: [MealItem]] {
-            // kalau userSet = 0, langsung return kosong
-            if userSet == 0 {
-                return [:]
-            }
-            
-            let nutrients = [
-                Nutrient(name: "Fat",    icon: "drop",       value: "50g"),
-                Nutrient(name: "Carbs",  icon: "leaf",       value: "50g"),
-                Nutrient(name: "Protein",icon: "bolt.heart", value: "50g")
-            ]
-            let item = MealItem(title: "Boiled Egg", emoji: "🍳", nutrients: nutrients)
-            return [
-                .breakfast: Array(repeating: item, count: 3),
-                .lunch:     Array(repeating: item, count: 3),
-                .diner:     Array(repeating: item, count: 3)
-            ]
-        }
+        // opsional: aturan custommu
+        if userSet == 2 { return [:] }
+
+        guard index >= 0 && index < root.days.count else { return [:] }
+        let day = root.days[index]
+
+        var result: [MealSection: [MealItem]] = [:]
+        if let b = day.sections.breakfast, !b.isEmpty { result[.breakfast] = b }
+        if let l = day.sections.lunch,     !l.isEmpty { result[.lunch]     = l }
+        if let d = day.sections.dinner,    !d.isEmpty { result[.dinner]    = d }
+        return result
+    }
 }

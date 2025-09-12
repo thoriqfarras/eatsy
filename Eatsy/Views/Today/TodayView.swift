@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct TodayView: View {
-    @Binding var showOnboarding:Bool // anak
+    @Binding var showOnboarding: Bool
+    @Binding var showButton: Bool
+    
+    @State private var showRecommendation = false
     
     var body: some View {
         VStack(spacing: 16) {
@@ -14,7 +17,7 @@ struct TodayView: View {
                 Spacer()
                 
                 NavigationLink {
-                    ProfileView() // nanti arahkan ke view profil
+                    ProfileView()
                 } label: {
                     Image(systemName: "person.fill")
                         .resizable()
@@ -27,45 +30,77 @@ struct TodayView: View {
             .padding(.horizontal)
             .padding(.top, 12)
             
-            Button(action: {
-                showOnboarding = true   // ganti halaman
-            }) {
-                Text("GET MEAL PLAN")
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+            // Info card / Button
+            if !showButton {
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("This is your starting line!")
+                            .bold()
+                            .font(.headline)
+                            .padding(.bottom, 6)
+                        
+                        Text("Small steps today, big changes ahead\nFirst progress visible by next week")
+                            .font(.caption)
+                            .foregroundStyle(Color(.systemGray2))
+                    }
+                    Spacer()
+                    Image("daun")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 68, height: 68)
+
+                }
+                .eatsyCard()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color(.systemGray5), lineWidth: 1)
+                )
+                .padding([.horizontal, .bottom])
+            } else {
+                Button("GET MEAL PLAN") {
+                    showOnboarding = true
+                }
+                .buttonStyle(PrimaryButtonStyle())
             }
-            .padding(.horizontal)
             
             // Calories Intake
             HStack {
                 Text("Calories Intake")
-                    .font(.headline)
+                    .bold()
                 Spacer()
                 Text("- KCAL")
-                    .foregroundColor(.gray)
+                    .font(.caption)
+                    .foregroundStyle(Color(.systemGray2))
             }
             .padding(.horizontal)
             
             // Timeline
             List {
-                VStack(spacing: 32) {
-                    ForEach(0..<3) { _ in
-                        TimelineRow()
+                ForEach(0..<3, id: \.self) { _ in
+                    TimelineRow {
+                        showRecommendation = true
                     }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear) // 👉 biar nyatu
                 }
-                .padding(.horizontal)
-                .padding(.top, 8)
             }
             .listStyle(PlainListStyle())
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity) // isi penuh layar
+        .background(Color("defaultBackground")) // 👉 kasih putih bersih
+        .background(Color(.systemGroupedBackground)) // biar gak blank
+        .sheet(isPresented: $showRecommendation) {
+            RecomendationView()
+                .presentationDetents([.fraction(0.8)]) // 👉 langsung atur tinggi modal
+                .presentationCornerRadius(24)          // sudut rounded bawaan iOS 16+
+        }
+
     }
 }
 
 struct TimelineRow: View {
+    var onAddTapped: () -> Void
+    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -86,31 +121,29 @@ struct TimelineRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("8 AM")
                     .font(.caption)
-                    .foregroundColor(.gray)
                 
-                HStack(spacing: 12) {
-                    RoundedRectangle(cornerRadius: 8)
-                        .strokeBorder(Color.gray.opacity(0.3), lineWidth: 1)
-                        .frame(width: 60, height: 60)
-                        .overlay(
-                            Image(systemName: "photo")
-                                .foregroundColor(.gray)
-                        )
+                HStack() {
+                    Text("🍳")
+                        .font(.largeTitle)
+                        .foregroundStyle(Color(.systemGray2))
                     
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Breakfast")
-                            .font(.headline)
+                            .font(.caption)
+                            .foregroundStyle(Color(.systemGray2))
                         Text("-")
-                            .foregroundColor(.gray)
-                            .font(.subheadline)
+                            .bold()
                     }
-                    
                     Spacer()
+                    
+                    Button(action: {
+                        onAddTapped()
+                    }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.black)
+                    }
                 }
-                .padding()
-                .background(Color.white)
-                .cornerRadius(12)
-                .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+                .eatsyCard()
             }
         }
     }
@@ -118,6 +151,6 @@ struct TimelineRow: View {
 
 #Preview {
     NavigationStack {
-        TodayView(showOnboarding: .constant(false))
+        TodayView(showOnboarding: .constant(false), showButton: .constant(false))
     }
 }

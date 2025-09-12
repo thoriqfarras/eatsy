@@ -132,15 +132,11 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,macos
-<<<<<<< Updated upstream
-=======
 
 Eatsy.xcodeproj/project.xcworkspace/xcuserdata/
 
 # Xcode personal data
 *.xcuserstate
-xcuserdata/
-
 
 # NEW GITIGNORE TO IGNORE PERSONAL XCODE FILES
 
@@ -252,4 +248,4 @@ xcuserdata
 # After new code Injection tools there's a generated folder /iOSInjectionProject
 # https://github.com/johnno1962/injectionforxcode
 
->>>>>>> Stashed changes
+xcuserdata/
