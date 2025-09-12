@@ -1,22 +1,73 @@
 {
-  "recommendation": {
+  "recommendations": {
     "breakfast": [
       {
         "title": "Boiled Egg",
         "emoji": "🍳",
+        "imageName": "boiled_egg",
+        "calories": 78,
         "nutrients": [
-          { "name": "Fat", "icon": "drop", "value": "10g" },
-          { "name": "Carbs", "icon": "leaf", "value": "1g" },
-          { "name": "Protein", "icon": "bolt.heart", "value": "6g" }
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "5.3g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "0.6g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "6.3g"
+          }
+        ]
+      },
+      {
+        "title": "Oatmeal with Fruits",
+        "emoji": "🥣",
+        "imageName": "oatmeal",
+        "calories": 150,
+        "nutrients": [
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "2.5g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "27g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "5.5g"
+          }
         ]
       },
       {
         "title": "Avocado Toast",
         "emoji": "🥑",
+        "imageName": "avocado_toast",
+        "calories": 250,
         "nutrients": [
-          { "name": "Fat", "icon": "drop", "value": "18g" },
-          { "name": "Carbs", "icon": "leaf", "value": "28g" },
-          { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "18g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "28g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "5g"
+          }
         ]
       }
     ],
@@ -24,30 +75,95 @@
       {
         "title": "Chicken Salad",
         "emoji": "🥗",
+        "imageName": "chicken_salad",
+        "calories": 350,
         "nutrients": [
-          { "name": "Fat", "icon": "drop", "value": "12g" },
-          { "name": "Carbs", "icon": "leaf", "value": "10g" },
-          { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "12g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "10g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "32g"
+          }
+        ]
+      },
+      {
+        "title": "Sate Ayam",
+        "emoji": "🍢",
+        "imageName": "sate_ayam",
+        "calories": 400,
+        "nutrients": [
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "20g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "15g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "25g"
+          }
         ]
       }
     ],
     "dinner": [
       {
-        "title": "Chicken Salad",
-        "emoji": "🥗",
+        "title": "Grilled Salmon",
+        "emoji": "🍣",
+        "imageName": "grilled_salmon",
+        "calories": 550,
         "nutrients": [
-          { "name": "Fat", "icon": "drop", "value": "12g" },
-          { "name": "Carbs", "icon": "leaf", "value": "10g" },
-          { "name": "Protein", "icon": "bolt.heart", "value": "32g" }
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "30g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "5g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "50g"
+          }
         ]
       },
       {
-        "title": "Avocado Toast",
-        "emoji": "🥑",
+        "title": "Rawon",
+        "emoji": "🍲",
+        "imageName": "rawon",
+        "calories": 600,
         "nutrients": [
-          { "name": "Fat", "icon": "drop", "value": "18g" },
-          { "name": "Carbs", "icon": "leaf", "value": "28g" },
-          { "name": "Protein", "icon": "bolt.heart", "value": "5g" }
+          {
+            "name": "Fat",
+            "icon": "drop",
+            "value": "35g"
+          },
+          {
+            "name": "Carbs",
+            "icon": "leaf",
+            "value": "45g"
+          },
+          {
+            "name": "Protein",
+            "icon": "bolt.heart",
+            "value": "20g"
+          }
         ]
       }
     ]
