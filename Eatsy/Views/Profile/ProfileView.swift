@@ -21,7 +21,7 @@ struct ProfileView: View {
                     ProfileItem(title: "📏 Height", value: userViewModel.user.isSetUp ? "\(userViewModel.user.height) cm" : "Not set")
                                             .onTapGesture { activePicker = .height }
                                         
-                                        ProfileItem(title: "⚖️ Weight", value: userViewModel.user.isSetUp ? "\(userViewModel.user.weight) cm" : "Not set")
+                                        ProfileItem(title: "⚖️ Weight", value: userViewModel.user.isSetUp ? "\(userViewModel.user.weight) kg" : "Not set")
                                             .onTapGesture { activePicker = .weight }
                                         
                                         ProfileItem(title: "🎂 Age", value: userViewModel.user.isSetUp ? "\(userViewModel.user.age) cm" : "Not set")
