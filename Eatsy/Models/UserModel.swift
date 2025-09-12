@@ -58,6 +58,7 @@ struct User: Identifiable, Codable {
     var age: Int = 21
     var targetWeight: Int = 75
     var dietRestrictions: Set<DietRestriction> = []
+    var isSetUp: Bool = false
 }
 
 enum PickerType: Identifiable {
