@@ -19,16 +19,19 @@ final class LocalScheduleRepository: ScheduleRepository {
     }
 
     func fetchDates() async throws -> [String] {
-        root.days.map { $0.title }
+        // Skip item pertama (Today)
+        let days = Array(root.days.dropFirst())
+        return days.map { $0.title }
     }
 
     func fetchMeals(forDateIndex index: Int) async throws -> [MealSection: [MealItem]] {
-        // opsional: aturan custommu
+        // aturan khusus: jika userSet == 2 maka kosong
         if userSet == 2 { return [:] }
 
-        guard index >= 0 && index < root.days.count else { return [:] }
-        let day = root.days[index]
+        let days = Array(root.days.dropFirst()) // buang "Today"
+        guard index >= 0 && index < days.count else { return [:] }
 
+        let day = days[index]
         var result: [MealSection: [MealItem]] = [:]
         if let b = day.sections.breakfast, !b.isEmpty { result[.breakfast] = b }
         if let l = day.sections.lunch,     !l.isEmpty { result[.lunch]     = l }
