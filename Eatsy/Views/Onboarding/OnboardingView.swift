@@ -19,23 +19,9 @@ enum OnboardingStep {
 struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     @Binding var showButton: Bool  // anak
-    @State private var selectedGoal: Goal? = nil
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> main
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> main
-=======
-    @State private var selectedGoal: Goal? = nil
-    @Binding var showButton: Bool  // anak
->>>>>>> 7e285b09aa83bcc55fe5f7fa3893dc6458883170
+    @StateObject var viewModel: UserViewModel = UserViewModel()
+    @State var userData: User = User()
     
     var body: some View {
         VStack {
@@ -46,7 +32,7 @@ struct OnboardingView: View {
                     prevStep: { currentStep = .gender },
                     onCancel: {showOnboarding = false}
                 )
-                GenderView(nextStep: { currentStep = .goal })
+                GenderView(nextStep: { currentStep = .goal }, gender: $userData.gender)
             case .goal:
                 Navbar(
                     currentStep: $currentStep,
@@ -54,8 +40,8 @@ struct OnboardingView: View {
                     onCancel: { showOnboarding = false }
                 )
                 GoalView(
-                    selectedGoal: $selectedGoal,
-                    nextStep: { currentStep = .aboutYou }
+                    selectedGoal: $userData.goal,
+                    nextStep: { currentStep = .aboutYou },
                 )
             case .aboutYou:
                 Navbar(
@@ -63,21 +49,24 @@ struct OnboardingView: View {
                     prevStep: { currentStep = .goal },
                     onCancel: { showOnboarding = false }
                 )
-                AboutYouView(nextStep: { currentStep = .weightGoal })
+                AboutYouView(nextStep: { currentStep = .weightGoal }, height: $userData.height, weight: $userData.weight, age: $userData.age)
             case .weightGoal:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .aboutYou },
                     onCancel: { showOnboarding = false }
                 )
-                WeightGoalView(nextStep: { currentStep = .dietRestriction })
+                WeightGoalView(nextStep: { currentStep = .dietRestriction }, weightGoal: $userData.targetWeight)
             case .dietRestriction:
                 Navbar(
                     currentStep: $currentStep,
                     prevStep: { currentStep = .weightGoal },
                     onCancel: { showOnboarding = false }
                 )
-                DietRestrictionView(nextStep: { currentStep = .done })
+                DietRestrictionView(nextStep: {
+                    currentStep = .done
+                    viewModel.saveData(userData: userData)
+                }, userData: $userData, saveUser: viewModel.saveData)
             case .done:
                 OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton)
             }
@@ -159,6 +148,7 @@ struct DoneButton: View {
 struct GenderView: View {
     
     let nextStep: () -> Void
+    @Binding var gender: Gender?
     
     var body: some View {
         
@@ -182,7 +172,7 @@ struct GenderView: View {
             .frame(maxWidth: .infinity)
             .padding()
             
-            GenderRadioButtonsGroup()
+            GenderRadioButtonsGroup(selectedGender: $gender)
             Spacer()
             NextButton(nextStep: nextStep)
         }
@@ -229,13 +219,13 @@ let weights = 30..<201
 let ages = 18..<26
 
 struct AboutYouView: View {
-    @State private var selectedHeight: Int = 160
-    @State private var selectedWeight: Int = 60
-    @State private var selectedAge: Int = 21
-    
     @State private var expandedPicker: PickerType? = nil
     
     let nextStep: () -> Void
+    
+    @Binding var height: Int
+    @Binding var weight: Int
+    @Binding var age: Int
     
     var body: some View {
         VStack {
@@ -251,32 +241,32 @@ struct AboutYouView: View {
             }
             .frame(maxWidth: .infinity)
             .padding()
+//<<<<<<< Updated upstream
             
             DropdownPicker(
                 text: "📏 Height",
-                selectedValue: selectedHeight,
+                selectedValue: $height,
                 values: heights,
                 unit: "cm",
                 isExpanded: expandedPicker == .height,
                 toggle: { expandedPicker = expandedPicker == .height ? nil : .height }
             ) {
-                Picker("Height", selection: $selectedHeight) {
+                Picker("Height", selection: $height) {
                     ForEach(heights, id: \.self) { height in
                         Text("\(height) cm")
                     }
                 }
                 .pickerStyle(.wheel)
             }
-            
             DropdownPicker(
                 text: "⚖️ Weight",
-                selectedValue: selectedWeight,
+                selectedValue: $weight,
                 values: weights,
                 unit: "kg",
                 isExpanded: expandedPicker == .weight,
                 toggle: { expandedPicker = expandedPicker == .weight ? nil : .weight }
             ) {
-                Picker("Weight", selection: $selectedWeight) {
+                Picker("Weight", selection: $weight) {
                     ForEach(weights, id: \.self) { weight in
                         Text("\(weight) kg")
                     }
@@ -286,13 +276,13 @@ struct AboutYouView: View {
             
             DropdownPicker(
                 text: "🎂 Age",
-                selectedValue: selectedAge,
+                selectedValue: $age,
                 values: ages,
                 unit: "yo",
                 isExpanded: expandedPicker == .age,
                 toggle: { expandedPicker = expandedPicker == .age ? nil : .age }
             ) {
-                Picker("Age", selection: $selectedAge) {
+                Picker("Age", selection: $age) {
                     ForEach(ages, id: \.self) { age in
                         Text("\(age) yo")
                     }
@@ -309,9 +299,9 @@ struct AboutYouView: View {
 
 struct WeightGoalView: View {
     
-    @State private var selectedWeightGoal: Int?
-    
     let nextStep: () -> Void
+    
+    @Binding var weightGoal: Int
     
     var body: some View {
         VStack {
@@ -329,7 +319,6 @@ struct WeightGoalView: View {
                 .frame(maxWidth: .infinity)
                 .padding()
             }
-            
             VStack {
                 HStack {
                     Text("🎯 Goal Weight")
@@ -337,7 +326,7 @@ struct WeightGoalView: View {
                     Spacer()
                 }
                 
-                Picker("Weight Goal", selection: $selectedWeightGoal) {
+                Picker("Weight Goal", selection: $weightGoal) {
                     ForEach (weights, id: \.self) { weight in
                         Text("\(weight) kg")
                     }
@@ -358,6 +347,9 @@ struct DietRestrictionView: View {
     @State private var selectedRestrictions: Set<DietRestriction> = []
     let nextStep: () -> Void
     
+    @Binding var userData: User
+    var saveUser: (User) -> Void
+    
     var body: some View {
         VStack {
             Text("5 of 5").foregroundColor(Color(.systemGray2)).padding(.top, 1)
@@ -372,7 +364,7 @@ struct DietRestrictionView: View {
             }
             .padding()
             
-            DietRestrictionCheckboxesGroup(selectedRestrictions: $selectedRestrictions)
+            DietRestrictionCheckboxesGroup(selectedRestrictions: $userData.dietRestrictions)
             
             Spacer()
             NextButton(nextStep: nextStep)
@@ -418,7 +410,7 @@ struct OnboardingDoneView: View {
 
 struct DropdownPicker<Content: View>: View {
     let text: String
-    let selectedValue: Int
+    @Binding var selectedValue: Int
     let values: Range<Int>
     let unit: String
     let isExpanded: Bool
@@ -499,30 +491,26 @@ struct DietRestrictionCheckboxesGroup: View {
 }
 
 struct GenderRadioButtonsGroup: View {
-    @State var isMaleSelected: Bool = false
-    @State var isFemaleSelected: Bool = false
+    @Binding var selectedGender: Gender?
     
     var body: some View {
         VStack(spacing: 10) {
             Button(action: {
-                isMaleSelected.toggle()
-                isFemaleSelected = false
+                selectedGender = .m
             }) {
                 Text("👨 Male")
                     .foregroundColor(.black)
                 Spacer()
             }
-            .selectableCard(isSelected: isMaleSelected)
+            .selectableCard(isSelected: selectedGender == .m)
             Button(action: {
-                isMaleSelected = false
-                isFemaleSelected.toggle()
-                
+                selectedGender = .f
             }) {
                 Text("👩‍🦰 Female")
                     .foregroundColor(.black)
                 Spacer()
             }
-            .selectableCard(isSelected: isFemaleSelected)
+            .selectableCard(isSelected: selectedGender == .f)
         }
     }
 }

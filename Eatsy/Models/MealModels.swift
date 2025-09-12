@@ -34,3 +34,19 @@ enum MealSection: String, CaseIterable, Identifiable, Codable {
         }
     }
 }
+
+
+struct MealsRootDTO: Codable {
+    let days: [DayDTO]
+}
+
+struct DayDTO: Codable {
+    let title: String
+    let sections: SectionsDTO
+}
+
+struct SectionsDTO: Codable {
+    let breakfast: [MealItem]?
+    let lunch:     [MealItem]?
+    let dinner:    [MealItem]?
+}
