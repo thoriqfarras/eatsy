@@ -5,6 +5,7 @@ struct TodayView: View {
     @Binding var showButton: Bool
     
     @State private var showRecommendation = false
+    @StateObject private var userVM = UserViewModel()
     
     var body: some View {
         VStack(spacing: 16) {
@@ -68,9 +69,9 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-                Text("- KCAL")
-                    .font(.caption)
-                    .foregroundStyle(Color(.systemGray2))
+                Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL") // 👉 tampilkan hasil
+                                    .font(.caption)
+                                    .foregroundStyle(Color(.systemGray2)).bold()
             }
             .padding(.horizontal)
             
