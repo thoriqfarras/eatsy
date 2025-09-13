@@ -64,15 +64,15 @@ extension View {
 }
 
 struct PrimaryButtonStyle: ButtonStyle {
+    var isEnabled: Bool = true
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .foregroundStyle(Color.white)
-            .bold()
-            .padding()
+            .foregroundStyle(isEnabled ? Color.white : Color(.systemGray2))
+            .bold() .padding()
             .frame(maxWidth: .infinity)
-            .background(Color("PrimaryGreen"))
+            .background(isEnabled ? Color("PrimaryGreen") : Color(.systemGray4))
             .clipShape(RoundedRectangle(cornerRadius: 16))
-            .opacity(configuration.isPressed ? 0.8 : 1.0) // efek tap
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
             .padding()
     }
 }

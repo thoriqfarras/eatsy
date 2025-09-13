@@ -69,36 +69,41 @@ class UserViewModel: ObservableObject {
     }
 
     func calculateTargetCalories(userData: User) -> Int {
-        var bmr: Double = 0
+        // 🔥 Unwrap semua optional, kalau ada yang nil return 0
+        guard let gender = userData.gender,
+              let weight = userData.weight,
+              let height = userData.height,
+              let age = userData.age,
+              let targetWeight = userData.targetWeight else {
+            return 0
+        }
+
+        var bmr: Double = 0.0
         
-        if userData.gender == .m {
-            bmr = 88.362
-                + (13.397 * Double(userData.weight))
-                + (4.799 * Double(userData.height))
-                - (5.677 * Double(userData.age))
+        if gender == .m {
+            // 🔥 Pecah jadi step
+            let weightFactor = 13.397 * Double(weight)
+            let heightFactor = 4.799 * Double(height)
+            let ageFactor = 5.677 * Double(age)
+            bmr = 88.362 + weightFactor + heightFactor - ageFactor
         } else {
-            bmr = 447.593
-                + (9.247 * Double(userData.weight))
-                + (3.098 * Double(userData.height))
-                - (4.330 * Double(userData.age))
+            let weightFactor = 9.247 * Double(weight)
+            let heightFactor = 3.098 * Double(height)
+            let ageFactor = 4.330 * Double(age)
+            bmr = 447.593 + weightFactor + heightFactor - ageFactor
         }
         
-        // TDEE dengan faktor aktivitas 1.2 (sedentary)
+        // 🔥 Perhitungan TDEE
         let tdee = bmr * 1.2
         
-        // Selisih berat dalam kg
-        let weightDiff = Double(userData.weight - userData.targetWeight)
+        // 🔥 Selisih berat
+        let weightDiff = Double(weight - targetWeight)
         
-        // Total kalori yg harus di-defisit/surplus (1 kg ≈ 7700 kcal)
+        // 🔥 Total kalori
         let totalCalorieChange = weightDiff * 7700
-        
-        // Per hari selama 1 tahun
         let dailyCalorieChange = totalCalorieChange / 365.0
         
-        // Target kalori harian
         let targetCalories = tdee - dailyCalorieChange
-        
         return Int(targetCalories.rounded())
     }
-
 }
