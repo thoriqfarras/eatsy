@@ -49,7 +49,7 @@ struct FoodCardView: View {
                     .font(.caption)
                     .bold()
                     .padding(10)
-                    .background(Color("secondary"))
+                    .background(Color("secYellow"))
                     .foregroundColor(Color("PrimaryGreen"))
                     .cornerRadius(8)
                 Spacer()

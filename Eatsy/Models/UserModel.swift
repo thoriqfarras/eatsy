@@ -53,13 +53,15 @@ struct User: Identifiable, Codable {
     var id = UUID()
     var gender: Gender?
     var goal: Goal?
-    var height: Int = 160
-    var weight: Int = 60
-    var age: Int = 21
-    var targetWeight: Int = 75
+    var height: Int?
+    var weight: Int?
+    var age: Int?
+    
+    var targetWeight: Int? = nil
     var dietRestrictions: Set<DietRestriction> = []
     var isSetUp: Bool = false
 }
+
 
 enum PickerType: Identifiable {
     case height, weight, age
