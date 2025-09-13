@@ -115,7 +115,7 @@ struct Navbar: View {
 
 struct NextButton: View {
     let nextStep: () -> Void
-    
+    var isEnabled: Bool = true
     var body: some View {
         VStack {
             Button(action: {
@@ -123,7 +123,8 @@ struct NextButton: View {
             }) {
                 Text("Next")
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(PrimaryButtonStyle(isEnabled: isEnabled))
+            .disabled(!isEnabled)
         }
     }
 }
@@ -174,9 +175,8 @@ struct GenderView: View {
             
             GenderRadioButtonsGroup(selectedGender: $gender)
             Spacer()
-            NextButton(nextStep: nextStep)
+            NextButton(nextStep: nextStep, isEnabled: gender != nil)
         }
-        .background(Color("defaultBackground")) // 👈 pindah ke sini
     }
 }
 
@@ -539,4 +539,5 @@ struct GoalRadioButtonsGroup: View {
 
 #Preview {
     OnboardingView(showOnboarding: .constant(true), showButton: .constant(false))
+        .background(Color("defaultBackground"))
 }
