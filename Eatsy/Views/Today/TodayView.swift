@@ -32,7 +32,7 @@ struct TodayView: View {
             .padding(.top, 12)
             
             // Info card / Button
-            if !showButton {
+            if !userVM.user.isSetUp  {
                 HStack(spacing: 12) {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("This is your starting line!")
