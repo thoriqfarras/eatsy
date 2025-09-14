@@ -18,14 +18,17 @@ struct ProfileView: View {
                     .fontWeight(.medium)
                     .padding([.horizontal, .top])
                 VStack(spacing: 16) {
-                    ProfileItem(title: "📏 Height", value: userViewModel.user.isSetUp ? "\(userViewModel.user.height) cm" : "Not set")
-                                            .onTapGesture { activePicker = .height }
-                                        
-                                        ProfileItem(title: "⚖️ Weight", value: userViewModel.user.isSetUp ? "\(userViewModel.user.weight) kg" : "Not set")
-                                            .onTapGesture { activePicker = .weight }
-                                        
-                                        ProfileItem(title: "🎂 Age", value: userViewModel.user.isSetUp ? "\(userViewModel.user.age) cm" : "Not set")
-                                            .onTapGesture { activePicker = .age }
+                    ProfileItem(title: "📏 Height",
+                                value: userViewModel.user.height != nil ? "\(userViewModel.user.height!) cm" : "Not set")
+                    .onTapGesture { activePicker = .height }
+                    
+                    ProfileItem(title: "⚖️ Weight",
+                                value: userViewModel.user.weight != nil ? "\(userViewModel.user.weight!) kg" : "Not set")
+                    .onTapGesture { activePicker = .weight }
+                    
+                    ProfileItem(title: "🎂 Age",
+                                value: userViewModel.user.age != nil ? "\(userViewModel.user.age!) yo" : "Not set")
+                    .onTapGesture { activePicker = .age }
                 }
                 .eatsyCard()
                 .padding(.horizontal)
@@ -73,20 +76,20 @@ struct ProfileItem: View {
 
 struct PickerSheet: View {
     let pickerType: PickerType
-    @Binding var height: Int
-    @Binding var weight: Int
-    @Binding var age: Int
-    
+    @Binding var height: Int?
+    @Binding var weight: Int?
+    @Binding var age: Int?
+
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         VStack {
             Text("Select \(title)")
                 .bold()
+            
             Picker("", selection: binding) {
                 ForEach(range, id: \.self) { value in
-                    Text("\(value) \(unit)")
-                        .tag(value)
+                    Text("\(value) \(unit)").tag(Optional(value))
                 }
             }
             .pickerStyle(.wheel)
@@ -98,23 +101,23 @@ struct PickerSheet: View {
             .buttonStyle(PrimaryButtonStyle())
         }
     }
-    
-    private var binding: Binding<Int> {
+
+    private var binding: Binding<Int?> {
         switch pickerType {
         case .height: return $height
         case .weight: return $weight
         case .age: return $age
         }
     }
-    
-    private var range: Range<Int> {
+
+    private var range: [Int] {
         switch pickerType {
-        case .height: return 130..<221
-        case .weight: return 30..<201
-        case .age: return 18..<100
+        case .height: return Array(130...220)
+        case .weight: return Array(30...200)
+        case .age: return Array(18...100)
         }
     }
-    
+
     private var unit: String {
         switch pickerType {
         case .height: return "cm"
@@ -122,7 +125,7 @@ struct PickerSheet: View {
         case .age: return "yo"
         }
     }
-    
+
     private var title: String {
         switch pickerType {
         case .height: return "Height"
@@ -137,7 +140,7 @@ struct GoalCardView: View {
     @State private var showModal = false
         @Environment(\.dismiss) var dismiss
         
-        @State private var tempSelectedGoal: Goal? = nil // state sementara
+        @State private var tempSelectedGoal: Goal? = nil
     
     var body: some View {
         HStack {
