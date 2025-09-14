@@ -40,6 +40,14 @@ struct ContentView: View {
             .tabItem {
                 Label("Schedule", systemImage: "calendar")
             }
+            
+            NavigationStack {
+                TommorowView()
+            }
+            .tabItem {
+                Label("Tommorow", systemImage: "calendar")
+            }
+
         }
         .accentColor(.primaryGreen)
         .fullScreenCover(isPresented: $showOnboarding) {
