@@ -20,12 +20,13 @@ struct OnboardingView: View {
     @State var currentStep: OnboardingStep = .gender
     @Binding var showOnboarding: Bool  // anak
     @Binding var showButton: Bool  // anak
-    @StateObject var viewModel: UserViewModel = UserViewModel()
+    //@StateObject var viewModel: UserViewModel = UserViewModel()
     @State var userData: User = User()
     @State private var selectedHeight: Int? = nil
     @State private var selectedWeight: Int? = nil
     @State private var selectedAge: Int? = nil
     
+    @EnvironmentObject var viewModel : UserViewModel
     var body: some View {
         VStack {
             switch currentStep {
