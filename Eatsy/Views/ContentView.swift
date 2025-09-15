@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State var showOnboarding:Bool = false // ortu
-    @State var showButton:Bool = true
+    @State var showButton:Bool = false
+    @State var enableButton: Bool = false
+    @State var showRecommendation: Bool = false
     
     init() {
         let appearance = UITabBarAppearance()
@@ -21,12 +23,13 @@ struct ContentView: View {
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
     
-    var viewModel = UserViewModel()
+    @StateObject var user = UserViewModel()
     
     var body: some View {
         TabView {
             NavigationStack {
-                TodayView(showOnboarding: $showOnboarding, showButton: $showButton)
+                TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation)
+                    .environmentObject(user)
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
@@ -49,7 +52,7 @@ struct ContentView: View {
         }
         .accentColor(.primaryGreen)
         .fullScreenCover(isPresented: $showOnboarding) {
-            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton)
+            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton).environmentObject(user)
         }
         
     }
