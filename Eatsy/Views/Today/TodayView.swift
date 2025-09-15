@@ -8,23 +8,23 @@ struct TodayView: View {
     
 //    @EnvironmentObject var userVM : UserViewModel
     var type = 2
-    
-    var recommendation: Recommendation = Recommendation(
+    var mealType : MealType
+    var recommendation = Recommendation(
         date: Date(),
         breakfasts: [
-            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:1, mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:2,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:3,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
         ],
         lunches: [
-            MealObject(mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:11,mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:12,mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:13,mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
         ],
         dinners: [
-            MealObject(mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:21,mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:22,mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(id:23,mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
         ]
     )
     
@@ -145,7 +145,7 @@ struct TodayView: View {
         .background(Color("defaultBackground"))
         .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $showRecommendation) {
-            RecomendationView()
+            RecomendationView(mealType: .breakfast)
                 .presentationDetents([.fraction(0.8)])
                 .presentationCornerRadius(24)
         }
@@ -297,6 +297,7 @@ struct TimelineRowFilled: View {
 
 #Preview {
     NavigationStack {
-        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false))
+        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false),
+                  mealType: .breakfast)
     }
 }

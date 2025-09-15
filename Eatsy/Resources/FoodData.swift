@@ -1,24 +1,5 @@
 import Foundation
 
-struct MealObject: Codable, Identifiable {
-    let id: Int
-    let mealType: MealType
-    let menuName: String
-    let calories: Int
-    let protein: Int
-    let carbs: Int
-    let fat: Int
-    var imageName: String = ""
-    let restrictions: [DietRestriction]
-}
-
-// Enum for meal types
-enum MealType: String, CaseIterable, Codable {
-    case breakfast
-    case lunch
-    case dinner
-}
-
 // A helper struct to hold the data, separated by meal type
 struct FoodData {
     static let breakfast: [MealObject] = [
