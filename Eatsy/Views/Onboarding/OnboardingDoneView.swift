@@ -29,12 +29,10 @@ struct OnboardingDoneView: View {
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
-                Text("🗓️ \(targetDate ?? Date())")
+                Text("🗓️ \(targetDate?.formatted(formatter.dateFormat) ?? Date())")
                     .bold()
                     .foregroundColor(Color("PrimaryGreen"))
                     .padding(.top, 5)
-                Text("\(height!)")
-                Text("\(dailyTargetCalories)")
             }
             .frame(maxWidth: .infinity)
             .padding()
