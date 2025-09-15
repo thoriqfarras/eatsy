@@ -35,13 +35,10 @@ enum Goal: Codable {
 }
 
 enum DietRestriction: String, CaseIterable, Hashable, Codable {
-    case noRestriction = "😋 No diet restriction"
-    case Lactose = "🥛 Lactose intolerant"
-    case Gluten = "🌾 Gluten-free"
-    case Diary = "🧀 Dairy-free"
-    case Egg = "🥚 Egg allergy"
-    case Shellfish = "🦐 Shellfish allergy"
-    
+    case lactoseIntolerant = "🥛 Lactose intolerant"
+    case glutenFree = "🌾 Gluten-free"
+    case dairyFree = "🧀 Dairy-free"
+    case eggAllergy = "🥚 Egg allergy"
 }
 
 
@@ -56,6 +53,9 @@ struct User: Identifiable, Codable {
     var targetWeight: Int? = nil
     var dietRestrictions: Set<DietRestriction> = []
     var isSetUp: Bool = false
+    
+    var dailyTargetCalories: Int = 0
+    var targetDate: Date?
 }
 
 
