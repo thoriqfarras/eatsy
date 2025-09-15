@@ -29,7 +29,7 @@ struct OnboardingDoneView: View {
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
-                Text("🗓️ \(targetDate?.formatted(formatter.dateFormat) ?? Date())")
+                Text("🗓️ \(targetDate ?? Date())")
                     .bold()
                     .foregroundColor(Color("PrimaryGreen"))
                     .padding(.top, 5)

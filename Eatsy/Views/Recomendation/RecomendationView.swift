@@ -26,13 +26,13 @@ struct RecomendationView: View {
             .padding(.bottom, 6)
             
             VStack(spacing: 12) {
-                ForEach(viewModel.foods.prefix(3)) { food in
-                    Button {
-                        viewModel.toggleSelection(for: food.id)
-                    } label: {
-                        FoodCardView(food: food)
-                    }
-                }
+//                ForEach(viewModel.foods.prefix(3)) { food in
+//                    Button {
+//                        viewModel.toggleSelection(for: food.id)
+//                    } label: {
+//                        FoodCardView(food: food)
+//                    }
+//                }
             }
             
             Button {
