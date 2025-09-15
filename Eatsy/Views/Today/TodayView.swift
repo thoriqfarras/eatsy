@@ -153,6 +153,7 @@ struct TodayView: View {
 }
 
 struct TimelineRow: View {
+    
     var onAddTapped: () -> Void
     var isEnabled: Bool   // 👈 flag untuk kontrol tombol
     var mealType: MealType
