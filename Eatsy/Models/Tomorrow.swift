@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TommorowMeal: Identifiable, Codable {
+struct TomorrowMeal: Identifiable, Codable {
     let id: Int
     let meal_type: String
     let menu_name: String

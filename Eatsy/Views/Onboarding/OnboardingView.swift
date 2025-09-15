@@ -109,7 +109,7 @@ struct Navbar: View {
         case .aboutYou: return 3
         case .weightGoal: return 4
         case .dietRestriction: return 5
-            case .done: return 5            }
+        case .done: return 5            }
     }
     
     var body: some View {
@@ -145,6 +145,7 @@ struct Navbar: View {
                 }
             }.hidden()
         }.padding(.horizontal)
+            .background(Color("defaultBackground").ignoresSafeArea())
     }
 }
 
@@ -209,6 +210,7 @@ struct GenderView: View {
             Spacer()
             NextButton(nextStep: nextStep, isEnabled: gender != nil)
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -365,6 +367,7 @@ struct AboutYouView: View {
                 if selectedAge != nil { completedSteps.insert(.age) }
             }
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -414,6 +417,7 @@ struct WeightGoalView: View {
                 nextStep: nextStep,
                 isEnabled: weightGoal != nil)
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -444,6 +448,7 @@ struct DietRestrictionView: View {
                 nextStep()
             }, isEnabled: !userData.dietRestrictions.isEmpty)
         }
+        .background(Color("defaultBackground"))
     }
 }
 
@@ -479,6 +484,7 @@ struct OnboardingDoneView: View {
             DoneButton(showOnboarding: $showOnboarding,
                        showButton: $showButton)
         }
+        .background(Color("defaultBackground"))
     }
 }
 

@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct TommorowView: View {
-    @StateObject private var vm = TommorowViewModel()
+struct TomorrowView: View {
+    @StateObject private var vm = TomorrowViewModel()
     
     var body: some View {
         NavigationStack {
@@ -9,7 +9,7 @@ struct TommorowView: View {
                 
                 // Header
                 HStack {
-                    Text("Tommorow Meal's Plan")
+                    Text("Tomorrow Meal's Plan")
                         .font(.title)
                         .bold()
                     
@@ -39,7 +39,7 @@ struct TommorowView: View {
                             .padding(.horizontal)
                         
                         ForEach(vm.recommendations(for: "breakfast")) { meal in
-                            TommorowMealRow(item: meal)
+                            TomorrowMealRow(item: meal)
                                 .padding(.horizontal)
                         }
                         
@@ -49,7 +49,7 @@ struct TommorowView: View {
                             .padding(.horizontal)
                         
                         ForEach(vm.recommendations(for: "lunch")) { meal in
-                            TommorowMealRow(item: meal)
+                            TomorrowMealRow(item: meal)
                                 .padding(.horizontal)
                         }
                         
@@ -59,7 +59,7 @@ struct TommorowView: View {
                             .padding(.horizontal)
                         
                         ForEach(vm.recommendations(for: "dinner")) { meal in
-                            TommorowMealRow(item: meal)
+                            TomorrowMealRow(item: meal)
                                 .padding(.horizontal)
                         }
                     }
@@ -71,8 +71,8 @@ struct TommorowView: View {
     }
 }
 
-struct TommorowMealRow: View {
-    let item: TommorowMeal
+struct TomorrowMealRow: View {
+    let item: TomorrowMeal
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -107,5 +107,5 @@ struct TommorowMealRow: View {
 }
 
 #Preview {
-    TommorowView()
+    TomorrowView()
 }

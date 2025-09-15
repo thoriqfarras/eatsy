@@ -34,18 +34,14 @@ enum Goal: Codable {
         }
 }
 
-//<<<<<<< Updated upstream
-//enum DietRestriction: String, CaseIterable, Hashable {
-//    case noRestriction = "😋 No diet restriction"
-//=======
 enum DietRestriction: String, CaseIterable, Hashable, Codable {
-//>>>>>>> Stashed changes
-    case lactoseIntolerant = "🥛 Lactose intolerant"
-    case glutenFree = "🌾 Gluten-free"
-    case DiaryFree = "🧀 Dairy-free"
+    case noRestriction = "😋 No diet restriction"
+    case Lactose = "🥛 Lactose intolerant"
+    case Gluten = "🌾 Gluten-free"
+    case Diary = "🧀 Dairy-free"
     case Egg = "🥚 Egg allergy"
+    case Shellfish = "🦐 Shellfish allergy"
     
-    // Tambah lainnya di sini
 }
 
 
