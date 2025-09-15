@@ -1,0 +1,900 @@
+[  {
+    "id": 101,
+    "meal_type": "dinner",
+    "menu_name": "Sup Ikan",
+    "portion_size": "250g",
+    "calories": 300,
+    "protein": 10,
+    "carbs": 30,
+    "fat": 8,
+    "description": "Sup Ikan dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 102,
+    "meal_type": "dinner",
+    "menu_name": "Salad Sayur",
+    "portion_size": "300g",
+    "calories": 305,
+    "protein": 11,
+    "carbs": 31,
+    "fat": 9,
+    "description": "Salad Sayur dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 103,
+    "meal_type": "dinner",
+    "menu_name": "Nasi Merah + Ayam",
+    "portion_size": "350g",
+    "calories": 310,
+    "protein": 12,
+    "carbs": 32,
+    "fat": 10,
+    "description": "Nasi Merah + Ayam dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 104,
+    "meal_type": "dinner",
+    "menu_name": "Tumis Brokoli",
+    "portion_size": "400g",
+    "calories": 315,
+    "protein": 13,
+    "carbs": 33,
+    "fat": 11,
+    "description": "Tumis Brokoli dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 105,
+    "meal_type": "dinner",
+    "menu_name": "Ikan Bakar",
+    "portion_size": "450g",
+    "calories": 320,
+    "protein": 14,
+    "carbs": 34,
+    "fat": 12,
+    "description": "Ikan Bakar dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 106,
+    "meal_type": "dinner",
+    "menu_name": "Sup Jagung",
+    "portion_size": "250g",
+    "calories": 325,
+    "protein": 15,
+    "carbs": 35,
+    "fat": 13,
+    "description": "Sup Jagung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 107,
+    "meal_type": "dinner",
+    "menu_name": "Sayur Asem",
+    "portion_size": "300g",
+    "calories": 330,
+    "protein": 16,
+    "carbs": 36,
+    "fat": 14,
+    "description": "Sayur Asem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 108,
+    "meal_type": "dinner",
+    "menu_name": "Sop Buntut",
+    "portion_size": "350g",
+    "calories": 335,
+    "protein": 17,
+    "carbs": 37,
+    "fat": 15,
+    "description": "Sop Buntut dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 109,
+    "meal_type": "dinner",
+    "menu_name": "Cah Kangkung",
+    "portion_size": "400g",
+    "calories": 340,
+    "protein": 18,
+    "carbs": 38,
+    "fat": 16,
+    "description": "Cah Kangkung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 110,
+    "meal_type": "dinner",
+    "menu_name": "Tahu Tempe Bacem",
+    "portion_size": "450g",
+    "calories": 345,
+    "protein": 19,
+    "carbs": 39,
+    "fat": 17,
+    "description": "Tahu Tempe Bacem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 111,
+    "meal_type": "dinner",
+    "menu_name": "Sup Ikan",
+    "portion_size": "250g",
+    "calories": 350,
+    "protein": 20,
+    "carbs": 40,
+    "fat": 18,
+    "description": "Sup Ikan dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 112,
+    "meal_type": "dinner",
+    "menu_name": "Salad Sayur",
+    "portion_size": "300g",
+    "calories": 355,
+    "protein": 21,
+    "carbs": 41,
+    "fat": 19,
+    "description": "Salad Sayur dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 113,
+    "meal_type": "dinner",
+    "menu_name": "Nasi Merah + Ayam",
+    "portion_size": "350g",
+    "calories": 360,
+    "protein": 22,
+    "carbs": 42,
+    "fat": 20,
+    "description": "Nasi Merah + Ayam dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 114,
+    "meal_type": "dinner",
+    "menu_name": "Tumis Brokoli",
+    "portion_size": "400g",
+    "calories": 365,
+    "protein": 23,
+    "carbs": 43,
+    "fat": 21,
+    "description": "Tumis Brokoli dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 115,
+    "meal_type": "dinner",
+    "menu_name": "Ikan Bakar",
+    "portion_size": "450g",
+    "calories": 370,
+    "protein": 24,
+    "carbs": 44,
+    "fat": 22,
+    "description": "Ikan Bakar dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 116,
+    "meal_type": "dinner",
+    "menu_name": "Sup Jagung",
+    "portion_size": "250g",
+    "calories": 375,
+    "protein": 25,
+    "carbs": 45,
+    "fat": 8,
+    "description": "Sup Jagung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 117,
+    "meal_type": "dinner",
+    "menu_name": "Sayur Asem",
+    "portion_size": "300g",
+    "calories": 380,
+    "protein": 26,
+    "carbs": 46,
+    "fat": 9,
+    "description": "Sayur Asem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 118,
+    "meal_type": "dinner",
+    "menu_name": "Sop Buntut",
+    "portion_size": "350g",
+    "calories": 385,
+    "protein": 27,
+    "carbs": 47,
+    "fat": 10,
+    "description": "Sop Buntut dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 119,
+    "meal_type": "dinner",
+    "menu_name": "Cah Kangkung",
+    "portion_size": "400g",
+    "calories": 390,
+    "protein": 28,
+    "carbs": 48,
+    "fat": 11,
+    "description": "Cah Kangkung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 120,
+    "meal_type": "dinner",
+    "menu_name": "Tahu Tempe Bacem",
+    "portion_size": "450g",
+    "calories": 395,
+    "protein": 29,
+    "carbs": 49,
+    "fat": 12,
+    "description": "Tahu Tempe Bacem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 121,
+    "meal_type": "dinner",
+    "menu_name": "Sup Ikan",
+    "portion_size": "250g",
+    "calories": 400,
+    "protein": 10,
+    "carbs": 50,
+    "fat": 13,
+    "description": "Sup Ikan dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 122,
+    "meal_type": "dinner",
+    "menu_name": "Salad Sayur",
+    "portion_size": "300g",
+    "calories": 405,
+    "protein": 11,
+    "carbs": 51,
+    "fat": 14,
+    "description": "Salad Sayur dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 123,
+    "meal_type": "dinner",
+    "menu_name": "Nasi Merah + Ayam",
+    "portion_size": "350g",
+    "calories": 410,
+    "protein": 12,
+    "carbs": 52,
+    "fat": 15,
+    "description": "Nasi Merah + Ayam dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 124,
+    "meal_type": "dinner",
+    "menu_name": "Tumis Brokoli",
+    "portion_size": "400g",
+    "calories": 415,
+    "protein": 13,
+    "carbs": 53,
+    "fat": 16,
+    "description": "Tumis Brokoli dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 125,
+    "meal_type": "dinner",
+    "menu_name": "Ikan Bakar",
+    "portion_size": "450g",
+    "calories": 420,
+    "protein": 14,
+    "carbs": 54,
+    "fat": 17,
+    "description": "Ikan Bakar dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 126,
+    "meal_type": "dinner",
+    "menu_name": "Sup Jagung",
+    "portion_size": "250g",
+    "calories": 425,
+    "protein": 15,
+    "carbs": 55,
+    "fat": 18,
+    "description": "Sup Jagung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 127,
+    "meal_type": "dinner",
+    "menu_name": "Sayur Asem",
+    "portion_size": "300g",
+    "calories": 430,
+    "protein": 16,
+    "carbs": 56,
+    "fat": 19,
+    "description": "Sayur Asem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 128,
+    "meal_type": "dinner",
+    "menu_name": "Sop Buntut",
+    "portion_size": "350g",
+    "calories": 435,
+    "protein": 17,
+    "carbs": 57,
+    "fat": 20,
+    "description": "Sop Buntut dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 129,
+    "meal_type": "dinner",
+    "menu_name": "Cah Kangkung",
+    "portion_size": "400g",
+    "calories": 440,
+    "protein": 18,
+    "carbs": 58,
+    "fat": 21,
+    "description": "Cah Kangkung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 130,
+    "meal_type": "dinner",
+    "menu_name": "Tahu Tempe Bacem",
+    "portion_size": "450g",
+    "calories": 445,
+    "protein": 19,
+    "carbs": 59,
+    "fat": 22,
+    "description": "Tahu Tempe Bacem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 131,
+    "meal_type": "dinner",
+    "menu_name": "Sup Ikan",
+    "portion_size": "250g",
+    "calories": 450,
+    "protein": 20,
+    "carbs": 60,
+    "fat": 8,
+    "description": "Sup Ikan dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 132,
+    "meal_type": "dinner",
+    "menu_name": "Salad Sayur",
+    "portion_size": "300g",
+    "calories": 455,
+    "protein": 21,
+    "carbs": 61,
+    "fat": 9,
+    "description": "Salad Sayur dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 133,
+    "meal_type": "dinner",
+    "menu_name": "Nasi Merah + Ayam",
+    "portion_size": "350g",
+    "calories": 460,
+    "protein": 22,
+    "carbs": 62,
+    "fat": 10,
+    "description": "Nasi Merah + Ayam dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 134,
+    "meal_type": "dinner",
+    "menu_name": "Tumis Brokoli",
+    "portion_size": "400g",
+    "calories": 465,
+    "protein": 23,
+    "carbs": 63,
+    "fat": 11,
+    "description": "Tumis Brokoli dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 135,
+    "meal_type": "dinner",
+    "menu_name": "Ikan Bakar",
+    "portion_size": "450g",
+    "calories": 470,
+    "protein": 24,
+    "carbs": 64,
+    "fat": 12,
+    "description": "Ikan Bakar dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 136,
+    "meal_type": "dinner",
+    "menu_name": "Sup Jagung",
+    "portion_size": "250g",
+    "calories": 475,
+    "protein": 25,
+    "carbs": 65,
+    "fat": 13,
+    "description": "Sup Jagung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 137,
+    "meal_type": "dinner",
+    "menu_name": "Sayur Asem",
+    "portion_size": "300g",
+    "calories": 480,
+    "protein": 26,
+    "carbs": 66,
+    "fat": 14,
+    "description": "Sayur Asem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 138,
+    "meal_type": "dinner",
+    "menu_name": "Sop Buntut",
+    "portion_size": "350g",
+    "calories": 485,
+    "protein": 27,
+    "carbs": 67,
+    "fat": 15,
+    "description": "Sop Buntut dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 139,
+    "meal_type": "dinner",
+    "menu_name": "Cah Kangkung",
+    "portion_size": "400g",
+    "calories": 490,
+    "protein": 28,
+    "carbs": 68,
+    "fat": 16,
+    "description": "Cah Kangkung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 140,
+    "meal_type": "dinner",
+    "menu_name": "Tahu Tempe Bacem",
+    "portion_size": "450g",
+    "calories": 495,
+    "protein": 29,
+    "carbs": 69,
+    "fat": 17,
+    "description": "Tahu Tempe Bacem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 141,
+    "meal_type": "dinner",
+    "menu_name": "Sup Ikan",
+    "portion_size": "250g",
+    "calories": 500,
+    "protein": 10,
+    "carbs": 70,
+    "fat": 18,
+    "description": "Sup Ikan dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 142,
+    "meal_type": "dinner",
+    "menu_name": "Salad Sayur",
+    "portion_size": "300g",
+    "calories": 505,
+    "protein": 11,
+    "carbs": 71,
+    "fat": 19,
+    "description": "Salad Sayur dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 143,
+    "meal_type": "dinner",
+    "menu_name": "Nasi Merah + Ayam",
+    "portion_size": "350g",
+    "calories": 510,
+    "protein": 12,
+    "carbs": 72,
+    "fat": 20,
+    "description": "Nasi Merah + Ayam dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 144,
+    "meal_type": "dinner",
+    "menu_name": "Tumis Brokoli",
+    "portion_size": "400g",
+    "calories": 515,
+    "protein": 13,
+    "carbs": 73,
+    "fat": 21,
+    "description": "Tumis Brokoli dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 145,
+    "meal_type": "dinner",
+    "menu_name": "Ikan Bakar",
+    "portion_size": "450g",
+    "calories": 520,
+    "protein": 14,
+    "carbs": 74,
+    "fat": 22,
+    "description": "Ikan Bakar dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  },
+  {
+    "id": 146,
+    "meal_type": "dinner",
+    "menu_name": "Sup Jagung",
+    "portion_size": "250g",
+    "calories": 525,
+    "protein": 15,
+    "carbs": 75,
+    "fat": 8,
+    "description": "Sup Jagung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 147,
+    "meal_type": "dinner",
+    "menu_name": "Sayur Asem",
+    "portion_size": "300g",
+    "calories": 530,
+    "protein": 16,
+    "carbs": 76,
+    "fat": 9,
+    "description": "Sayur Asem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🧀 Dairy-free",
+      "🥚 Egg allergy"
+    ]
+  },
+  {
+    "id": 148,
+    "meal_type": "dinner",
+    "menu_name": "Sop Buntut",
+    "portion_size": "350g",
+    "calories": 535,
+    "protein": 17,
+    "carbs": 77,
+    "fat": 10,
+    "description": "Sop Buntut dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥚 Egg allergy",
+      "🥛 Lactose intolerant",
+      "🌾 Gluten-free"
+    ]
+  },
+  {
+    "id": 149,
+    "meal_type": "dinner",
+    "menu_name": "Cah Kangkung",
+    "portion_size": "400g",
+    "calories": 540,
+    "protein": 18,
+    "carbs": 78,
+    "fat": 11,
+    "description": "Cah Kangkung dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🥛 Lactose intolerant"
+    ]
+  },
+  {
+    "id": 150,
+    "meal_type": "dinner",
+    "menu_name": "Tahu Tempe Bacem",
+    "portion_size": "450g",
+    "calories": 545,
+    "protein": 19,
+    "carbs": 79,
+    "fat": 12,
+    "description": "Tahu Tempe Bacem dengan bahan segar dan bumbu khas.",
+    "tags": [
+      "halal"
+    ],
+    "restrictions": [
+      "🌾 Gluten-free",
+      "🧀 Dairy-free"
+    ]
+  }
+]

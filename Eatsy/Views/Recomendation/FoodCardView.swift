@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FoodCardView: View {
-    var food: Food
+    var food: Meal
     
     var body: some View {
         HStack() {

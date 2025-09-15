@@ -67,6 +67,51 @@ class UserViewModel: ObservableObject {
     func completeSetUp() {
         self.user.isSetUp = true
     }
+    
+    func getDailyTargetCalories() -> Int {
+        var dailyTargetCalories: Int;
+        
+        guard let gender = self.user.gender,
+              let weight = self.user.weight,
+              let height = self.user.height,
+              let age = self.user.age,
+              let targetWeight = self.user.targetWeight else {
+            return 0
+        }
+
+        var bmr: Double = 0.0
+        
+        if gender == .m {
+            let weightFactor = 13.397 * Double(weight)
+            let heightFactor = 4.799 * Double(height)
+            let ageFactor = 5.677 * Double(age)
+            bmr = 88.362 + weightFactor + heightFactor - ageFactor
+        } else {
+            let weightFactor = 9.247 * Double(weight)
+            let heightFactor = 3.098 * Double(height)
+            let ageFactor = 4.330 * Double(age)
+            bmr = 447.593 + weightFactor + heightFactor - ageFactor
+        }
+        
+        // 🔥 Perhitungan TDEE
+        let tdee = bmr * 1.2
+        
+        dailyTargetCalories = Int(self.user.goal == .lose ? tdee - 500 : tdee + 500)
+        
+        return dailyTargetCalories
+    }
+    
+    func getTargetDate() -> Date {
+        var targetDate: Date
+    
+        let weightDiff = abs(self.user.targetWeight! - self.user.weight!)
+        let totalCaloriesNeeded = weightDiff * 7700
+        let amountOfDaysNeeded = totalCaloriesNeeded / self.getDailyTargetCalories()
+        
+        targetDate = Calendar.current.date(byAdding: .day, value: Int(amountOfDaysNeeded), to: Date())!
+        
+        return targetDate;
+    }
 
     func calculateTargetCalories(userData: User) -> Int {
         // 🔥 Unwrap semua optional, kalau ada yang nil return 0

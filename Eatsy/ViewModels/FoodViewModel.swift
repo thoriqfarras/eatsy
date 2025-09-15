@@ -2,12 +2,20 @@
 //  FoodViewModel.swift
 //  Recomendation
 //
+//
+//  FoodViewModel.swift
+//  Eatsy
+//
+//  Created by Mac on 11/09/25.
+//
+
 
 import SwiftUI
+import Foundation
 
 class FoodViewModel: ObservableObject {
-    @Published var foods: [Food] = [
-        Food(
+    @Published var foods: [Meal] = [
+        Meal(
             name: "Nasi Goreng",
             imageName: "nasgor",
             calories: 800,
@@ -17,7 +25,7 @@ class FoodViewModel: ObservableObject {
                 NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
             ]
         ),
-        Food(
+        Meal(
             name: "Belum ada data",
             imageName: "piring",
             calories: 150,
@@ -27,7 +35,7 @@ class FoodViewModel: ObservableObject {
                 NutritionInfo(icon: "bolt.heart", text: "50g Protein", color: .red)
             ]
         ),
-        Food(
+        Meal(
             name: "Belum ada data",
             imageName: "piring",
             calories: 800,
@@ -47,12 +55,6 @@ class FoodViewModel: ObservableObject {
             foods[index].isSelected.toggle()
         }
     }
+    
+    func 
 }
-//
-//  FoodViewModel.swift
-//  Eatsy
-//
-//  Created by Mac on 11/09/25.
-//
-
-import Foundation
