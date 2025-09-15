@@ -14,10 +14,8 @@ struct ContentView: View {
     init() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.systemBackground
-        
-        // ✅ tambahkan garis tipis di atas tab bar
-        appearance.shadowColor = UIColor.lightGray
+//        appearance.backgroundColor = UIColor.systemBackground
+//        appearance.shadowColor = UIColor.lightGray
         
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
@@ -45,6 +43,7 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $showOnboarding) {
             OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton)
         }
+        
     }
 }
 
