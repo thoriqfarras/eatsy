@@ -23,4 +23,21 @@ struct Meal: Identifiable {
     var isSelected: Bool = false
 }
 
+enum MealType:  String, Codable, Hashable {
+    case breakfast = "Breakfast"
+    case lunch = "Lunch"
+    case dinner = "Dinner"
+}
+
 // Codable struct to represent a single food item.
+struct MealObject: Codable, Identifiable, Hashable {
+    var id = UUID()
+    let mealType: MealType
+    let menuName: String
+    let calories: Int
+    let protein: Int
+    let carbs: Int
+    let fat: Int
+    var imageName: String = ""
+    let restrictions: [DietRestriction]
+}
