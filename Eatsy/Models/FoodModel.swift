@@ -24,16 +24,3 @@ struct Meal: Identifiable {
 }
 
 // Codable struct to represent a single food item.
-//struct Meal: Codable, Identifiable {
-//    let id: Int
-//    let mealType: MealType
-//    let menuName: String
-//    let portionSizeGram: Int
-//    let calories: Int
-//    let protein: Int
-//    let carbs: Int
-//    let fat: Int
-//    let description: String
-//    var imageName: String = ""
-//    let restrictions: [DietRestriction]
-//}
