@@ -10,12 +10,11 @@ protocol ScheduleRepository {
 final class LocalScheduleRepository: ScheduleRepository {
 
     private let root: MealsRootDTO
-    private let userSet: Int
+    private let userViewModel: UserViewModel = UserViewModel()
 
     /// subdirectory = "mock_meals" karena file ada di Resources/mock_meals/mock_meals.json
-    init(bundle: Bundle = .main, userSet: Int = 1) {
+    init(bundle: Bundle = .main) {
         self.root = bundle.decode("mock_meals", in: "mock_meals")
-        self.userSet = userSet
     }
 
     func fetchDates() async throws -> [String] {
@@ -25,8 +24,7 @@ final class LocalScheduleRepository: ScheduleRepository {
     }
 
     func fetchMeals(forDateIndex index: Int) async throws -> [MealSection: [MealItem]] {
-        // aturan khusus: jika userSet == 2 maka kosong
-        if userSet == 2 { return [:] }
+        if !userViewModel.user.isSetUp { return [:] }
 
         let days = Array(root.days.dropFirst()) // buang "Today"
         guard index >= 0 && index < days.count else { return [:] }
