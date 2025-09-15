@@ -102,7 +102,6 @@ class UserViewModel: ObservableObject {
     
     func setTargetDate() -> Void {
         var targetDate: Date
-    
         let weightDiff = abs(self.user.targetWeight! - self.user.weight!)
         let totalCaloriesNeeded = weightDiff * 7700
         let amountOfDaysNeeded = totalCaloriesNeeded / self.user.dailyTargetCalories
