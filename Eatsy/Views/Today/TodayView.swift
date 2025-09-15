@@ -6,7 +6,27 @@ struct TodayView: View {
     @Binding var enableButton: Bool    // tombol + di meal card
     @Binding var showRecommendation: Bool
     
-    @EnvironmentObject var userVM : UserViewModel
+//    @EnvironmentObject var userVM : UserViewModel
+    var type = 2
+    
+    var recommendation: Recommendation = Recommendation(
+        date: Date(),
+        breakfasts: [
+            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+        ],
+        lunches: [
+            MealObject(mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+        ],
+        dinners: [
+            MealObject(mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+            MealObject(mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+        ]
+    )
     
     var body: some View {
         VStack(spacing: 16) {
@@ -31,9 +51,9 @@ struct TodayView: View {
             }
             .padding(.horizontal)
             .padding(.top, 12)
-
+            
             // Info card / GET MEAL PLAN
-            if !userVM.user.isSetUp {
+            if (type == 1) {
                 Button("GET MEAL PLAN") {
                     showOnboarding = true
                 }
@@ -80,7 +100,7 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-                Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
+//                Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
                     .font(.caption)
                     .foregroundStyle(Color(.systemGray2))
                     .bold()
@@ -89,14 +109,34 @@ struct TodayView: View {
             
             // Timeline
             List {
-                ForEach(0..<3, id: \.self) { _ in
-                    TimelineRow(
-                        onAddTapped: { showRecommendation = true },
-                        isEnabled: enableButton
-                    )
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                }
+                TimelineRow(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
+                    mealType: .breakfast,
+                    time: "8 AM"
+                )
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                
+                TimelineRow(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
+                    mealType: .lunch,
+                    time: "1 PM",
+                    calorie: 300
+                )
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+                
+                TimelineRowFilled(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
+                    mealType: .dinner,
+                    time: "5 PM"
+                )
+                
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
                 
             }
             .listStyle(PlainListStyle())
@@ -115,6 +155,11 @@ struct TodayView: View {
 struct TimelineRow: View {
     var onAddTapped: () -> Void
     var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var mealType: MealType
+    var meal: MealObject?
+    var time: String
+    var calorie: Int?
+
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -134,20 +179,26 @@ struct TimelineRow: View {
             
             // Meal Card
             VStack(alignment: .leading, spacing: 8) {
-                Text("8 AM")
+                Text("\(time)")
                     .font(.caption)
                 
                 HStack {
-                    Text("🍳")
+                    
+                    Text("🍛")
                         .font(.largeTitle)
                         .foregroundStyle(Color(.systemGray2))
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Breakfast")
+                        Text("\(mealType.rawValue)")
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray2))
-                        Text("-")
-                            .bold()
+                        if let calorie = calorie {
+                            Text("~\(calorie)kcal")
+                                .bold()
+                        } else {
+                            Text("-")
+                                .bold()
+                        }
                     }
                     Spacer()
                     
@@ -159,6 +210,83 @@ struct TimelineRow: View {
                     }
                     .disabled(isEnabled)
                     .opacity(isEnabled ? 1.0 : 0.4)
+                }
+                .eatsyCard()
+            }
+        }
+    }
+}
+
+struct TimelineRowFilled: View {
+    var onAddTapped: () -> Void
+    var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var mealType: MealType
+    var meal: MealObject?
+    var time: String
+    var calorie: Int?
+
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            // Timeline dots + line
+            VStack {
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        Circle().stroke(Color.gray, lineWidth: 1)
+                    )
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 2)
+                    .padding(.top, -2)
+            }
+            
+            // Meal Card
+            VStack(alignment: .leading, spacing: 8) {
+                Text("\(time)")
+                    .font(.caption)
+                
+                HStack {
+                    
+                    Image("nasgor")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 56, height: 56)
+                        .clipped()
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("\(mealType.rawValue)")
+                            .font(.caption)
+                            .foregroundStyle(Color(.systemGray2))
+                        Text("Nasi Goreng")
+                            .bold()
+                        Text("50g | 20g | 7g")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    
+                    Text("800kcal")
+                        .bold()
+                        .padding(4)
+                        .foregroundStyle(.green)
+                        .background(.green.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.green, lineWidth: 1)
+                        )
+                    
+//                    Button(action: {
+//                        onAddTapped()
+//                    }) {
+//                        Image(systemName: "plus")
+//                            .foregroundColor(.black)
+//                    }
+//                    .disabled(isEnabled)
+//                    .opacity(isEnabled ? 1.0 : 0.4)
                 }
                 .eatsyCard()
             }
