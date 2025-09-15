@@ -40,7 +40,7 @@ struct ContentView: View {
             }
             
             NavigationStack {
-                TommorowView()
+                TomorrowView()
             }
             .tabItem {
                 Label("Tommorow", systemImage: "calendar")
