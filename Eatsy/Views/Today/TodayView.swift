@@ -31,7 +31,7 @@ struct TodayView: View {
             }
             .padding(.horizontal)
             .padding(.top, 12)
-            
+
             // Info card / GET MEAL PLAN
             if !userVM.user.isSetUp {
                 Button("GET MEAL PLAN") {

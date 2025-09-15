@@ -68,7 +68,7 @@ class UserViewModel: ObservableObject {
         self.user.isSetUp = true
     }
     
-    func getDailyTargetCalories() -> Int {
+    func setDailyTargetCalories() -> Void {
         var dailyTargetCalories: Int;
         
         guard let gender = self.user.gender,
@@ -76,7 +76,7 @@ class UserViewModel: ObservableObject {
               let height = self.user.height,
               let age = self.user.age,
               let targetWeight = self.user.targetWeight else {
-            return 0
+            return
         }
 
         var bmr: Double = 0.0
@@ -97,21 +97,19 @@ class UserViewModel: ObservableObject {
         let tdee = bmr * 1.2
         
         dailyTargetCalories = Int(self.user.goal == .lose ? tdee - 500 : tdee + 500)
-        
-        return dailyTargetCalories
+        self.user.dailyTargetCalories = dailyTargetCalories
     }
     
-    func getTargetDate() -> Date {
+    func setTargetDate() -> Void {
         var targetDate: Date
     
         let weightDiff = abs(self.user.targetWeight! - self.user.weight!)
         let totalCaloriesNeeded = weightDiff * 7700
-        let amountOfDaysNeeded = totalCaloriesNeeded / self.getDailyTargetCalories()
+        let amountOfDaysNeeded = totalCaloriesNeeded / self.user.dailyTargetCalories
         
         targetDate = Calendar.current.date(byAdding: .day, value: Int(amountOfDaysNeeded), to: Date())!
-        
-        return targetDate;
-    }
+        self.user.targetDate = targetDate
+}
 
     func calculateTargetCalories(userData: User) -> Int {
         // 🔥 Unwrap semua optional, kalau ada yang nil return 0

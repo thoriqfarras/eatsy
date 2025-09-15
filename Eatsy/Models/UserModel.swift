@@ -53,6 +53,9 @@ struct User: Identifiable, Codable {
     var targetWeight: Int? = nil
     var dietRestrictions: Set<DietRestriction> = []
     var isSetUp: Bool = false
+    
+    var dailyTargetCalories: Int = 0
+    var targetDate: Date?
 }
 
 

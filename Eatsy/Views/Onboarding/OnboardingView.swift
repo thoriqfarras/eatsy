@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 enum OnboardingStep {
     case gender
@@ -88,10 +89,12 @@ struct OnboardingView: View {
                 DietRestrictionView(userData: $userData, nextStep: {
                     currentStep = .done
                     viewModel.saveData(userData: userData)
-                }, saveUser: viewModel.saveData)
+                }, saveUser: viewModel.saveData, viewModel: viewModel)
                 
             case .done:
-                OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton)
+                OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton, targetDate: $viewModel.user.targetDate, height: $viewModel.user.height,
+                                   dailyTargetCalories: $viewModel.user.dailyTargetCalories
+                )
             }
         }
         .padding(.bottom, 1)
@@ -426,6 +429,7 @@ struct DietRestrictionView: View {
     @Binding var userData: User
     let nextStep: () -> Void
     var saveUser: (User) -> Void
+    @ObservedObject var viewModel: UserViewModel
 
     var body: some View {
         VStack {
@@ -445,7 +449,10 @@ struct DietRestrictionView: View {
             Spacer()
 
             NextButton(nextStep: {
-                saveUser(userData)
+                viewModel.saveData(userData: userData)
+                viewModel.setDailyTargetCalories()
+                viewModel.setTargetDate()
+                print(viewModel.user)
                 nextStep()
             }, isEnabled: !userData.dietRestrictions.isEmpty)
         }
@@ -457,6 +464,9 @@ struct DietRestrictionView: View {
 struct OnboardingDoneView: View {
     @Binding var showOnboarding: Bool  // anak
     @Binding var showButton: Bool  // anak
+    @Binding var targetDate: Date?
+    @Binding var height: Int?
+    @Binding var dailyTargetCalories: Int
     
     var body: some View {
         VStack {
@@ -474,10 +484,12 @@ struct OnboardingDoneView: View {
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
-                Text("🗓️ 12 December 2025 ")
+                Text("🗓️ \(targetDate ?? Date())")
                     .bold()
                     .foregroundColor(Color("PrimaryGreen"))
                     .padding(.top, 5)
+                Text("\(height!)")
+                Text("\(dailyTargetCalories)")
             }
             .frame(maxWidth: .infinity)
             .padding()

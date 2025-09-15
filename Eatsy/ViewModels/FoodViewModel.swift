@@ -55,6 +55,4 @@ class FoodViewModel: ObservableObject {
             foods[index].isSelected.toggle()
         }
     }
-    
-    func 
 }
