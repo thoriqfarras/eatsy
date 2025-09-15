@@ -9,53 +9,132 @@
 import SwiftUI
 
 struct FoodCardView: View {
-    var food: Meal
+    var meal: MealObject
     
     var body: some View {
-        HStack() {
+        HStack(spacing: 12) {
             // Gambar makanan
-            Image(food.imageName)
+            Image("nasgor")
                 .resizable()
-                .aspectRatio(1, contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 80, height: 80)
+                .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
-                .padding(.trailing, 8)
             
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 6) {
                 // Nama makanan
-                Text(food.name)
-                    .font(.subheadline)
-                    .bold(true)
+                Text(meal.menuName)
+                    .font(.headline)
+                    .bold()
                     .foregroundColor(.black)
                 
+                // Nutrisi
                 VStack(alignment: .leading, spacing: 4) {
-                    ForEach(food.nutritions) { nutrition in
-                        HStack() {
-                            Image(systemName: nutrition.icon)
-                                .foregroundColor(Color(.systemGray2))
-                                .font(.footnote)
-                            
-                            Text(nutrition.text)
-                                .foregroundColor(Color(.systemGray2))
-                                .font(.footnote)
-                        }
+                    HStack(spacing: 4) {
+                        Image(systemName: "drop.fill")
+                            .foregroundColor(.gray)
+                            .font(.caption2)
+                        Text("\(meal.fat)g fat")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    HStack(spacing: 4) {
+                        Image(systemName: "leaf.fill")
+                            .foregroundColor(.gray)
+                            .font(.caption2)
+                        Text("\(meal.carbs)g carbs")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    HStack(spacing: 4) {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.gray)
+                            .font(.caption2)
+                        Text("\(meal.protein)g protein")
+                            .font(.caption)
+                            .foregroundColor(.gray)
                     }
                 }
             }
             
             Spacer()
-            VStack {
-
-                Text("\(food.calories)kcal")
-                    .font(.caption)
-                    .bold()
-                    .padding(10)
-                    .background(Color("secYellow"))
-                    .foregroundColor(Color("PrimaryGreen"))
-                    .cornerRadius(8)
-                Spacer()
-            }
+            
+            // Kalori
+            Text("\(meal.calories)kcal")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.green)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color.green.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(-10)
-        .modifier(SelectableCard(isSelected: food.isSelected))
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.white)
+                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+        )
     }
 }
+
+
+
+
+
+//struct FoodCardView: View {
+//    var dummyRecomend = Recommendation(
+//        date: Date(),
+//        breakfasts: [
+//            MealObject(id:1, mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:2,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:3,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+//        ],
+//        lunches: [
+//            MealObject(id:11,mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:12,mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:13,mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+//        ],
+//        dinners: [
+//            MealObject(id:21,mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:22,mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
+//            MealObject(id:23,mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+//        ]
+//    )
+//    
+//    var body: some View {
+//        HStack() {
+//            // Gambar makanan
+//            Image(dummyRecomend.breakfasts[0].imageName)
+//                .resizable()
+//                .aspectRatio(1, contentMode: .fit)
+//                .clipShape(RoundedRectangle(cornerRadius: 12))
+//                .padding(.trailing, 8)
+//            
+//            VStack(alignment: .leading, spacing: 8) {
+//                // Nama makanan
+//                Text(dummyRecomend.breakfasts[0].menuName)
+//                    .font(.subheadline)
+//                    .bold(true)
+//                    .foregroundColor(.black)
+//            }
+//            Spacer()
+//            VStack {
+//
+//                Text("\(dummyRecomend.breakfasts[0].calories)kcal")
+//                    .font(.caption)
+//                    .bold()
+//                    .padding(10)
+//                    .background(Color("secYellow"))
+//                    .foregroundColor(Color("PrimaryGreen"))
+//                    .cornerRadius(8)
+//                Spacer()
+//            }
+//        }
+//        .padding(-10)
+//    }
+//}
+
+//#Preview {
+//    FoodCardView()
+//}
