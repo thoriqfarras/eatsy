@@ -9,6 +9,8 @@ import Foundation
 
 struct Recommendation: Identifiable {
     var id = UUID()
-    var date: Date = Date()
-    var meals: [MealObject] = []
+    var date: Date
+    var breakfasts: [MealObject]
+    var lunches: [MealObject]
+    var dinners: [MealObject]
 }
