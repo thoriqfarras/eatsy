@@ -76,3 +76,19 @@ struct PrimaryButtonStyle: ButtonStyle {
             .padding()
     }
 }
+
+struct OutlineButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundStyle(Color("PrimaryGreen"))
+            .bold()
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color("PrimaryGreen"), lineWidth: 2)
+            )
+            .opacity(configuration.isPressed ? 0.8 : 1.0)
+            .padding()
+    }
+}

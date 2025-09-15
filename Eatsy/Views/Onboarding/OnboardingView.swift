@@ -425,7 +425,7 @@ struct DietRestrictionView: View {
     @Binding var userData: User
     let nextStep: () -> Void
     var saveUser: (User) -> Void
-
+    
     var body: some View {
         VStack {
             VStack(spacing: 10) {
@@ -438,15 +438,25 @@ struct DietRestrictionView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding()
-
+            
             DietRestrictionCheckboxesGroup(selectedRestrictions: $userData.dietRestrictions)
-
+            
             Spacer()
-
-            NextButton(nextStep: {
-                saveUser(userData)
-                nextStep()
-            }, isEnabled: !userData.dietRestrictions.isEmpty)
+            
+            if userData.dietRestrictions.isEmpty {
+                Button(action: {
+                    saveUser(userData)
+                    nextStep()
+                }) {
+                    Text("Skip")
+                }
+                .buttonStyle(OutlineButtonStyle())
+            } else {
+                NextButton(nextStep: {
+                    saveUser(userData)
+                    nextStep()
+                }, isEnabled: true)
+            }
         }
         .background(Color("defaultBackground"))
     }

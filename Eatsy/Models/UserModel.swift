@@ -35,7 +35,7 @@ enum Goal: Codable {
 }
 
 enum DietRestriction: String, CaseIterable, Hashable, Codable {
-    case noRestriction = "😋 No diet restriction"
+//    case noRestriction = "😋 No diet restriction"
     case Lactose = "🥛 Lactose intolerant"
     case Gluten = "🌾 Gluten-free"
     case Diary = "🧀 Dairy-free"
