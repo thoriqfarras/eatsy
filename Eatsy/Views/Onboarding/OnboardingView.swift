@@ -104,6 +104,10 @@ struct OnboardingView: View {
 }
 
 #Preview {
-    OnboardingView(showOnboarding: .constant(true), showButton: .constant(false))
-        .background(Color("defaultBackground"))
+    OnboardingView(
+        showOnboarding: .constant(true),
+        showButton: .constant(false)
+    )
+    .environmentObject(UserViewModel())
+    .background(Color("defaultBackground"))
 }

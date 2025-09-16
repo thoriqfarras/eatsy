@@ -18,6 +18,10 @@ struct ProfileView: View {
                     .fontWeight(.medium)
                     .padding([.horizontal, .top])
                 VStack(spacing: 16) {
+                    ProfileItem(title: "🎂 Age",
+                                value: userViewModel.user.age != nil ? "\(userViewModel.user.age!) yo" : "Not set")
+                    .onTapGesture { activePicker = .age }
+                    
                     ProfileItem(title: "📏 Height",
                                 value: userViewModel.user.height != nil ? "\(userViewModel.user.height!) cm" : "Not set")
                     .onTapGesture { activePicker = .height }
@@ -26,12 +30,16 @@ struct ProfileView: View {
                                 value: userViewModel.user.weight != nil ? "\(userViewModel.user.weight!) kg" : "Not set")
                     .onTapGesture { activePicker = .weight }
                     
-                    ProfileItem(title: "🎂 Age",
-                                value: userViewModel.user.age != nil ? "\(userViewModel.user.age!) yo" : "Not set")
-                    .onTapGesture { activePicker = .age }
+                    ProfileItem(title: "🎯 Goal Weight",
+                                value: userViewModel.user.targetWeight != nil ? "\(userViewModel.user.targetWeight!) kg" : "Not set")
+                    .onTapGesture { activePicker = .targetWeight }
+
                 }
                 .eatsyCard()
                 .padding(.horizontal)
+            }
+            HStack(){
+                PreferenceView(selectedRestrictions: $userViewModel.user.dietRestrictions)
             }
             Spacer()
         }
@@ -40,7 +48,8 @@ struct ProfileView: View {
                         pickerType: picker,
                         height: $userViewModel.user.height,
                         weight: $userViewModel.user.weight,
-                        age: $userViewModel.user.age
+                        age: $userViewModel.user.age,
+                        targetWeight: $userViewModel.user.targetWeight
                     )
                     .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
@@ -79,6 +88,7 @@ struct PickerSheet: View {
     @Binding var height: Int?
     @Binding var weight: Int?
     @Binding var age: Int?
+    @Binding var targetWeight: Int?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -107,13 +117,14 @@ struct PickerSheet: View {
         case .height: return $height
         case .weight: return $weight
         case .age: return $age
+        case .targetWeight: return $targetWeight
         }
     }
 
     private var range: [Int] {
         switch pickerType {
         case .height: return Array(130...220)
-        case .weight: return Array(30...200)
+        case .weight, .targetWeight: return Array(30...200)
         case .age: return Array(18...100)
         }
     }
@@ -121,7 +132,7 @@ struct PickerSheet: View {
     private var unit: String {
         switch pickerType {
         case .height: return "cm"
-        case .weight: return "kg"
+        case .weight, .targetWeight: return "kg"
         case .age: return "yo"
         }
     }
@@ -130,6 +141,7 @@ struct PickerSheet: View {
         switch pickerType {
         case .height: return "Height"
         case .weight: return "Weight"
+        case .targetWeight: return "Goal Weight"
         case .age: return "Age"
         }
     }
@@ -195,3 +207,66 @@ struct GoalCardView: View {
         }
     }
 }
+
+struct PreferenceView: View {
+    @Binding var selectedRestrictions: Set<DietRestriction>
+    @State private var showModal = false
+    @State private var tempSelection: Set<DietRestriction> = []
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Preferences")
+                .font(.callout)
+                .fontWeight(.medium)
+                .padding([.horizontal, .top])
+            
+            VStack(spacing: 16) {
+                HStack {
+                    Text("Allergies")
+                        .font(.subheadline)
+                        .padding(.vertical, 4)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(Color(.systemGray2))
+                        .font(.caption2)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    tempSelection = selectedRestrictions // copy state
+                    showModal = true
+                }
+            }
+            .eatsyCard()
+            .padding(.horizontal)
+        }
+        .sheet(isPresented: $showModal) {
+            VStack() {
+                Text("Select Allergies")
+                    .bold()
+                    .padding(.top, 40)
+                    .padding(.bottom)
+                
+                VStack {
+                    ForEach(DietRestriction.allCases, id: \.self) { restriction in
+                        DietRestrictionCheckbox(
+                            restriction: restriction,
+                            selectedRestrictions: $tempSelection
+                        )
+                    }
+                }
+                
+                Spacer()
+                
+                Button("Done") {
+                    selectedRestrictions = tempSelection
+                    showModal = false
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+            .background(Color("defaultBackground"))
+            .presentationDetents([.fraction(0.65)])
+            .presentationDragIndicator(.visible)
+        }
+}
+   }
+

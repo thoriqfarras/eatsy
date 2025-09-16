@@ -50,7 +50,7 @@ struct User: Identifiable, Codable {
     var weight: Int?
     var age: Int?
     
-    var targetWeight: Int? = nil
+    var targetWeight: Int?
     var dietRestrictions: Set<DietRestriction> = []
     var isSetUp: Bool = false
     
@@ -60,6 +60,6 @@ struct User: Identifiable, Codable {
 
 
 enum PickerType: Identifiable {
-    case height, weight, age
+    case height, weight, age, targetWeight
     var id: Self { self }
 }
