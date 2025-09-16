@@ -31,7 +31,7 @@ enum MealType:  String, Codable, Hashable {
 
 // Codable struct to represent a single food item.
 struct MealObject: Codable, Identifiable, Hashable {
-    var id: Int
+    let id: Int
     let mealType: MealType
     let menuName: String
     let calories: Int

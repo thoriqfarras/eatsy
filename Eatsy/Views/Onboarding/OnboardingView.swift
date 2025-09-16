@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Combine
+import Foundation
 
 enum OnboardingStep {
     case gender
@@ -28,6 +28,7 @@ struct OnboardingView: View {
     @State private var selectedAge: Int? = nil
     
     @EnvironmentObject var viewModel : UserViewModel
+    @EnvironmentObject var recViewModel : RecommendationViewModel
     var body: some View {
         VStack {
             switch currentStep {
@@ -91,6 +92,7 @@ struct OnboardingView: View {
                     viewModel.saveData(userData: userData)
                     viewModel.setDailyTargetCalories()
                     viewModel.setTargetDate()
+                    recViewModel.generateRecommendation(dailyTargetCalories: viewModel.user.dailyTargetCalories, date: Date())
                 }, saveUser: viewModel.saveData, viewModel: viewModel)
                 
             case .done:
