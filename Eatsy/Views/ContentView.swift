@@ -24,6 +24,7 @@ struct ContentView: View {
     }
     
     @StateObject var user = UserViewModel()
+    @StateObject var recommendation = RecommendationViewModel()
     
     var body: some View {
         TabView {
@@ -44,6 +45,7 @@ struct ContentView: View {
             
             NavigationStack {
                 TomorrowView()
+                Text("\(recommendation.recommendations)")
             }
             .tabItem {
                 Label("Tommorow", systemImage: "calendar")
@@ -52,7 +54,7 @@ struct ContentView: View {
         }
         .accentColor(.primaryGreen)
         .fullScreenCover(isPresented: $showOnboarding) {
-            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton).environmentObject(user)
+            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton).environmentObject(user).environmentObject(recommendation)
         }
         
     }
