@@ -10,49 +10,49 @@ import SwiftUI
 
 struct FoodCardView: View {
     var meal: MealObject
+    var isSelected: Bool
     
     var body: some View {
-        HStack(spacing: 12) {
+        HStack() {
             // Gambar makanan
             Image("nasgor")
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 80, height: 80)
-                .clipped()
+                .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.trailing, 8)
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 8) {
                 // Nama makanan
                 Text(meal.menuName)
-                    .font(.headline)
+                    .font(.subheadline)
                     .bold()
                     .foregroundColor(.black)
                 
                 // Nutrisi
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "drop.fill")
-                            .foregroundColor(.gray)
-                            .font(.caption2)
+                VStack(alignment: .leading) {
+                    HStack(spacing: 13) {
+                        Image(systemName: "drop")
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.footnote)
                         Text("\(meal.fat)g fat")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .foregroundColor(Color(.systemGray2))
                     }
-                    HStack(spacing: 4) {
-                        Image(systemName: "leaf.fill")
-                            .foregroundColor(.gray)
-                            .font(.caption2)
+                    HStack(spacing: 10) {
+                        Image(systemName: "leaf")
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.footnote)
                         Text("\(meal.carbs)g carbs")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .foregroundColor(Color(.systemGray2))
                     }
-                    HStack(spacing: 4) {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.gray)
-                            .font(.caption2)
+                    HStack(spacing: 10) {
+                        Image(systemName: "heart")
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.footnote)
                         Text("\(meal.protein)g protein")
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .font(.footnote)
+                            .foregroundColor(Color(.systemGray2))
                     }
                 }
             }
@@ -60,24 +60,20 @@ struct FoodCardView: View {
             Spacer()
             
             // Kalori
-            Text("\(meal.calories)kcal")
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundColor(Color.green)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background(Color.green.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-        )
-    }
-}
-
+            VStack {
+                Text("\(meal.calories)kcal")
+                    .font(.footnote)
+                    .bold()
+                    .padding(10)
+                    .background(Color("secYellow"))
+                    .foregroundColor(Color("PrimaryGreen"))
+                    .cornerRadius(8)
+                Spacer()
+            }
+                    }
+                    .padding(-10)
+                }
+            }
 
 
 
