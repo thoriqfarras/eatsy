@@ -13,17 +13,22 @@ struct ContentView: View {
     @State var enableButton: Bool = false
     @State var showRecommendation: Bool = false
     
+    @StateObject private var user: UserViewModel
+    @StateObject private var recommendation: RecommendationViewModel
+    
+    
     init() {
+        let userViewModel = UserViewModel()
+        let recommendationViewModel = RecommendationViewModel(userViewModel: userViewModel)
+        
+        _user = StateObject(wrappedValue: userViewModel)
+        _recommendation = StateObject(wrappedValue: recommendationViewModel)
+        
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = UIColor.systemBackground
-//        appearance.shadowColor = UIColor.lightGray
-        
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
     }
-    
-    @StateObject var user = UserViewModel()
     
     var body: some View {
         TabView {
@@ -41,7 +46,6 @@ struct ContentView: View {
             .tabItem {
                 Label("Schedule", systemImage: "calendar")
             }
-            
 //            NavigationStack {
 //                TomorrowView()
 //            }
@@ -52,7 +56,7 @@ struct ContentView: View {
         }
         .accentColor(.primaryGreen)
         .fullScreenCover(isPresented: $showOnboarding) {
-            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton).environmentObject(user)
+            OnboardingView(showOnboarding: $showOnboarding, showButton: $showButton).environmentObject(user).environmentObject(recommendation)
         }
         
     }

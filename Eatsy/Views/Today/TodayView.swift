@@ -5,10 +5,10 @@ struct TodayView: View {
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
     @Binding var enableButton: Bool    // tombol + di meal card
     @Binding var showRecommendation: Bool
+    var mealType: MealType
     
     @EnvironmentObject var userVM : UserViewModel
     var type = 2
-    var mealType : MealType
     var recommendation = Recommendation(
         date: Date(),
         breakfasts: [
@@ -53,7 +53,7 @@ struct TodayView: View {
             .padding(.top, 12)
             
             // Info card / GET MEAL PLAN
-            if (!userVM.user.isSetUp) {
+            if !userVM.user.isSetUp {
                 Button("GET MEAL PLAN") {
                     showOnboarding = true
                 }
