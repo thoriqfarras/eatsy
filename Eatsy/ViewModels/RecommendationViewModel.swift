@@ -14,6 +14,24 @@ class RecommendationViewModel: ObservableObject {
     @Published var lunch: [MealObject] = FoodData.lunch
     @Published var dinner: [MealObject] = FoodData.dinner
     
+    var userViewModel: UserViewModel
+    
+    init(userViewModel: UserViewModel) {
+        self.userViewModel = userViewModel
+        let dailyTargetCalories = userViewModel.user.dailyTargetCalories
+        if dailyTargetCalories == 0 && recommendations.isEmpty {
+            print("User not yet set up.")
+            return
+        }
+        
+        let calendar = Calendar.current
+        if calendar.isDate(recommendations[0].date, equalTo: Date(), toGranularity: .day) {
+            recommendations.removeFirst()
+            generateRecommendation(dailyTargetCalories: dailyTargetCalories, date: Calendar.current.startOfDay(for: Date()))
+            print("Updated recommendations.")
+        }
+    }
+    
     func generateRecommendation(dailyTargetCalories: Int, date: Date) -> Void {
         var dayRecommendation: Recommendation = Recommendation(date: date)
         
