@@ -15,5 +15,5 @@ struct Recommendation: Identifiable {
     var dinners: [MealObject] = []
     var avgBreakfastsCalorie: Int = 0
     var avgLunchesCalorie: Int = 0
-    var avgDinnerLCalorie: Int = 0
+    var avgDinnersCalorie: Int = 0
 }

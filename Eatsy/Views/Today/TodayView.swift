@@ -28,6 +28,9 @@ struct TodayView: View {
         ]
     )
     
+    @EnvironmentObject var recommendationViewModel: RecommendationViewModel
+    
+    
     var body: some View {
         VStack(spacing: 16) {
             // Title & Profile
@@ -108,35 +111,70 @@ struct TodayView: View {
             .padding(.horizontal)
             
             // Timeline
+            
             List {
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .breakfast,
-                    time: "8 AM"
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+                if recommendationViewModel.recommendations.count > 0 {
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .breakfast,
+                        time: "8 AM",
+                        calorie: recommendationViewModel.recommendations[0].avgBreakfastsCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .lunch,
+                        time: "1 PM",
+                        calorie: recommendationViewModel.recommendations[0].avgLunchesCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .dinner,
+                        time: "5 PM",
+                        calorie: recommendationViewModel.recommendations[0].avgDinnersCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                } else {
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .breakfast,
+                        time: "8 AM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .lunch,
+                        time: "1 PM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .dinner,
+                        time: "5 PM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                }
                 
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .lunch,
-                    time: "1 PM",
-                    calorie: 300
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                
-                TimelineRowFilled(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .dinner,
-                    time: "5 PM"
-                )
-                
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
                 
             }
             .listStyle(PlainListStyle())
@@ -159,7 +197,7 @@ struct TimelineRow: View {
     var mealType: MealType
     var meal: MealObject?
     var time: String
-    var calorie: Int?
+    var calorie: Int
 
     
     var body: some View {
@@ -178,41 +216,80 @@ struct TimelineRow: View {
                     .padding(.top, -2)
             }
             
-            // Meal Card
+            // Conditional Meal Card
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(time)")
                     .font(.caption)
                 
-                HStack {
-                    
-                    Text("🍛")
-                        .font(.largeTitle)
-                        .foregroundStyle(Color(.systemGray2))
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("\(mealType.rawValue)")
-                            .font(.caption)
-                            .foregroundStyle(Color(.systemGray2))
-                        if let calorie = calorie {
-                            Text("~\(calorie)kcal")
+                // Use a single 'if let' to handle both cases
+                if let chosenMeal = meal {
+                    // This block runs when `meal` is NOT nil
+                    HStack {
+                        Image(chosenMeal.menuName) // Use chosenMeal directly
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 56, height: 56)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("\(mealType.rawValue)")
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            Text(chosenMeal.menuName)
                                 .bold()
-                        } else {
-                            Text("-")
-                                .bold()
+                            Text("P: \(chosenMeal.protein)g C: \(chosenMeal.carbs)g F: \(chosenMeal.fat)g")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
+                        
+                        Spacer()
+                        
+                        Text("\(chosenMeal.calories)kcal")
+                            .bold()
+                            .padding(4)
+                            .foregroundStyle(.green)
+                            .background(.green.opacity(0.2))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.green, lineWidth: 1)
+                            )
                     }
-                    Spacer()
-                    
-                    Button(action: {
-                        onAddTapped()
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
+                    .eatsyCard()
+                } else {
+                    // This block runs when `meal` is nil
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("\(mealType.rawValue)")
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            if calorie > 0 {
+                                Text("~\(calorie)kcal")
+                                    .bold()
+                            } else {
+                                Text("-")
+                                    .bold()
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            onAddTapped()
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                        .disabled(isEnabled)
+                        .opacity(isEnabled ? 1.0 : 0.4)
                     }
-                    .disabled(isEnabled)
-                    .opacity(isEnabled ? 1.0 : 0.4)
+                    .eatsyCard()
                 }
-                .eatsyCard()
             }
         }
     }

@@ -82,7 +82,7 @@ class RecommendationViewModel: ObservableObject {
             
             dayRecommendation.avgBreakfastsCalorie = avgBreakfastCalories
             dayRecommendation.avgLunchesCalorie = avgLunchCalories
-            dayRecommendation.avgDinnerLCalorie = avgDinnerCalories
+            dayRecommendation.avgDinnersCalorie = avgDinnerCalories
             
             let totalAvgCalories = avgBreakfastCalories + avgLunchCalories + avgDinnerCalories
             

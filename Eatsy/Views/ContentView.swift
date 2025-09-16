@@ -34,7 +34,7 @@ struct ContentView: View {
         TabView {
             NavigationStack {
                 TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation, mealType: .breakfast)
-                    .environmentObject(user)
+                    .environmentObject(user).environmentObject(recommendation)
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
