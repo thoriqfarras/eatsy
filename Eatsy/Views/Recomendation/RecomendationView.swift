@@ -5,7 +5,7 @@ struct RecomendationView: View {
     @StateObject private var viewModel = FoodViewModel()
     @Environment(\.dismiss) var dismiss
     
-    var mealType: MealType
+    @Binding var mealType: MealType
     let dummyRecomend = Recommendation(
         date: Date(),
         breakfasts: [
@@ -40,7 +40,7 @@ struct RecomendationView: View {
             if mealType == .breakfast {
                 HStack {
                     Label("Today", systemImage: "calendar")
-                    Label("Breakfast", systemImage: "clock")
+                    Label("\(mealType.rawValue)", systemImage: "clock")
                 }
                 .font(.footnote)
                 .bold()
@@ -135,6 +135,6 @@ struct RoundedCorner: Shape {
     }
 }
 
-#Preview {
-    RecomendationView( mealType: .breakfast)
-}
+//#Preview {
+//    RecomendationView(mealType: .breakfast)
+//}

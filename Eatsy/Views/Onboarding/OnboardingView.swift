@@ -89,12 +89,13 @@ struct OnboardingView: View {
                 )
                 DietRestrictionView(userData: $userData, nextStep: {
                     currentStep = .done
-                    viewModel.saveData(userData: userData)
+                    viewModel.save(userData: userData)
                     viewModel.setDailyTargetCalories()
                     viewModel.setTargetDate()
+                    viewModel.completeSetUp()
                     recViewModel.generateRecommendation(dailyTargetCalories: viewModel.user.dailyTargetCalories, date: Date())
                     recViewModel.generateRecommendation(dailyTargetCalories: viewModel.user.dailyTargetCalories, date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!)
-                }, saveUser: viewModel.saveData, viewModel: viewModel)
+                })
                 
             case .done:
                 OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton, targetDate: $viewModel.user.targetDate, height: $viewModel.user.height,

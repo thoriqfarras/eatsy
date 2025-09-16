@@ -5,7 +5,8 @@ struct TodayView: View {
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
     @Binding var enableButton: Bool    // tombol + di meal card
     @Binding var showRecommendation: Bool
-    var mealType: MealType
+    
+    @State private var selectedMealCardType: MealType = .breakfast
     
     @EnvironmentObject var userVM : UserViewModel
     var type = 2
@@ -103,7 +104,7 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-//                Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
+                Text("\(userVM.user.dailyTargetCalories) kcal")
                     .font(.caption)
                     .foregroundStyle(Color(.systemGray2))
                     .bold()
@@ -114,8 +115,12 @@ struct TodayView: View {
             
             List {
                 if recommendationViewModel.recommendations.count > 0 {
+                    Text("RECOMMENDATION GENERATED")
                     TimelineRow(
-                        onAddTapped: { showRecommendation = true },
+                        onAddTapped: {
+                            selectedMealCardType = .breakfast
+                            showRecommendation = true
+                        },
                         isEnabled: enableButton,
                         mealType: .breakfast,
                         time: "8 AM",
@@ -125,7 +130,10 @@ struct TodayView: View {
                     .listRowBackground(Color.clear)
                     
                     TimelineRow(
-                        onAddTapped: { showRecommendation = true },
+                        onAddTapped: {
+                            selectedMealCardType = .lunch
+                            showRecommendation = true
+                        },
                         isEnabled: enableButton,
                         mealType: .lunch,
                         time: "1 PM",
@@ -135,7 +143,10 @@ struct TodayView: View {
                     .listRowBackground(Color.clear)
                     
                     TimelineRow(
-                        onAddTapped: { showRecommendation = true },
+                        onAddTapped: {
+                            selectedMealCardType = .dinner
+                            showRecommendation = true
+                        },
                         isEnabled: enableButton,
                         mealType: .dinner,
                         time: "5 PM",
@@ -144,6 +155,7 @@ struct TodayView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 } else {
+                    Text("RECOMMENDATION NOT GENERATED")
                     TimelineRow(
                         onAddTapped: { showRecommendation = true },
                         isEnabled: enableButton,
@@ -183,7 +195,7 @@ struct TodayView: View {
         .background(Color("defaultBackground"))
         .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $showRecommendation) {
-            RecomendationView(mealType: .breakfast)
+            RecomendationView(mealType: $selectedMealCardType)
                 .presentationDetents([.fraction(0.8)])
                 .presentationCornerRadius(24)
         }
@@ -374,7 +386,6 @@ struct TimelineRowFilled: View {
 
 #Preview {
     NavigationStack {
-        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false),
-                  mealType: .breakfast)
+        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false))
     }
 }

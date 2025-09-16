@@ -9,8 +9,6 @@ import SwiftUI
 struct DietRestrictionView: View {
     @Binding var userData: User
     let nextStep: () -> Void
-    var saveUser: (User) -> Void
-    @ObservedObject var viewModel: UserViewModel
 
     var body: some View {
         VStack {

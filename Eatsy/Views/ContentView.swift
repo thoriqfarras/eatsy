@@ -33,7 +33,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation, mealType: .breakfast)
+                TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation)
                     .environmentObject(user).environmentObject(recommendation)
             }
             .tabItem {

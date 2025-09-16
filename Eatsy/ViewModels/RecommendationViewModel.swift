@@ -17,18 +17,42 @@ class RecommendationViewModel: ObservableObject {
     var userViewModel: UserViewModel
     
     init(userViewModel: UserViewModel) {
+        
         self.userViewModel = userViewModel
         let dailyTargetCalories = userViewModel.user.dailyTargetCalories
-        if dailyTargetCalories == 0 && recommendations.isEmpty {
-            print("User not yet set up.")
+        
+        print(userViewModel.user)
+        
+        if let savedData = UserDefaults.standard.data(forKey: "userRecommendations"),
+           let decodedRecommendations = try? JSONDecoder().decode([Recommendation].self, from: savedData) {
+            self.recommendations = decodedRecommendations
+            print("Recommendations data successfully fetched.")
+        } else {
+            print("No existing Recommendations data found.")
             return
         }
         
         let calendar = Calendar.current
-        if calendar.isDate(recommendations[0].date, equalTo: Date(), toGranularity: .day) {
+        let firstRecommendationDate = calendar.startOfDay(for: recommendations[0].date)
+        let todaysDate = calendar.startOfDay(for: Date())
+        if firstRecommendationDate < todaysDate {
+            print("Updating recommendations...")
             recommendations.removeFirst()
             generateRecommendation(dailyTargetCalories: dailyTargetCalories, date: Calendar.current.startOfDay(for: Date()))
             print("Updated recommendations.")
+        }
+    }
+    
+    func saveData() {
+        do {
+            // Encode the provided User struct into Data.
+            let encodedData = try JSONEncoder().encode(self.recommendations)
+            // Save the encoded data to UserDefaults using the designated key.
+            UserDefaults.standard.set(encodedData, forKey: "userRecommendations")
+            print("Recommendation data successfully saved.")
+        } catch {
+            // Log any errors that occur during encoding.
+            print("Error saving recommendation data: \(error.localizedDescription)")
         }
     }
     
@@ -95,6 +119,7 @@ class RecommendationViewModel: ObservableObject {
         } while true // Loop indefinitely until a valid combination is found
         
         self.recommendations.append(dayRecommendation)
+        self.saveData()
     }
 }
 
