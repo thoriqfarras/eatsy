@@ -29,7 +29,7 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation)
+                TodayView(showOnboarding: $showOnboarding, showButton: $showButton, enableButton: $enableButton, showRecommendation:$showRecommendation, mealType: .breakfast)
                     .environmentObject(user)
             }
             .tabItem {
@@ -42,14 +42,12 @@ struct ContentView: View {
             .tabItem {
                 Label("Schedule", systemImage: "calendar")
             }
-            
-            NavigationStack {
-                TomorrowView()
-                Text("\(recommendation.recommendations)")
-            }
-            .tabItem {
-                Label("Tommorow", systemImage: "calendar")
-            }
+//            NavigationStack {
+//                TomorrowView()
+//            }
+//            .tabItem {
+//                Label("Tommorow", systemImage: "calendar")
+//            }
 
         }
         .accentColor(.primaryGreen)
