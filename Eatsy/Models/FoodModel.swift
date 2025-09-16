@@ -40,4 +40,5 @@ struct MealObject: Codable, Identifiable, Hashable {
     let fat: Int
     var imageName: String = ""
     let restrictions: [DietRestriction]
+    var isSelected: Bool
 }
