@@ -94,49 +94,39 @@ struct TodayView: View {
             
             // Timeline
             List {
-                // Breakfast
-                TimelineRowUniversal(
-                    time: "8 AM",
+                TimelineRow(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
                     mealType: .breakfast,
-                    state: !userVM.user.isSetUp
-                        ? .beforeSignIn
-                        : (showRecommendation
-                            ? .filled(meal: recommendation.breakfasts[0])
-                            : .afterSignIn(calorie: 300)),
-                    onAddTapped: { showRecommendation = true }
+                    time: "8 AM"
                 )
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
-                // Lunch
-                TimelineRowUniversal(
-                    time: "1 PM",
+                TimelineRow(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
                     mealType: .lunch,
-                    state: !userVM.user.isSetUp
-                        ? .beforeSignIn
-                        : (showRecommendation
-                            ? .filled(meal: recommendation.lunches[0])
-                            : .afterSignIn(calorie: 500)),
-                    onAddTapped: { showRecommendation = true }
+                    time: "1 PM",
+                    calorie: 300
                 )
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
-                // Dinner
-                TimelineRowUniversal(
-                    time: "5 PM",
+                TimelineRowFilled(
+                    onAddTapped: { showRecommendation = true },
+                    isEnabled: enableButton,
                     mealType: .dinner,
-                    state: !userVM.user.isSetUp
-                        ? .beforeSignIn
-                        : (showRecommendation
-                            ? .filled(meal: recommendation.dinners[0])
-                            : .afterSignIn(calorie: 400)),
-                    onAddTapped: { showRecommendation = true }
+                    time: "5 PM"
                 )
+                
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
+                
             }
             .listStyle(PlainListStyle())
+            
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
