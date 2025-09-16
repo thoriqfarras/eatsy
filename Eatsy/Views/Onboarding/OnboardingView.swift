@@ -93,6 +93,7 @@ struct OnboardingView: View {
                     viewModel.setDailyTargetCalories()
                     viewModel.setTargetDate()
                     recViewModel.generateRecommendation(dailyTargetCalories: viewModel.user.dailyTargetCalories, date: Date())
+                    recViewModel.generateRecommendation(dailyTargetCalories: viewModel.user.dailyTargetCalories, date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!)
                 }, saveUser: viewModel.saveData, viewModel: viewModel)
                 
             case .done:
