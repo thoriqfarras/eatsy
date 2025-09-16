@@ -1,5 +1,12 @@
 import SwiftUI
 
+enum TimelineState {
+    case beforeSignIn
+    case afterSignIn(calorie: Int?)
+    case filled(meal: MealObject)
+}
+
+
 struct TodayView: View {
     @Binding var showOnboarding: Bool
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
@@ -108,36 +115,82 @@ struct TodayView: View {
             .padding(.horizontal)
             
             // Timeline
+//            List {
+//                TimelineRow(
+//                    onAddTapped: { showRecommendation = true },
+//                    isEnabled: enableButton,
+//                    mealType: .breakfast,
+//                    time: "8 AM"
+//                )
+//                .listRowSeparator(.hidden)
+//                .listRowBackground(Color.clear)
+//                
+//                TimelineRow(
+//                    onAddTapped: { showRecommendation = true },
+//                    isEnabled: enableButton,
+//                    mealType: .lunch,
+//                    time: "1 PM",
+//                    calorie: 300
+//                )
+//                .listRowSeparator(.hidden)
+//                .listRowBackground(Color.clear)
+//                
+//                TimelineRowFilled(
+//                    onAddTapped: { showRecommendation = true },
+//                    isEnabled: enableButton,
+//                    mealType: .dinner,
+//                    time: "5 PM"
+//                )
+//                
+//                .listRowSeparator(.hidden)
+//                .listRowBackground(Color.clear)
+//                
+//            }
+//            .listStyle(PlainListStyle())
+            
+            // Timeline
             List {
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
+                // Breakfast
+                TimelineRowUniversal(
+                    time: "8 AM",
                     mealType: .breakfast,
-                    time: "8 AM"
+                    state: !userVM.user.isSetUp
+                        ? .beforeSignIn
+                        : (showRecommendation
+                            ? .filled(meal: recommendation.breakfasts[0])
+                            : .afterSignIn(calorie: 300)),
+                    onAddTapped: { showRecommendation = true }
                 )
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .lunch,
+                // Lunch
+                TimelineRowUniversal(
                     time: "1 PM",
-                    calorie: 300
+                    mealType: .lunch,
+                    state: !userVM.user.isSetUp
+                        ? .beforeSignIn
+                        : (showRecommendation
+                            ? .filled(meal: recommendation.lunches[0])
+                            : .afterSignIn(calorie: 500)),
+                    onAddTapped: { showRecommendation = true }
                 )
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 
-                TimelineRowFilled(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
+                // Dinner
+                TimelineRowUniversal(
+                    time: "5 PM",
                     mealType: .dinner,
-                    time: "5 PM"
+                    state: !userVM.user.isSetUp
+                        ? .beforeSignIn
+                        : (showRecommendation
+                            ? .filled(meal: recommendation.dinners[0])
+                            : .afterSignIn(calorie: 400)),
+                    onAddTapped: { showRecommendation = true }
                 )
-                
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
-                
             }
             .listStyle(PlainListStyle())
         }
@@ -294,6 +347,113 @@ struct TimelineRowFilled: View {
         }
     }
 }
+
+struct TimelineRowUniversal: View {
+    var time: String
+    var mealType: MealType
+    var state: TimelineState
+    var onAddTapped: () -> Void
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            // Timeline dots + line
+            VStack {
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        Circle().stroke(Color.gray, lineWidth: 1)
+                    )
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 2)
+                    .padding(.top, -2)
+            }
+            
+            // Timeline Content
+            VStack(alignment: .leading, spacing: 8) {
+                Text(time)
+                    .font(.caption)
+                
+                switch state {
+                case .beforeSignIn:
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            Text("-").bold()
+                        }
+                        Spacer()
+                        Button(action: onAddTapped) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .eatsyCard()
+                    
+                case .afterSignIn(let calorie):
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            if let c = calorie {
+                                Text("~\(c)kcal").bold()
+                            } else {
+                                Text("-").bold()
+                            }
+                        }
+                        Spacer()
+                        Button(action: onAddTapped) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .eatsyCard()
+                    
+                case .filled(let meal):
+                    HStack {
+                        Image(meal.imageName ?? "nasgor")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 56, height: 56)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            Text(meal.menuName)
+                                .bold()
+                            Text("\(meal.protein)g P | \(meal.carbs)g C | \(meal.fat)g F")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Text("\(meal.calories)kcal")
+                            .bold()
+                            .padding(4)
+                            .foregroundStyle(.green)
+                            .background(.green.opacity(0.2))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .eatsyCard()
+                }
+            }
+        }
+    }
+}
+
 
 #Preview {
     NavigationStack {
