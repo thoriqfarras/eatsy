@@ -44,7 +44,7 @@ struct RecomendationView: View {
                     Label("Breakfast", systemImage: "clock")
                 }
                 .font(.footnote)
-                .bold()
+//                .bold()
                 .foregroundColor(.gray)
                 .padding(.bottom, 6)
                 

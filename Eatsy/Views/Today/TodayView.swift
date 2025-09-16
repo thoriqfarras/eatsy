@@ -6,7 +6,6 @@ enum TimelineState {
     case filled(meal: MealObject)
 }
 
-
 struct TodayView: View {
     @Binding var showOnboarding: Bool
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
@@ -37,28 +36,6 @@ struct TodayView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            // Title & Profile
-            HStack {
-                Text("Today's Meal Plan")
-                    .font(.title)
-                    .bold()
-                
-                Spacer()
-                
-                NavigationLink {
-                    ProfileView()
-                } label: {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                        .foregroundColor(.white)
-                        .background(Circle().fill(Color.gray))
-                }
-            }
-            .padding(.horizontal)
-            .padding(.top, 12)
-            
             // Info card / GET MEAL PLAN
             if !userVM.user.isSetUp {
                 Button("GET MEAL PLAN") {
@@ -67,7 +44,7 @@ struct TodayView: View {
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal)
                 .onAppear {
-                    print("user tidak ada") // ✅ sekarang aman
+                    print("user tidak ada")
                     enableButton = true
                 }
                             
@@ -97,7 +74,7 @@ struct TodayView: View {
                 )
                 .padding([.horizontal, .bottom])
                 .onAppear {
-                    print("user ada") // ✅ sekarang aman
+                    print("user ada")
                     enableButton = false
                 }
             }
@@ -107,46 +84,13 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-//                Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
-                    .font(.caption)
-                    .foregroundStyle(Color(.systemGray2))
-                    .bold()
+                // Uncomment when needed
+                // Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
+                //     .font(.caption)
+                //     .foregroundStyle(Color(.systemGray2))
+                //     .bold()
             }
             .padding(.horizontal)
-            
-            // Timeline
-//            List {
-//                TimelineRow(
-//                    onAddTapped: { showRecommendation = true },
-//                    isEnabled: enableButton,
-//                    mealType: .breakfast,
-//                    time: "8 AM"
-//                )
-//                .listRowSeparator(.hidden)
-//                .listRowBackground(Color.clear)
-//                
-//                TimelineRow(
-//                    onAddTapped: { showRecommendation = true },
-//                    isEnabled: enableButton,
-//                    mealType: .lunch,
-//                    time: "1 PM",
-//                    calorie: 300
-//                )
-//                .listRowSeparator(.hidden)
-//                .listRowBackground(Color.clear)
-//                
-//                TimelineRowFilled(
-//                    onAddTapped: { showRecommendation = true },
-//                    isEnabled: enableButton,
-//                    mealType: .dinner,
-//                    time: "5 PM"
-//                )
-//                
-//                .listRowSeparator(.hidden)
-//                .listRowBackground(Color.clear)
-//                
-//            }
-//            .listStyle(PlainListStyle())
             
             // Timeline
             List {
@@ -196,7 +140,6 @@ struct TodayView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
-        .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $showRecommendation) {
             RecomendationView(mealType: .breakfast)
                 .presentationDetents([.fraction(0.8)])
@@ -205,16 +148,15 @@ struct TodayView: View {
     }
 }
 
+// Keep your existing TimelineRow components unchanged
 struct TimelineRow: View {
-    
     var onAddTapped: () -> Void
-    var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var isEnabled: Bool
     var mealType: MealType
     var meal: MealObject?
     var time: String
     var calorie: Int?
 
-    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -237,7 +179,6 @@ struct TimelineRow: View {
                     .font(.caption)
                 
                 HStack {
-                    
                     Text("🍛")
                         .font(.largeTitle)
                         .foregroundStyle(Color(.systemGray2))
@@ -273,13 +214,12 @@ struct TimelineRow: View {
 
 struct TimelineRowFilled: View {
     var onAddTapped: () -> Void
-    var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var isEnabled: Bool
     var mealType: MealType
     var meal: MealObject?
     var time: String
     var calorie: Int?
 
-    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -302,7 +242,6 @@ struct TimelineRowFilled: View {
                     .font(.caption)
                 
                 HStack {
-                    
                     Image("nasgor")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -318,29 +257,17 @@ struct TimelineRowFilled: View {
                             .bold()
                         Text("50g | 20g | 7g")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color(.systemGray2))
                     }
                     Spacer()
                     
                     Text("800kcal")
+                        .font(.footnote)
                         .bold()
-                        .padding(4)
-                        .foregroundStyle(.green)
-                        .background(.green.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.green, lineWidth: 1)
-                        )
-                    
-//                    Button(action: {
-//                        onAddTapped()
-//                    }) {
-//                        Image(systemName: "plus")
-//                            .foregroundColor(.black)
-//                    }
-//                    .disabled(isEnabled)
-//                    .opacity(isEnabled ? 1.0 : 0.4)
+                        .padding(10)
+                        .background(Color("secYellow"))
+                        .foregroundColor(Color("PrimaryGreen"))
+                        .cornerRadius(8)
                 }
                 .eatsyCard()
             }
@@ -421,8 +348,10 @@ struct TimelineRowUniversal: View {
                     .eatsyCard()
                     
                 case .filled(let meal):
+                    // You'll need to implement FormatTimelineView
+                    // or replace this with your actual filled meal view
                     HStack {
-                        Image(meal.imageName ?? "nasgor")
+                        Image("nasgor") // Replace with meal image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 56, height: 56)
@@ -435,17 +364,19 @@ struct TimelineRowUniversal: View {
                                 .foregroundStyle(Color(.systemGray2))
                             Text(meal.menuName)
                                 .bold()
-                            Text("\(meal.protein)g P | \(meal.carbs)g C | \(meal.fat)g F")
+                            Text("\(meal.carbs)g | \(meal.protein)g | \(meal.fat)g")
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color(.systemGray2))
                         }
                         Spacer()
+                        
                         Text("\(meal.calories)kcal")
+                            .font(.footnote)
                             .bold()
-                            .padding(4)
-                            .foregroundStyle(.green)
-                            .background(.green.opacity(0.2))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .padding(10)
+                            .background(Color("secYellow"))
+                            .foregroundColor(Color("PrimaryGreen"))
+                            .cornerRadius(8)
                     }
                     .eatsyCard()
                 }
@@ -454,10 +385,13 @@ struct TimelineRowUniversal: View {
     }
 }
 
-
 #Preview {
-    NavigationStack {
-        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false),
-                  mealType: .breakfast)
-    }
+    TodayView(
+        showOnboarding: .constant(false),
+        showButton: .constant(false),
+        enableButton: .constant(false),
+        showRecommendation: .constant(false),
+        mealType: .breakfast
+    )
+    .environmentObject(UserViewModel())
 }

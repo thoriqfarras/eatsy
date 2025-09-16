@@ -1,18 +1,17 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     @StateObject var userViewModel = UserViewModel()
-    
+    @Environment(\.dismiss) var dismiss
     @State private var activePicker: PickerType? = nil
     
     var body: some View {
         VStack {
-            HStack(){
+            HStack {
                 GoalCardView()
             }
             
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 Text("Personal Information")
                     .font(.callout)
                     .fontWeight(.medium)
@@ -33,31 +32,34 @@ struct ProfileView: View {
                     ProfileItem(title: "🎯 Goal Weight",
                                 value: userViewModel.user.targetWeight != nil ? "\(userViewModel.user.targetWeight!) kg" : "Not set")
                     .onTapGesture { activePicker = .targetWeight }
-
                 }
                 .eatsyCard()
                 .padding(.horizontal)
             }
-            HStack(){
+            
+            HStack {
                 PreferenceView(selectedRestrictions: $userViewModel.user.dietRestrictions)
             }
+            
             Spacer()
-        }
-        .sheet(item: $activePicker) { picker in
-                    PickerSheet(
-                        pickerType: picker,
-                        height: $userViewModel.user.height,
-                        weight: $userViewModel.user.weight,
-                        age: $userViewModel.user.age,
-                        targetWeight: $userViewModel.user.targetWeight
-                    )
-                    .presentationDetents([.medium])
-                    .presentationDragIndicator(.visible)
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $activePicker) { picker in
+            PickerSheet(
+                pickerType: picker,
+                height: $userViewModel.user.height,
+                weight: $userViewModel.user.weight,
+                age: $userViewModel.user.age,
+                targetWeight: $userViewModel.user.targetWeight
+            )
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+        }
         .background(Color("defaultBackground"))
-    }}
+    }
+}
+
 #Preview {
     ProfileView()
 }
@@ -150,9 +152,8 @@ struct PickerSheet: View {
 struct GoalCardView: View {
     @State private var selectedGoal: Goal?
     @State private var showModal = false
-        @Environment(\.dismiss) var dismiss
-        
-        @State private var tempSelectedGoal: Goal? = nil
+    @Environment(\.dismiss) var dismiss
+    @State private var tempSelectedGoal: Goal? = nil
     
     var body: some View {
         HStack {
@@ -267,6 +268,5 @@ struct PreferenceView: View {
             .presentationDetents([.fraction(0.65)])
             .presentationDragIndicator(.visible)
         }
+    }
 }
-   }
-

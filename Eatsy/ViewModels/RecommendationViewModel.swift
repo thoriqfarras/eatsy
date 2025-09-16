@@ -33,14 +33,25 @@ class RecommendationViewModel: ObservableObject {
     }
     
     func generateRecommendation(dailyTargetCalories: Int, date: Date) -> Void {
+        
+        guard dailyTargetCalories > 0 else {
+                print("⚠️ dailyTargetCalories = 0, skip recommendation.")
+                return
+            }
+        
         var dayRecommendation: Recommendation = Recommendation(date: date)
         
         // Define the acceptable calorie range
         let lowerBound = Double(dailyTargetCalories) * 0.9
         let upperBound = Double(dailyTargetCalories) * 1.1
+        
+        var attempts = 0
+        let maxAttempts = 1000
 
         // Repeat the meal selection until the total calories are within the target range
         repeat {
+            attempts += 1
+            
             // Clear previous selection
             dayRecommendation.breakfasts.removeAll()
             dayRecommendation.lunches.removeAll()
@@ -87,12 +98,15 @@ class RecommendationViewModel: ObservableObject {
             let totalAvgCalories = avgBreakfastCalories + avgLunchCalories + avgDinnerCalories
             
             if Double(totalAvgCalories) >= lowerBound && Double(totalAvgCalories) <= upperBound {
-                // Found a good combination, exit the loop
-                print("Found a valid combination")
+                print("✅ Found a valid combination: \(totalAvgCalories)")
                 break
             }
-            print("Combination invalid: \(totalAvgCalories)")
-        } while true // Loop indefinitely until a valid combination is found
+            
+        } while attempts < maxAttempts
+        
+        if attempts >= maxAttempts {
+            print("⚠️ Could not find valid combination after \(maxAttempts) tries.")
+        }
         
         self.recommendations.append(dayRecommendation)
     }

@@ -37,6 +37,7 @@ struct DietRestrictionView: View {
                             .buttonStyle(OutlineButtonStyle())
                         } else {
                             Button("Next") {
+                                print("DEBUG: dietRestrictions = \(userData.dietRestrictions)")
                                 nextStep()
                                 saveUser(userData)
                             }
