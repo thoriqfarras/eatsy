@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var userViewModel = UserViewModel()
+    @EnvironmentObject var userViewModel: UserViewModel  // Changed from @StateObject
     @Environment(\.dismiss) var dismiss
     @State private var activePicker: PickerType? = nil
     
@@ -9,6 +9,7 @@ struct ProfileView: View {
         VStack {
             HStack {
                 GoalCardView()
+                    .environmentObject(userViewModel)  // Pass the environment object
             }
             
             VStack(alignment: .leading) {
@@ -62,6 +63,7 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(UserViewModel())
 }
 
 struct ProfileItem: View {
@@ -150,14 +152,13 @@ struct PickerSheet: View {
 }
 
 struct GoalCardView: View {
-    @State private var selectedGoal: Goal?
+    @EnvironmentObject var userViewModel: UserViewModel  // Changed to EnvironmentObject
     @State private var showModal = false
-    @Environment(\.dismiss) var dismiss
     @State private var tempSelectedGoal: Goal? = nil
     
     var body: some View {
         HStack {
-            Text("🏆")
+            Text(userViewModel.user.goal?.emoji ?? "🏆")
                 .font(.largeTitle)
                 .padding(.trailing, 8)
             
@@ -166,13 +167,14 @@ struct GoalCardView: View {
                     .font(.caption)
                     .foregroundStyle(Color(.systemGray2))
                 
-                Text(selectedGoal?.title ?? "Select Goal")
+                Text(userViewModel.user.goal?.title ?? "Select Goal")
                     .font(.headline)
             }
             
             Spacer()
             
             Button("Change") {
+                tempSelectedGoal = userViewModel.user.goal // set current goal as temp
                 showModal.toggle()
             }
             .font(.caption)
@@ -190,20 +192,26 @@ struct GoalCardView: View {
             VStack {
                 Text("Select Your Goal")
                     .bold()
+                    .padding(.top, 40)
                     .padding(.bottom)
                 
                 GoalRadioButtonsGroup(selectedButton: $tempSelectedGoal)
-                    .onAppear {
-                        tempSelectedGoal = selectedGoal // mulai dari current goal
-                    }
+                
+                Spacer()
                 
                 Button("Done") {
-                    selectedGoal = tempSelectedGoal // apply ke main state
-                    showModal = false // tutup modal
+                    if let newGoal = tempSelectedGoal {
+                        userViewModel.user.goal = newGoal
+                        userViewModel.saveData(userData: userViewModel.user)
+                        // Optionally recalculate target calories if goal affects it
+                        userViewModel.setDailyTargetCalories()
+                    }
+                    showModal = false
                 }
                 .buttonStyle(PrimaryButtonStyle())
+                .disabled(tempSelectedGoal == nil)
             }
-            .presentationDetents([.medium])
+            .presentationDetents([.fraction(0.55)])
             .presentationDragIndicator(.visible)
         }
     }
@@ -247,7 +255,7 @@ struct PreferenceView: View {
                     .padding(.top, 40)
                     .padding(.bottom)
                 
-                VStack {
+                VStack (spacing:10) {
                     ForEach(DietRestriction.allCases, id: \.self) { restriction in
                         DietRestrictionCheckbox(
                             restriction: restriction,

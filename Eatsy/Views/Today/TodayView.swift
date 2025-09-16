@@ -239,15 +239,30 @@ struct TimelineRowFilled: View {
                         .clipped()
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("\(mealType.rawValue)")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundStyle(Color(.systemGray2))
                         Text("Nasi Goreng")
                             .bold()
-                        Text("50g | 20g | 7g")
-                            .font(.caption)
-                            .foregroundStyle(Color(.systemGray2))
+                        HStack {
+                            Image(systemName: "drop")
+                            
+                            Text("300g")
+                                .padding(.leading, -4)
+                            
+                            Image(systemName: "leaf")
+                            
+                            Text("600g")
+                                .padding(.leading, -4)
+                            
+                            Image(systemName: "bolt.heart")
+                            
+                            Text("500g")
+                                .padding(.leading, -4)
+                        }
+                        .foregroundColor(Color(.systemGray2))
+                        .font(.footnote)
                     }
                     Spacer()
                     
@@ -259,6 +274,7 @@ struct TimelineRowFilled: View {
                         .foregroundColor(Color("PrimaryGreen"))
                         .cornerRadius(8)
                 }
+                .padding(-4)
                 .eatsyCard()
             }
         }
@@ -338,36 +354,15 @@ struct TimelineRowUniversal: View {
                     .eatsyCard()
                     
                 case .filled(let meal):
-                    // You'll need to implement FormatTimelineView
-                    // or replace this with your actual filled meal view
-                    HStack {
-                        Image("nasgor") // Replace with meal image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 56, height: 56)
-                            .clipped()
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(mealType.rawValue.capitalized)
-                                .font(.caption)
-                                .foregroundStyle(Color(.systemGray2))
-                            Text(meal.menuName)
-                                .bold()
-                            Text("\(meal.carbs)g | \(meal.protein)g | \(meal.fat)g")
-                                .font(.caption)
-                                .foregroundStyle(Color(.systemGray2))
+                    FormatTimelineView(
+                        time: "08:00", // bisa diganti sesuai jam meal yang sesuai
+                        mealType: mealType,
+                        meal: meal,
+                        onAddTapped: {
+                            // action kalau user mau add meal
+                            print("Add tapped for \(meal.menuName)")
                         }
-                        Spacer()
-                        
-                        Text("\(meal.calories)kcal")
-                            .font(.footnote)
-                            .bold()
-                            .padding(10)
-                            .background(Color("secYellow"))
-                            .foregroundColor(Color("PrimaryGreen"))
-                            .cornerRadius(8)
-                    }
+                    )
                     .eatsyCard()
                 }
             }

@@ -29,7 +29,15 @@ struct ContentView: View {
             appearance.configureWithOpaqueBackground()
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
+            
+            // Set navigation back button color to primaryGreen
             UINavigationBar.appearance().tintColor = UIColor(named: "PrimaryGreen")
+            
+            // More specific navigation appearance
+            let navAppearance = UINavigationBarAppearance()
+            navAppearance.configureWithOpaqueBackground()
+            UINavigationBar.appearance().standardAppearance = navAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
         }
     
     var body: some View {
@@ -93,8 +101,10 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $showProfile) {
                 ProfileView()
+                    .environmentObject(user)
             }
         }
+        .tint(Color("PrimaryGreen"))
     }
 }
 

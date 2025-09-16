@@ -32,14 +32,17 @@ struct FormatTimelineView: View {
                     Image(systemName: "drop")
                     
                     Text("\(meal.fat)g")
+                        .padding(.leading, -4)
                     
                     Image(systemName: "leaf")
                     
                     Text("\(meal.carbs)g")
+                        .padding(.leading, -4)
                     
                     Image(systemName: "bolt.heart")
                     
                     Text("\(meal.protein)g")
+                        .padding(.leading, -4)
                 }
                 .foregroundColor(Color(.systemGray2))
                 .font(.footnote)
