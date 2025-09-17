@@ -1,5 +1,11 @@
 import SwiftUI
 
+enum TimelineState {
+    case beforeSignIn
+    case afterSignIn(calorie: Int?)
+    case filled(meal: MealObject)
+}
+
 struct TodayView: View {
     @Binding var showOnboarding: Bool
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
@@ -13,19 +19,19 @@ struct TodayView: View {
     var recommendation = Recommendation(
         date: Date(),
         breakfasts: [
-            MealObject(id:1, mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:2,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:3,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:1, mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:2,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:3,mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false)
         ],
         lunches: [
-            MealObject(id:11,mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:12,mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:13,mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:11,mealType: .lunch, menuName: "Nasgor Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:12,mealType: .lunch, menuName: "Mi Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:13,mealType: .lunch, menuName: "Ayam Bali", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false)
         ],
         dinners: [
-            MealObject(id:21,mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:22,mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy]),
-            MealObject(id:23,mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy])
+            MealObject(id:21,mealType: .dinner, menuName: "Ketoprak Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:22,mealType: .dinner, menuName: "Mi Kuah", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
+            MealObject(id:23,mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false)
         ]
     )
     
@@ -34,28 +40,6 @@ struct TodayView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            // Title & Profile
-            HStack {
-                Text("Today's Meal Plan")
-                    .font(.title)
-                    .bold()
-                
-                Spacer()
-                
-                NavigationLink {
-                    ProfileView()
-                } label: {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                        .foregroundColor(.white)
-                        .background(Circle().fill(Color.gray))
-                }
-            }
-            .padding(.horizontal)
-            .padding(.top, 12)
-            
             // Info card / GET MEAL PLAN
             if !userVM.user.isSetUp {
                 Button("GET MEAL PLAN") {
@@ -64,7 +48,7 @@ struct TodayView: View {
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal)
                 .onAppear {
-                    print("user tidak ada") // ✅ sekarang aman
+                    print("user tidak ada")
                     enableButton = true
                 }
                             
@@ -94,7 +78,7 @@ struct TodayView: View {
                 )
                 .padding([.horizontal, .bottom])
                 .onAppear {
-                    print("user ada") // ✅ sekarang aman
+                    print("user ada")
                     enableButton = false
                 }
             }
@@ -104,10 +88,18 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
+<<<<<<< HEAD
                 Text("\(userVM.user.dailyTargetCalories) kcal")
                     .font(.caption)
                     .foregroundStyle(Color(.systemGray2))
                     .bold()
+=======
+                // Uncomment when needed
+                // Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
+                //     .font(.caption)
+                //     .foregroundStyle(Color(.systemGray2))
+                //     .bold()
+>>>>>>> main
             }
             .padding(.horizontal)
             
@@ -190,10 +182,11 @@ struct TodayView: View {
                 
             }
             .listStyle(PlainListStyle())
+            
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
-        .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $showRecommendation) {
             RecomendationView(mealType: $selectedMealCardType)
                 .presentationDetents([.fraction(0.8)])
@@ -202,16 +195,15 @@ struct TodayView: View {
     }
 }
 
+// Keep your existing TimelineRow components unchanged
 struct TimelineRow: View {
-    
     var onAddTapped: () -> Void
-    var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var isEnabled: Bool
     var mealType: MealType
     var meal: MealObject?
     var time: String
     var calorie: Int
 
-    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -232,7 +224,6 @@ struct TimelineRow: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(time)")
                     .font(.caption)
-                
                 // Use a single 'if let' to handle both cases
                 if let chosenMeal = meal {
                     // This block runs when `meal` is NOT nil
@@ -309,13 +300,12 @@ struct TimelineRow: View {
 
 struct TimelineRowFilled: View {
     var onAddTapped: () -> Void
-    var isEnabled: Bool   // 👈 flag untuk kontrol tombol
+    var isEnabled: Bool
     var mealType: MealType
     var meal: MealObject?
     var time: String
     var calorie: Int?
 
-    
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dots + line
@@ -338,7 +328,6 @@ struct TimelineRowFilled: View {
                     .font(.caption)
                 
                 HStack {
-                    
                     Image("nasgor")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -346,46 +335,143 @@ struct TimelineRowFilled: View {
                         .clipped()
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("\(mealType.rawValue)")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundStyle(Color(.systemGray2))
                         Text("Nasi Goreng")
                             .bold()
-                        Text("50g | 20g | 7g")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
+                        HStack {
+                            Image(systemName: "drop")
+                            
+                            Text("300g")
+                                .padding(.leading, -4)
+                            
+                            Image(systemName: "leaf")
+                            
+                            Text("600g")
+                                .padding(.leading, -4)
+                            
+                            Image(systemName: "bolt.heart")
+                            
+                            Text("500g")
+                                .padding(.leading, -4)
+                        }
+                        .foregroundColor(Color(.systemGray2))
+                        .font(.footnote)
                     }
                     Spacer()
                     
                     Text("800kcal")
+                        .font(.footnote)
                         .bold()
-                        .padding(4)
-                        .foregroundStyle(.green)
-                        .background(.green.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.green, lineWidth: 1)
-                        )
-                    
-//                    Button(action: {
-//                        onAddTapped()
-//                    }) {
-//                        Image(systemName: "plus")
-//                            .foregroundColor(.black)
-//                    }
-//                    .disabled(isEnabled)
-//                    .opacity(isEnabled ? 1.0 : 0.4)
+                        .padding(10)
+                        .background(Color("secYellow"))
+                        .foregroundColor(Color("PrimaryGreen"))
+                        .cornerRadius(8)
                 }
+                .padding(-4)
                 .eatsyCard()
             }
         }
     }
 }
 
-#Preview {
-    NavigationStack {
-        TodayView(showOnboarding: .constant(false), showButton: .constant(false), enableButton: .constant(false), showRecommendation: .constant(false))
+struct TimelineRowUniversal: View {
+    var time: String
+    var mealType: MealType
+    var state: TimelineState
+    var onAddTapped: () -> Void
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            // Timeline dots + line
+            VStack {
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        Circle().stroke(Color.gray, lineWidth: 1)
+                    )
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 2)
+                    .padding(.top, -2)
+            }
+            
+            // Timeline Content
+            VStack(alignment: .leading, spacing: 8) {
+                Text(time)
+                    .font(.caption)
+                
+                switch state {
+                case .beforeSignIn:
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            Text("-").bold()
+                        }
+                        Spacer()
+                        Button(action: onAddTapped) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .eatsyCard()
+                    
+                case .afterSignIn(let calorie):
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            if let c = calorie {
+                                Text("~\(c)kcal").bold()
+                            } else {
+                                Text("-").bold()
+                            }
+                        }
+                        Spacer()
+                        Button(action: onAddTapped) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .eatsyCard()
+                    
+                case .filled(let meal):
+                    FormatTimelineView(
+                        time: "08:00", // bisa diganti sesuai jam meal yang sesuai
+                        mealType: mealType,
+                        meal: meal,
+                        onAddTapped: {
+                            // action kalau user mau add meal
+                            print("Add tapped for \(meal.menuName)")
+                        }
+                    )
+                    .eatsyCard()
+                }
+            }
+        }
     }
+}
+
+#Preview {
+    TodayView(
+        showOnboarding: .constant(false),
+        showButton: .constant(false),
+        enableButton: .constant(false),
+        showRecommendation: .constant(false)
+    )
+    .environmentObject(UserViewModel())
 }

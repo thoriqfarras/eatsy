@@ -13,7 +13,7 @@ struct GoalRadioButtonsGroup: View {
         VStack(spacing: 10) {
             ForEach([Goal.lose, Goal.maintain, Goal.gain], id: \.self) { goal in
                 Button(action: {
-                    selectedButton = (selectedButton == goal) ? nil : goal
+                    selectedButton = goal  // Always set the selected goal, don't toggle to nil
                 }) {
                     HStack {
                         Text(goal.emoji + " " + goal.title)

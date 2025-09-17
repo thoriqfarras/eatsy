@@ -2,89 +2,67 @@ import SwiftUI
 
 struct ScheduleView: View {
     @StateObject private var vm: ScheduleViewModel
+    @State private var showDivider: Bool = false // untuk garis bawah bar
 
-    // Inject VM (enak buat testing/preview)
     init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: LocalScheduleRepository())) {
-            _vm = StateObject(wrappedValue: viewModel)
-        }
+        _vm = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 12) {
-                
-                HStack {
-                    Text("Schedule")
-                        .font(.title)
-                        .bold()
-                    
-                    Spacer()
-                    
-                    NavigationLink {
-                        ProfileView()   // nanti arahkan ke view profil kamu
-                    } label: {
-                        Image(systemName: "person.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 28, height: 28)
-                            .foregroundColor(.white)
-                            .background(Circle().fill(Color.gray))
-                    }
-                    .navigationTitle("Back")
-                    
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-
-
-                // --- FIXED SEGMENTED NEW ---
-                DateSegmentBar(selectedIndex: $vm.selectedDateIndex,
-                               titles: vm.dates)
+        VStack {
+            DateSegmentBar(selectedIndex: $vm.selectedDateIndex, titles: vm.dates)
                     .padding(.horizontal)
+                    .frame(height: 44)
+                    .background(Color("defaultBackground"))
+                    .overlay(
+                        Divider()
+                            .background(Color(.systemGray4))
+                            .opacity(showDivider ? 1 : 0),
+                        alignment: .bottom
+                    )
+                    .zIndex(1)
+//                    .padding(.vertical, 8)
 
-                // --- ONLY THIS PART SCROLLS ---
+
+            ScrollViewReader { proxy in
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {
-
-                        if let msg = vm.errorMessage {
-                            Text(msg)
-                                .foregroundStyle(.red)
-                                .padding()
-                        }
-
-                        if vm.isLoading && vm.dates.isEmpty {
-                            ProgressView()
-                                .padding()
-                        }
-
                         ForEach(MealSection.allCases) { section in
-                            // Section header
                             Text(section.rawValue)
                                 .font(.subheadline)
                                 .foregroundStyle(Color(.systemGray2))
                                 .padding(.horizontal)
-                                .padding(.vertical, 8)
+                                .padding(.vertical, 12)
 
-                            // Cards
                             VStack(spacing: 8) {
                                 ForEach(vm.items(for: section)) { item in
                                     ScheduleMealRow(item: item)
                                         .padding(.horizontal)
                                 }
                             }
-                            .padding(.bottom, 12)
+                            .padding(.bottom, 16)
                         }
-
-                        Spacer(minLength: 16)
                     }
+                    .background(
+                        GeometryReader { geo in
+                            Color.clear
+                                .onChange(of: geo.frame(in: .named("scroll")).minY) { value in
+                                    showDivider = value < 0
+                                }
+                        }
+                    )
                 }
+                .coordinateSpace(name: "scroll")
                 .scrollIndicators(.hidden)
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .task { vm.onAppear() } // trigger load pertama
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("defaultBackground"))
+        .task { vm.onAppear() }
     }
 }
 
+// MARK: - Preview
 #Preview {
     ScheduleView(viewModel: ScheduleViewModel(repo: LocalScheduleRepository()))
 }

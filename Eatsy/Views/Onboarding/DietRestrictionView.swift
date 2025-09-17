@@ -27,10 +27,21 @@ struct DietRestrictionView: View {
 
             Spacer()
 
-            NextButton(nextStep: {
-                nextStep()
-            }, isEnabled: !userData.dietRestrictions.isEmpty)
-        }
+            if userData.dietRestrictions.isEmpty {
+                            Button("Skip") {
+                                nextStep()
+                                saveUser(userData)
+                            }
+                            .buttonStyle(OutlineButtonStyle())
+                        } else {
+                            Button("Next") {
+                                print("DEBUG: dietRestrictions = \(userData.dietRestrictions)")
+                                nextStep()
+                                saveUser(userData)
+                            }
+                            .buttonStyle(PrimaryButtonStyle())
+                        }
+                    }
         .background(Color("defaultBackground"))
     }
 }
