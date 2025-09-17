@@ -8,7 +8,6 @@ import SwiftUI
 
 
 struct FormatTimelineView: View {
-    var time: String
     var mealType: MealType
     var meal: MealObject
     var onAddTapped: () -> Void
@@ -63,7 +62,6 @@ struct FormatTimelineView: View {
 
 #Preview {
     FormatTimelineView(
-        time: "08:00",
         mealType: .breakfast,
         meal: MealObject(id:1, mealType: .breakfast, menuName: "Bubur Ayam", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false),
         onAddTapped: { print("Add tapped") }

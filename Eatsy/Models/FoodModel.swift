@@ -23,7 +23,7 @@ struct Meal: Identifiable {
     var isSelected: Bool = false
 }
 
-enum MealType:  String, Codable, Hashable {
+enum MealType:  String, Codable, Hashable, CaseIterable {
     case breakfast = "Breakfast"
     case lunch = "Lunch"
     case dinner = "Dinner"

@@ -45,7 +45,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 // Custom Toolbar
                 HStack {
-                    Text(selectedTab == 0 ? "Today's Meal Plan" : "Schedule")
+                    Text(selectedTab == 0 ? "Today" : "Tomorrow")
                         .font(.title)
                         .bold()
                     
@@ -85,9 +85,10 @@ struct ContentView: View {
                     }
                     
                     ScheduleView()
+                        .environmentObject(recommendation)
                         .tag(1)
                         .tabItem {
-                            Label("Schedule", systemImage: "calendar")
+                            Label("Tomorrow", systemImage: "calendar")
                         }
                 }
                 .accentColor(.primaryGreen)

@@ -1,54 +1,60 @@
 import SwiftUI
 
 struct ScheduleMealRow: View {
-    let item: MealItem
+    var meal: MealObject
+    var mealType: MealType
     
     var body: some View {
-        HStack(spacing: 12) {
-            // Left thumbnail
-            ZStack {
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(.ultraThinMaterial)
-                Text(item.emoji)
-                    .font(.system(size: 48))
-            }
-            .frame(width: 74, height: 74)
+        HStack {
+            Image("nasgor")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 56, height: 56)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             
-            // Title + nutrients
-            VStack(alignment: .leading, spacing: 10) {
-                Text(item.title)
-                    .font(.headline)
-                
-                HStack(spacing: 0) {
-                    ForEach(item.nutrients.indices, id: \.self) { i in
-                        let n = item.nutrients[i]
-                        HStack(spacing: 6) {
-                            Image(systemName: n.icon)
-                                .foregroundStyle(.secondary)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(n.name)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                Text(n.value)
-                                    .font(.caption.weight(.semibold))
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        
-//                        if i < item.nutrients.count - 1 {
-//                            Divider().frame(height: 18)
-//                        }
-                    }
+            VStack(alignment: .leading, spacing: 4) {
+                Text(mealType.rawValue.capitalized)
+                    .font(.caption2)
+                    .foregroundStyle(Color(.systemGray2))
+                Text(meal.menuName)
+                    .bold()
+                HStack () {
+                    Image(systemName: "drop")
+                    
+                    Text("\(meal.fat)g")
+                        .padding(.leading, -4)
+                    
+                    Image(systemName: "leaf")
+                    
+                    Text("\(meal.carbs)g")
+                        .padding(.leading, -4)
+                    
+                    Image(systemName: "bolt.heart")
+                    
+                    Text("\(meal.protein)g")
+                        .padding(.leading, -4)
                 }
+                .foregroundColor(Color(.systemGray2))
+                .font(.footnote)
             }
-            Spacer(minLength: 0)
+            Spacer()
+            Text("\(meal.calories)kcal")
+                .font(.footnote)
+                .bold()
+                .padding(10)
+                .background(Color("secYellow"))
+                .foregroundColor(Color("PrimaryGreen"))
+                .cornerRadius(8)
         }
-//        .padding(14)
-//        .background(
-//            RoundedRectangle(cornerRadius: 18, style: .continuous)
-//                .fill(Color(.systemBackground))
-//                .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
-//        )
+        .padding(-4)
         .eatsyCard()
     }
+    //        .padding(14)
+    //        .background(
+    //            RoundedRectangle(cornerRadius: 18, style: .continuous)
+    //                .fill(Color(.systemBackground))
+    //                .shadow(color: .black.opacity(0.08), radius: 8, y: 2)
+    //        )
 }
+

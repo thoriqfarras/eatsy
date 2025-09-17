@@ -1,47 +1,56 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    @StateObject private var vm: ScheduleViewModel
     @State private var showDivider: Bool = false // untuk garis bawah bar
-
-    init(viewModel: ScheduleViewModel = ScheduleViewModel(repo: LocalScheduleRepository())) {
-        _vm = StateObject(wrappedValue: viewModel)
-    }
+    
+    @EnvironmentObject var recommendationViewModel: RecommendationViewModel
 
     var body: some View {
         VStack {
-            DateSegmentBar(selectedIndex: $vm.selectedDateIndex, titles: vm.dates)
-                    .padding(.horizontal)
-                    .frame(height: 44)
-                    .background(Color("defaultBackground"))
-                    .overlay(
-                        Divider()
-                            .background(Color(.systemGray4))
-                            .opacity(showDivider ? 1 : 0),
-                        alignment: .bottom
-                    )
-                    .zIndex(1)
-//                    .padding(.vertical, 8)
-
 
             ScrollViewReader { proxy in
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(MealSection.allCases) { section in
-                            Text(section.rawValue)
+                            Text("Breakfast")
                                 .font(.subheadline)
                                 .foregroundStyle(Color(.systemGray2))
                                 .padding(.horizontal)
                                 .padding(.vertical, 12)
 
                             VStack(spacing: 8) {
-                                ForEach(vm.items(for: section)) { item in
-                                    ScheduleMealRow(item: item)
+                                ForEach(recommendationViewModel.recommendations[1].breakfasts) { meal in
+                                    ScheduleMealRow(meal: meal, mealType: .breakfast)
                                         .padding(.horizontal)
                                 }
                             }
                             .padding(.bottom, 16)
-                        }
+                        Text("Lunch")
+                                .font(.subheadline)
+                                .foregroundStyle(Color(.systemGray2))
+                                .padding(.horizontal)
+                                .padding(.vertical, 12)
+
+                            VStack(spacing: 8) {
+                                ForEach(recommendationViewModel.recommendations[1].lunches) { meal in
+                                    ScheduleMealRow(meal: meal, mealType: .lunch)
+                                        .padding(.horizontal)
+                                }
+                            }
+                            .padding(.bottom, 16)
+                        Text("Dinner")
+                                .font(.subheadline)
+                                .foregroundStyle(Color(.systemGray2))
+                                .padding(.horizontal)
+                                .padding(.vertical, 12)
+
+                            VStack(spacing: 8) {
+                                ForEach(recommendationViewModel.recommendations[1].dinners) { meal in
+                                    ScheduleMealRow(meal: meal, mealType: .dinner)
+                                        .padding(.horizontal)
+                                }
+                            }
+                            .padding(.bottom, 16)
+                        
                     }
                     .background(
                         GeometryReader { geo in
@@ -58,11 +67,10 @@ struct ScheduleView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
-        .task { vm.onAppear() }
     }
 }
 
 // MARK: - Preview
 #Preview {
-    ScheduleView(viewModel: ScheduleViewModel(repo: LocalScheduleRepository()))
+    ScheduleView()
 }
