@@ -98,7 +98,7 @@ struct OnboardingView: View {
                 })
                 
             case .done:
-                OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton, targetDate: $viewModel.user.targetDate, height: $viewModel.user.height,
+                OnboardingDoneView(showOnboarding: $showOnboarding, showButton: $showButton, targetDate: $viewModel.user.targetDate,
                                    dailyTargetCalories: $viewModel.user.dailyTargetCalories
                 )
             }

@@ -62,7 +62,7 @@ struct User: Identifiable, Codable {
     var isSetUp: Bool = false
     
     var dailyTargetCalories: Int = 0
-    var targetDate: Date?
+    var targetDate: Date = Date()
     
     var selectedMealsForToday: SelectedMeals = SelectedMeals()
 }

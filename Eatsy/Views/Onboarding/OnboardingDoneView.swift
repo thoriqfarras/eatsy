@@ -9,8 +9,7 @@ import SwiftUI
 struct OnboardingDoneView: View {
     @Binding var showOnboarding: Bool  // anak
     @Binding var showButton: Bool  // anak
-    @Binding var targetDate: Date?
-    @Binding var height: Int?
+    @Binding var targetDate: Date
     @Binding var dailyTargetCalories: Int
     
     var body: some View {
@@ -29,7 +28,7 @@ struct OnboardingDoneView: View {
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
-                Text("🗓️ \(targetDate ?? Date())")
+                Text("🗓️ \(formatDate(date: targetDate))")
                     .bold()
                     .foregroundColor(Color("PrimaryGreen"))
                     .padding(.top, 5)
@@ -42,4 +41,12 @@ struct OnboardingDoneView: View {
         }
         .background(Color("defaultBackground"))
     }
+}
+
+func formatDate(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .long
+    formatter.timeStyle = .none
+    
+    return formatter.string(from: date)
 }

@@ -110,6 +110,7 @@ class UserViewModel: ObservableObject {
         let amountOfDaysNeeded = totalCaloriesNeeded / self.user.dailyTargetCalories
         
         targetDate = Calendar.current.date(byAdding: .day, value: Int(amountOfDaysNeeded), to: Date())!
+        
         self.user.targetDate = targetDate
 }
 

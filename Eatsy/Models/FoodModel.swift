@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-struct NutritionInfo: Identifiable {
-    var id = UUID()
-    var icon: String
-    var text: String
-    var color: Color
-}
-
-struct Meal: Identifiable {
-    var id = UUID()
-    var name: String
-    var imageName: String
-    var calories: Int
-    var nutritions: [NutritionInfo]
-    var isSelected: Bool = false
-}
-
 enum MealType:  String, Codable, Hashable, CaseIterable {
     case breakfast = "Breakfast"
     case lunch = "Lunch"
