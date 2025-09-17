@@ -9,8 +9,6 @@ import SwiftUI
 struct DietRestrictionView: View {
     @Binding var userData: User
     let nextStep: () -> Void
-    var saveUser: (User) -> Void
-    @ObservedObject var viewModel: UserViewModel
 
     var body: some View {
         VStack {
@@ -32,14 +30,11 @@ struct DietRestrictionView: View {
             if userData.dietRestrictions.isEmpty {
                             Button("Skip") {
                                 nextStep()
-                                saveUser(userData)
                             }
                             .buttonStyle(OutlineButtonStyle())
                         } else {
                             Button("Next") {
-                                print("DEBUG: dietRestrictions = \(userData.dietRestrictions)")
                                 nextStep()
-                                saveUser(userData)
                             }
                             .buttonStyle(PrimaryButtonStyle())
                         }

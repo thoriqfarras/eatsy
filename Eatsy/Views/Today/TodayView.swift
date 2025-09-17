@@ -11,7 +11,8 @@ struct TodayView: View {
     @Binding var showButton: Bool      // tombol GET MEAL PLAN
     @Binding var enableButton: Bool    // tombol + di meal card
     @Binding var showRecommendation: Bool
-    var mealType: MealType
+    
+    @State private var selectedMealCardType: MealType = .breakfast
     
     @EnvironmentObject var userVM : UserViewModel
     var type = 2
@@ -33,6 +34,9 @@ struct TodayView: View {
             MealObject(id:23,mealType: .dinner, menuName: "Ayam Bakar", calories: 750, protein: 7, carbs: 30, fat: 23, restrictions: [.eggAllergy], isSelected: false)
         ]
     )
+    
+    @EnvironmentObject var recommendationViewModel: RecommendationViewModel
+    
     
     var body: some View {
         VStack(spacing: 16) {
@@ -84,44 +88,90 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-                // Uncomment when needed
-                // Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
-                //     .font(.caption)
-                //     .foregroundStyle(Color(.systemGray2))
-                //     .bold()
+                Text("\(userVM.user.dailyTargetCalories) kcal")
+                    .font(.caption)
+                    .foregroundStyle(Color(.systemGray2))
+                    .bold()
             }
             .padding(.horizontal)
             
             // Timeline
+            
             List {
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .breakfast,
-                    time: "8 AM"
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+                if recommendationViewModel.recommendations.count > 0 {
+                    TimelineRow(
+                        onAddTapped: {
+                            selectedMealCardType = .breakfast
+                            showRecommendation = true
+                        },
+                        isEnabled: enableButton,
+                        mealType: .breakfast,
+                        meal: userVM.user.selectedMealsForToday.breakfast,
+                        time: "8 AM",
+                        calorie: recommendationViewModel.recommendations[0].avgBreakfastsCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: {
+                            selectedMealCardType = .lunch
+                            showRecommendation = true
+                        },
+                        isEnabled: enableButton,
+                        mealType: .lunch,
+                        meal: userVM.user.selectedMealsForToday.lunch,
+                        time: "1 PM",
+                        calorie: recommendationViewModel.recommendations[0].avgLunchesCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: {
+                            selectedMealCardType = .dinner
+                            showRecommendation = true
+                        },
+                        isEnabled: enableButton,
+                        mealType: .dinner,
+                        meal: userVM.user.selectedMealsForToday.dinner,
+                        time: "5 PM",
+                        calorie: recommendationViewModel.recommendations[0].avgDinnersCalorie
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                } else {
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .breakfast,
+                        time: "8 AM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .lunch,
+                        time: "1 PM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    
+                    TimelineRow(
+                        onAddTapped: { showRecommendation = true },
+                        isEnabled: enableButton,
+                        mealType: .dinner,
+                        time: "5 PM",
+                        calorie: 0
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                }
                 
-                TimelineRow(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .lunch,
-                    time: "1 PM",
-                    calorie: 300
-                )
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                
-                TimelineRowFilled(
-                    onAddTapped: { showRecommendation = true },
-                    isEnabled: enableButton,
-                    mealType: .dinner,
-                    time: "5 PM"
-                )
-                
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
                 
             }
             .listStyle(PlainListStyle())
@@ -131,7 +181,8 @@ struct TodayView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
         .sheet(isPresented: $showRecommendation) {
-            RecomendationView(mealType: .breakfast)
+            RecomendationView(mealType: $selectedMealCardType, meals: selectedMealCardType == .breakfast ? recommendationViewModel.recommendations[0].breakfasts : (selectedMealCardType == .lunch ? recommendationViewModel.recommendations[0].lunches : recommendationViewModel.recommendations[0].dinners))
+                .environmentObject(recommendationViewModel)
                 .presentationDetents([.fraction(0.8)])
                 .presentationCornerRadius(24)
         }
@@ -145,7 +196,7 @@ struct TimelineRow: View {
     var mealType: MealType
     var meal: MealObject?
     var time: String
-    var calorie: Int?
+    var calorie: Int
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -163,40 +214,93 @@ struct TimelineRow: View {
                     .padding(.top, -2)
             }
             
-            // Meal Card
+            // Conditional Meal Card
             VStack(alignment: .leading, spacing: 8) {
                 Text("\(time)")
                     .font(.caption)
-                
-                HStack {
-                    Text("🍛")
-                        .font(.largeTitle)
-                        .foregroundStyle(Color(.systemGray2))
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("\(mealType.rawValue)")
-                            .font(.caption)
-                            .foregroundStyle(Color(.systemGray2))
-                        if let calorie = calorie {
-                            Text("~\(calorie)kcal")
+                // Use a single 'if let' to handle both cases
+                if let chosenMeal = meal {
+                    // This block runs when `meal` is NOT nil
+                    HStack {
+                        Image("nasgor")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 56, height: 56)
+                            .clipped()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption2)
+                                .foregroundStyle(Color(.systemGray2))
+                            Text(chosenMeal.menuName)
                                 .bold()
-                        } else {
-                            Text("-")
-                                .bold()
+                            HStack () {
+                                Image(systemName: "drop")
+                                
+                                Text("\(chosenMeal.fat)g")
+                                    .padding(.leading, -4)
+                                
+                                Image(systemName: "leaf")
+                                
+                                Text("\(chosenMeal.carbs)g")
+                                    .padding(.leading, -4)
+                                
+                                Image(systemName: "bolt.heart")
+                                
+                                Text("\(chosenMeal.protein)g")
+                                    .padding(.leading, -4)
+                            }
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.footnote)
                         }
+                        Spacer()
+                            Text("\(chosenMeal.calories)kcal")
+                                .font(.footnote)
+                                .bold()
+                                .padding(10)
+                                .background(Color("secYellow"))
+                                .foregroundColor(Color("PrimaryGreen"))
+                                .cornerRadius(8)
                     }
-                    Spacer()
-                    
-                    Button(action: {
+                    .padding(-4)
+                    .eatsyCard()
+                    .onTapGesture {
                         onAddTapped()
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
                     }
-                    .disabled(isEnabled)
-                    .opacity(isEnabled ? 1.0 : 0.4)
+                } else {
+                    // This block runs when `meal` is nil
+                    HStack {
+                        Text("🍛")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color(.systemGray2))
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("\(mealType.rawValue)")
+                                .font(.caption)
+                                .foregroundStyle(Color(.systemGray2))
+                            if calorie > 0 {
+                                Text("~\(calorie)kcal")
+                                    .bold()
+                            } else {
+                                Text("-")
+                                    .bold()
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            onAddTapped()
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                        }
+                        .disabled(isEnabled)
+                        .opacity(isEnabled ? 1.0 : 0.4)
+                    }
+                    .eatsyCard()
                 }
-                .eatsyCard()
             }
         }
     }
@@ -375,8 +479,7 @@ struct TimelineRowUniversal: View {
         showOnboarding: .constant(false),
         showButton: .constant(false),
         enableButton: .constant(false),
-        showRecommendation: .constant(false),
-        mealType: .breakfast
+        showRecommendation: .constant(false)
     )
     .environmentObject(UserViewModel())
 }

@@ -76,9 +76,9 @@ struct ContentView: View {
                         showButton: $showButton,
                         enableButton: $enableButton,
                         showRecommendation: $showRecommendation,
-                        mealType: .breakfast
                     )
                     .environmentObject(user)
+                    .environmentObject(recommendation)
                     .tag(0)
                     .tabItem {
                         Label("Today", systemImage: "house.fill")

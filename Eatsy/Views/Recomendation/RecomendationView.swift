@@ -2,11 +2,20 @@ import SwiftUI
 
 // RecomendationView.swift
 struct RecomendationView: View {
-    @StateObject private var viewModel = FoodViewModel()
-    @Environment(\.dismiss) var dismiss
-    @State private var selectedMealID: Int? = nil
+    @State var selectedMeal: MealObject?
+    @State var selectedMealID: Int?
     
-    var mealType: MealType
+    @Binding var mealType: MealType
+    @State var meals: [MealObject]
+    
+    @EnvironmentObject var userViewModel: UserViewModel
+    @Environment(\.dismiss) var dismiss
+    
+    init(mealType: Binding<MealType>, meals: [MealObject]) {
+        _mealType = mealType
+        _meals = State(initialValue: meals)
+    }
+    
     let dummyRecomend = Recommendation(
         date: Date(),
         breakfasts: [
@@ -36,12 +45,10 @@ struct RecomendationView: View {
             Text("Recommendation")
                 .bold()
                 .padding(6)
-            
-            // Breakfast
-            if mealType == .breakfast {
+
                 HStack {
                     Label("Today", systemImage: "calendar")
-                    Label("Breakfast", systemImage: "clock")
+                    Label("\(mealType.rawValue)", systemImage: "clock")
                 }
                 .font(.footnote)
 //                .bold()
@@ -49,74 +56,51 @@ struct RecomendationView: View {
                 .padding(.bottom, 6)
                 
                 VStack {
-                    ForEach(dummyRecomend.breakfasts) { recomBreak in
+                    ForEach(meals) { meal in
                         Button {
-                            selectedMealID = recomBreak.id
-                            print("Pilih \(recomBreak.menuName)")
+                            selectedMealID = meal.id
+                            selectedMeal = meal
                         } label: {
                             FoodCardView(
-                                meal: recomBreak,
-                                isSelected: selectedMealID == recomBreak.id
+                                meal: meal,
+                                isSelected: selectedMealID == meal.id
                             )
-                            .selectableCard(isSelected: selectedMealID == recomBreak.id)
+                            .selectableCard(isSelected: selectedMealID == meal.id)
                         }
                     }
                 }
                 
-                Button("Choose") { dismiss() }
+            Button("Choose") { action: do {
+                if mealType == .breakfast {
+                    userViewModel.user.selectedMealsForToday.breakfast = selectedMeal
+                } else if mealType == .lunch {
+                    userViewModel.user.selectedMealsForToday.lunch = selectedMeal
+                } else if mealType == .dinner {
+                    userViewModel.user.selectedMealsForToday.dinner = selectedMeal
+                }
+                userViewModel.saveDefaults()
+                dismiss()
+            } }
                     .buttonStyle(PrimaryButtonStyle())
+        }
+        .onAppear {
+            // Use .onAppear to set the initial state from the userViewModel
+            // This runs after the view is fully initialized and the environment is available
+            let selectedMeals = userViewModel.user.selectedMealsForToday
             
-            // Lunch
-            } else if mealType == .lunch {
-                HStack {
-                    Label("Today", systemImage: "calendar")
-                    Label("Lunch", systemImage: "clock")
-                }
-                .font(.footnote)
-                .bold()
-                .foregroundColor(.gray)
-                .padding(.bottom, 6)
-                
-                VStack() {
-                    ForEach(dummyRecomend.lunches) { recomLunch in
-                        Button {
-                            print("Pilih \(recomLunch.menuName)")
-                        } label: {
-                            FoodCardView(meal: recomLunch, isSelected: recomLunch.isSelected)
-                        }
-                    }
-                }
-                
-                Button("Choose") { dismiss() }
-                    .buttonStyle(PrimaryButtonStyle())
-            
-            } else if mealType == .dinner {
-                HStack {
-                    Label("Today", systemImage: "calendar")
-                    Label("Dinner", systemImage: "clock")
-                }
-                .font(.footnote)
-                .bold()
-                .foregroundColor(.gray)
-                .padding(.bottom, 6)
-                
-                VStack() {
-                    ForEach(dummyRecomend.dinners) { recomDinner in
-                        Button {
-                            print("Pilih \(recomDinner.menuName)")
-                        } label: {
-                            FoodCardView(meal: recomDinner, isSelected: recomDinner.isSelected)
-                        }
-                    }
-                }
-                
-                Button("Choose") { dismiss() }
-                    .buttonStyle(PrimaryButtonStyle())
-            } else {
-                Text("MealType not found!")
+            switch mealType {
+            case .breakfast:
+                self.selectedMeal = selectedMeals.breakfast
+            case .lunch:
+                self.selectedMeal = selectedMeals.lunch
+            case .dinner:
+                self.selectedMeal = selectedMeals.dinner
             }
+            
+            self.selectedMealID = self.selectedMeal?.id
         }
     }
+        
 }
 
 
@@ -141,6 +125,6 @@ struct RoundedCorner: Shape {
     }
 }
 
-#Preview {
-    RecomendationView( mealType: .breakfast)
-}
+//#Preview {
+//    RecomendationView(mealType: .breakfast)
+//}

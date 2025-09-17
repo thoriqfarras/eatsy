@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recommendation: Identifiable {
+struct Recommendation: Identifiable, Codable {
     var id = UUID()
     var date: Date
     var breakfasts: [MealObject] = []
@@ -15,5 +15,5 @@ struct Recommendation: Identifiable {
     var dinners: [MealObject] = []
     var avgBreakfastsCalorie: Int = 0
     var avgLunchesCalorie: Int = 0
-    var avgDinnerLCalorie: Int = 0
+    var avgDinnersCalorie: Int = 0
 }

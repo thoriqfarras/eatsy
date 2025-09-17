@@ -49,11 +49,13 @@ class UserViewModel: ObservableObject {
     
     /// Saves a given User object to UserDefaults.
     /// - Parameter userData: The User object to be saved.
-    func saveData(userData: User) {
+    func save(userData: User) {
+        self.user = userData
+    }
+    
+    func saveDefaults() {
         do {
             // Encode the provided User struct into Data.
-            self.user = userData
-            self.completeSetUp()
             let encodedData = try JSONEncoder().encode(self.user)
             // Save the encoded data to UserDefaults using the designated key.
             UserDefaults.standard.set(encodedData, forKey: userDefaultsKey)
@@ -66,6 +68,7 @@ class UserViewModel: ObservableObject {
     
     func completeSetUp() {
         self.user.isSetUp = true
+        self.saveDefaults()
     }
     
     func setDailyTargetCalories() -> Void {

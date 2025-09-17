@@ -202,9 +202,10 @@ struct GoalCardView: View {
                 Button("Done") {
                     if let newGoal = tempSelectedGoal {
                         userViewModel.user.goal = newGoal
-                        userViewModel.saveData(userData: userViewModel.user)
+                        userViewModel.saveDefaults()
                         // Optionally recalculate target calories if goal affects it
-                        userViewModel.setDailyTargetCalories()
+//                        userViewModel.setDailyTargetCalories()
+                        
                     }
                     showModal = false
                 }
