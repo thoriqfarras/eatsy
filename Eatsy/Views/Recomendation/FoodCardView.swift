@@ -15,7 +15,7 @@ struct FoodCardView: View {
     var body: some View {
         HStack() {
             // Gambar makanan
-            Image("nasgor")
+            Image(meal.imageName)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 12))

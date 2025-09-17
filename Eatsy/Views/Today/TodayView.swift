@@ -222,7 +222,7 @@ struct TimelineRow: View {
                 if let chosenMeal = meal {
                     // This block runs when `meal` is NOT nil
                     HStack {
-                        Image("nasgor")
+                        Image(chosenMeal.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 56, height: 56)
