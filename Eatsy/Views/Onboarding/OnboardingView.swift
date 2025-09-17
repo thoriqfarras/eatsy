@@ -104,6 +104,7 @@ struct OnboardingView: View {
             }
         }
         .padding(.bottom, 1)
+        .background(Color(.defaultBackground))
     }
 }
 

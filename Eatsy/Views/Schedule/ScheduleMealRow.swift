@@ -6,7 +6,7 @@ struct ScheduleMealRow: View {
     
     var body: some View {
         HStack {
-            Image("nasgor")
+            Image(meal.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 56, height: 56)

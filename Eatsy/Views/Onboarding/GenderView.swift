@@ -34,6 +34,6 @@ struct GenderView: View {
             Spacer()
             NextButton(nextStep: nextStep, isEnabled: gender != nil)
         }
-        .background(Color("defaultBackground"))
+//        .background(Color("defaultBackground"))
     }
 }

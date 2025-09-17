@@ -54,6 +54,6 @@ struct Navbar: View {
                 }
             }.hidden()
         }.padding(.horizontal)
-            .background(Color("defaultBackground").ignoresSafeArea())
+//            .background(Color("defaultBackground").ignoresSafeArea())
     }
 }
