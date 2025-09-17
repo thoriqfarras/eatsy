@@ -30,14 +30,11 @@ struct DietRestrictionView: View {
             if userData.dietRestrictions.isEmpty {
                             Button("Skip") {
                                 nextStep()
-                                saveUser(userData)
                             }
                             .buttonStyle(OutlineButtonStyle())
                         } else {
                             Button("Next") {
-                                print("DEBUG: dietRestrictions = \(userData.dietRestrictions)")
                                 nextStep()
-                                saveUser(userData)
                             }
                             .buttonStyle(PrimaryButtonStyle())
                         }
