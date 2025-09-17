@@ -41,6 +41,13 @@ enum DietRestriction: String, CaseIterable, Hashable, Codable {
     case eggAllergy = "🥚 Egg allergy"
 }
 
+struct SelectedMeals: Codable, Hashable {
+    var breakfast: MealObject?
+    var lunch: MealObject?
+    var dinner: MealObject?
+}
+
+
 
 struct User: Identifiable, Codable {
     var id = UUID()
@@ -56,6 +63,8 @@ struct User: Identifiable, Codable {
     
     var dailyTargetCalories: Int = 0
     var targetDate: Date?
+    
+    var selectedMealsForToday: SelectedMeals = SelectedMeals()
 }
 
 

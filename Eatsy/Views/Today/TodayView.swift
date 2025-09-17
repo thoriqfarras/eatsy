@@ -88,18 +88,10 @@ struct TodayView: View {
                 Text("Calories Intake")
                     .bold()
                 Spacer()
-<<<<<<< HEAD
                 Text("\(userVM.user.dailyTargetCalories) kcal")
                     .font(.caption)
                     .foregroundStyle(Color(.systemGray2))
                     .bold()
-=======
-                // Uncomment when needed
-                // Text("\(userVM.calculateTargetCalories(userData: userVM.user)) KCAL")
-                //     .font(.caption)
-                //     .foregroundStyle(Color(.systemGray2))
-                //     .bold()
->>>>>>> main
             }
             .padding(.horizontal)
             
@@ -107,7 +99,6 @@ struct TodayView: View {
             
             List {
                 if recommendationViewModel.recommendations.count > 0 {
-                    Text("RECOMMENDATION GENERATED")
                     TimelineRow(
                         onAddTapped: {
                             selectedMealCardType = .breakfast
@@ -115,6 +106,7 @@ struct TodayView: View {
                         },
                         isEnabled: enableButton,
                         mealType: .breakfast,
+                        meal: userVM.user.selectedMealsForToday.breakfast,
                         time: "8 AM",
                         calorie: recommendationViewModel.recommendations[0].avgBreakfastsCalorie
                     )
@@ -128,6 +120,7 @@ struct TodayView: View {
                         },
                         isEnabled: enableButton,
                         mealType: .lunch,
+                        meal: userVM.user.selectedMealsForToday.lunch,
                         time: "1 PM",
                         calorie: recommendationViewModel.recommendations[0].avgLunchesCalorie
                     )
@@ -141,13 +134,13 @@ struct TodayView: View {
                         },
                         isEnabled: enableButton,
                         mealType: .dinner,
+                        meal: userVM.user.selectedMealsForToday.dinner,
                         time: "5 PM",
                         calorie: recommendationViewModel.recommendations[0].avgDinnersCalorie
                     )
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 } else {
-                    Text("RECOMMENDATION NOT GENERATED")
                     TimelineRow(
                         onAddTapped: { showRecommendation = true },
                         isEnabled: enableButton,
@@ -188,7 +181,8 @@ struct TodayView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("defaultBackground"))
         .sheet(isPresented: $showRecommendation) {
-            RecomendationView(mealType: $selectedMealCardType)
+            RecomendationView(mealType: $selectedMealCardType, meals: selectedMealCardType == .breakfast ? recommendationViewModel.recommendations[0].breakfasts : (selectedMealCardType == .lunch ? recommendationViewModel.recommendations[0].lunches : recommendationViewModel.recommendations[0].dinners))
+                .environmentObject(recommendationViewModel)
                 .presentationDetents([.fraction(0.8)])
                 .presentationCornerRadius(24)
         }
@@ -228,7 +222,7 @@ struct TimelineRow: View {
                 if let chosenMeal = meal {
                     // This block runs when `meal` is NOT nil
                     HStack {
-                        Image(chosenMeal.menuName) // Use chosenMeal directly
+                        Image("nasgor")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 56, height: 56)
@@ -236,30 +230,44 @@ struct TimelineRow: View {
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("\(mealType.rawValue)")
-                                .font(.caption)
+                            Text(mealType.rawValue.capitalized)
+                                .font(.caption2)
                                 .foregroundStyle(Color(.systemGray2))
                             Text(chosenMeal.menuName)
                                 .bold()
-                            Text("P: \(chosenMeal.protein)g C: \(chosenMeal.carbs)g F: \(chosenMeal.fat)g")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
+                            HStack () {
+                                Image(systemName: "drop")
+                                
+                                Text("\(chosenMeal.fat)g")
+                                    .padding(.leading, -4)
+                                
+                                Image(systemName: "leaf")
+                                
+                                Text("\(chosenMeal.carbs)g")
+                                    .padding(.leading, -4)
+                                
+                                Image(systemName: "bolt.heart")
+                                
+                                Text("\(chosenMeal.protein)g")
+                                    .padding(.leading, -4)
+                            }
+                            .foregroundColor(Color(.systemGray2))
+                            .font(.footnote)
                         }
-                        
                         Spacer()
-                        
-                        Text("\(chosenMeal.calories)kcal")
-                            .bold()
-                            .padding(4)
-                            .foregroundStyle(.green)
-                            .background(.green.opacity(0.2))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.green, lineWidth: 1)
-                            )
+                            Text("\(chosenMeal.calories)kcal")
+                                .font(.footnote)
+                                .bold()
+                                .padding(10)
+                                .background(Color("secYellow"))
+                                .foregroundColor(Color("PrimaryGreen"))
+                                .cornerRadius(8)
                     }
+                    .padding(-4)
                     .eatsyCard()
+                    .onTapGesture {
+                        onAddTapped()
+                    }
                 } else {
                     // This block runs when `meal` is nil
                     HStack {
